@@ -1,8 +1,0 @@
-ShiftBrite KEYWORD1
-Color KEYWORD1
-setColor KEYWORD2
-setRgbVal KEYWORD2
-getColor KEYWORD2
-getColors KEYWORD2
-colorName KEYWORD2
-WriteLEDArray KEYWORD2
