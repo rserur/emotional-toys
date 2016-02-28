@@ -2,7 +2,10 @@ import pygame, numpy, sys, os, random
 from math import fabs
 from pygame.locals import *
 
-_mainDir = os.environ['RESOURCEPATH']#"/Users/marc513/Documents/BCH/RAGE-Control/app/dist/game0.app/Contents/Resources"#os.path.split(os.path.abspath(__file__))[0]
+if 'RESOURCEPATH' in os.environ:
+	_mainDir = os.environ['RESOURCEPATH']
+else:
+	_mainDir = os.path.split(os.path.abspath(__file__))[0]#"/Users/marc513/Documents/BCH/RAGE-Control/app/dist/game0.app/Contents/Resources"#os.path.split(os.path.abspath(__file__))[0]
 _aether = numpy.array([0.01, 0.])
 _accelDecay = numpy.array([0.5, 0.])
 _maxRot = 45.

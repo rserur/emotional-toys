@@ -4,7 +4,10 @@ import pygame, numpy, sys, os, random, time, math
 
 white = (255,255,255,255)
 black = (0,0,0)
-_mainDir = os.environ['RESOURCEPATH']
+if 'RESOURCEPATH' in os.environ:
+	_mainDir = os.environ['RESOURCEPATH']
+else:
+	_mainDir = os.path.split(os.path.abspath(__file__))[0]
 _defaultFont = os.path.join(_mainDir, 'fonts', 'freesansbold.ttf')
 
 class HUD:

@@ -4,7 +4,10 @@ import pygame.mixer
 from random import choice
 from datetime import datetime, timedelta
 
-_mainDir = os.environ['RESOURCEPATH']
+if 'RESOURCEPATH' in os.environ:
+	_mainDir = os.environ['RESOURCEPATH']
+else:
+	_mainDir = os.path.split(os.path.abspath(__file__))[0]
 _soundDir = 'Sounds'
 _shotFileName = 'shot2.wav'
 _explosionFileName = 'explosion.wav'

@@ -1,68 +1,11 @@
-import pygame, Sprite, numpy, random, os
+#! /usr/bin/env python
 
-black = (0,0,0)
-red = (255,0,0)
-white = (255,255,255)
-if 'RESOURCEPATH' in os.environ:
-    _mainDir = os.environ['RESOURCEPATH']
-else:
-    _mainDir = os.path.split(os.path.abspath(__file__))[0]
+class TextRectException:
+    def __init__(self, message = None):
+        self.message = message
+    def __str__(self):
+        return self.message
 
-class TutorialScreen:
-
-	def __init__(self, screen):
-		all = pygame.sprite.RenderUpdates()
-		self._screen = screen
-		self._Instructions = ['Move left and right by using the arrow keys',
-							  "Avoid meteors as they fall. If you get hit, you'll lose control!",
-							  'Use the up arrow or space bar to shoot the meteors and gain points',
-							  'Keep your friends safe from the meteors',
-							  'You lose points whenever one of your friends explodes',
-							  'Bigger meteors have to be shot by two players at the same time']
-		self._defaultFont = os.path.join(_mainDir, 'fonts', 'freesansbold.ttf')#os.path.join(_mainDir, 'fonts', 'freesansbold.ttf')
-		self._InstructionFont = pygame.font.Font(self._defaultFont, 30)
-		self._ButtonFont = pygame.font.Font(self._defaultFont, 36)
-		# self._InstructionPos = [(150,100),(50,100),(0,100),(175,100),(100,100),(0,100)]
-		self._InstructionRect = pygame.Rect(100,100,700,300)
-		self._ButtonPos = (400,175)
-		self._UnselectedColor = black
-		self._SelectedColor = red
-		self._InstructionText = self._InstructionFont.render(self._Instructions[0],True,self._UnselectedColor)
-		self._ButtonText = self._ButtonFont.render('Next -->',True,self._UnselectedColor)
-		self.hoverButton = False
-		self.step = 0
-		self.numSteps = 6
-		
-	def draw(self):
-		#print self._screen.get_size()
-		if (self.step < self.numSteps):
-			self._InstructionText = render_textrect(self._Instructions[self.step],self._InstructionFont,self._InstructionRect,self._UnselectedColor,white,1)
-			# self._InstructionText = self._InstructionFont.render(self._Instructions[self.step],True,self._UnselectedColor)
-			r = self._InstructionText.get_rect()
-			self._InstructionPos = (450-(r.width/2),100)
-			self._screen.blit(self._InstructionText, self._InstructionPos)
-		self._screen.blit(self._ButtonText, self._ButtonPos)
-	
-	def ButtonHover(self):
-		self._ButtonText = self._ButtonFont.render('Next -->',True,self._SelectedColor)
-		if (self.step == self.numSteps-1):
-			self._ButtonPos = (325,175)
-			self._ButtonText = self._ButtonFont.render('Return to Menu -->',True,self._SelectedColor)
-		self.hoverButton = True
-	
-	def ButtonLeave(self):
-		self._ButtonText = self._ButtonFont.render('Next -->',True,self._UnselectedColor)
-		if (self.step == self.numSteps-1):
-			self._ButtonPos = (325,175)
-			self._ButtonText = self._ButtonFont.render('Return to Menu -->',True,self._UnselectedColor)
-		self.hoverButton = False
-		
-	def getInstructionText(self):
-		if self._InstructionIndex < len(self._Instructions):
-			self._InstructionIndex += 1
-		return self._Instructions[self._InstructionIndex - 1]
-
-	# source: http://www.pygame.org/pcr/text_rect/index.php
 def render_textrect(string, font, rect, text_color, background_color, justification=0):
     """Returns a surface containing the passed text string, reformatted
     to fit within the given rect, word-wrapping as necessary. The text
@@ -86,7 +29,7 @@ def render_textrect(string, font, rect, text_color, background_color, justificat
     Failure - raises a TextRectException if the text won't fit onto the surface.
     """
 
-    # import pygame
+    import pygame
     
     final_lines = []
 
@@ -139,4 +82,31 @@ def render_textrect(string, font, rect, text_color, background_color, justificat
 
     return surface
 
-#----------------------------------------------------------------------------------------
+
+if __name__ == '__main__':
+    import pygame
+    import pygame.font
+    from pygame.locals import *
+
+    pygame.init()
+
+    display = pygame.display.set_mode((400, 400))
+
+    my_font = pygame.font.Font(None, 22)
+
+    my_string = "Hi there! I'm a nice bit of wordwrapped text. Won't you be my friend? Honestly, wordwrapping is easy, with David's fancy new render_textrect() function.\nThis is a new line.\n\nThis is another one.\n\n\nAnother line, you lucky dog."
+
+    my_rect = pygame.Rect((40, 40, 300, 300))
+    
+    rendered_text = render_textrect(my_string, my_font, my_rect, (216, 216, 216), (48, 48, 48), 0)
+
+    if rendered_text:
+        display.blit(rendered_text, my_rect.topleft)
+
+    pygame.display.update()
+
+    while not pygame.event.wait().type in (QUIT, KEYDOWN):
+        pass
+
+
+

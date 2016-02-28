@@ -6,7 +6,10 @@ alphaDecay = 0.025
 black = (0,0,0)
 red = (255,0,0)
 white = (255,255,255)
-_mainDir = os.environ['RESOURCEPATH']#os.path.split(os.path.abspath(__file__))[0]
+if 'RESOURCEPATH' in os.environ:
+	_mainDir = os.environ['RESOURCEPATH']
+else:
+	_mainDir = os.path.split(os.path.abspath(__file__))[0]
 _SoundImage = 'art/sound.jpg'
 _MuteImage = 'art/sound_mute.png'
 _SoundSize = (100,100)
