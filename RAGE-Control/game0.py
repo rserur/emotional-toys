@@ -321,7 +321,7 @@ def tutorialLoop(sound_on = True):
 	tutorialScreen = RAGE.TutorialScreen.TutorialScreen(screen)
 	hud = RAGE.HUD.HUD(screen)
 	players = RAGE.PlayerList.PlayerList(all, screen, sound_on=sound_on)
-	villians = RAGE.Villians.Villians(all, screen, sound_on)
+	villians = RAGE.Villians.Villians(all, screen)
 	friends = RAGE.Friends.Friends(all, screen)
 	bosses = RAGE.Bosses.Bosses(all, screen, sound_on)
 
@@ -395,7 +395,7 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 
 	#game resources
 	players = RAGE.PlayerList.PlayerList(all, screen, players, thresholds, sound_on)
-	villians = RAGE.Villians.Villians(all, screen, sound_on)
+	villians = RAGE.Villians.Villians(all, screen)
 	bosses = RAGE.Bosses.Bosses(all, screen, sound_on)
 	friends = RAGE.Friends.Friends(all, screen)
 	background = RAGE.Background.Background(screen)

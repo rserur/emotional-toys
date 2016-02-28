@@ -68,4 +68,4 @@ class _Villian (Sprite):
 		if launchV[1] < 0:
 			launchV[1] = -launchV[1]
 		self._v = launchV
-		self._a = numpy.array([0,0])
+		self._a = numpy.array([0.,0.])
