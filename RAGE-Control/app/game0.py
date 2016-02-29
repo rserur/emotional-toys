@@ -398,7 +398,7 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 	villians = RAGE.Villians.Villians(all, screen, sound_on)
 	bosses = RAGE.Bosses.Bosses(all, screen, sound_on)
 	friends = RAGE.Friends.Friends(all, screen)
-	background = RAGE.Background.Background(screen)
+	background = RAGE.Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,703), x=array([0.,0.]))
 	hud = RAGE.HUD.HUD(screen)
 	
 	#start time

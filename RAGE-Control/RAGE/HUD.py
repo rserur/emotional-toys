@@ -76,7 +76,7 @@ class Clock:
 		pygame.draw.aaline(self._surface, black, (25,25), minHandCoord)
 		pygame.draw.aaline(self._surface, black, (25,25), secHandCoord)
 		pygame.draw.circle(self._surface, black, (25,25), secHandLen, 2)
-		self._screen.blit(self._surface, (600, 10))
+		self._screen.blit(self._surface, (650, 10))
 
 	def time(self):
 		return self.duration - (time.clock() - self.startTime)

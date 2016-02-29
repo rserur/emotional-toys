@@ -12,7 +12,7 @@ explosionLifetime = .5
 
 class Explosion:
 
-	def __init__ (self, containers, screen, x, imageFile='explosion.jpg'):
+	def __init__ (self, containers, screen, x, imageFile='explosion.png'):
 		self._containers = containers
 		self._screen = screen
 		self._particles = []
@@ -47,7 +47,7 @@ class Explosion:
 
 class _ExplosionParticle (Sprite):
 
-	def __init__ (self, loc, containers, screen, alpha=1., imageFile='explosion.jpg'):
+	def __init__ (self, loc, containers, screen, alpha=1., imageFile='explosion.png'):
 		v0 = numpy.array([random.uniform(-1,1), random.uniform(-1,1)])
 		v1 = v0 * particleSpeed
 		x0 = numpy.array([random.uniform(-30,30), random.uniform(-30,30)])
@@ -55,7 +55,7 @@ class _ExplosionParticle (Sprite):
 		Sprite.__init__(self, containers, screen, imageFile=imageFile, size=(15,15), x=loc, v=v1)
 		self._a = numpy.array([0.,0.2])
 		self.alpha = alpha
-		self._surface.set_colorkey((255,255,255))
+		# self._surface.set_colorkey((255,255,255))
 		self.kill()	# particles don't get to be in any group
 
 	def move (self):

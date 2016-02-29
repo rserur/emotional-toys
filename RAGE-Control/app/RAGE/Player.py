@@ -14,6 +14,7 @@ maxBullets = 5
 black = (0,0,0)
 red = (255,0,0)
 white = (255,255,255,255)
+yellow = (254, 250, 15)
 green = (0,255,0)
 blue = (0,0,255)
 maxCountdownTime = 5
@@ -31,7 +32,7 @@ class Player (Sprite):
 		self.hxm = hxm
 		self.fontSmall = pygame.font.SysFont('Helvetica', 12)
 		self.fontLarge = pygame.font.SysFont('Helvetica', 38, bold=True)
-		self.hrTextLabel = self.fontSmall.render('HR',True,black)
+		self.hrTextLabel = self.fontSmall.render('HR',True,white)
 		self.countdownMode = False
 		self.countdownOver = False
 		self.countdownClockOutline = pygame.Surface((7,52))
@@ -70,7 +71,7 @@ class Player (Sprite):
 		Sprite.draw(self)
 		hrTextLabelPos = self._x + numpy.array([60.,0.])
 		hrTextPos = self._x + numpy.array([60.,14.])
-		self.hrText = self.fontLarge.render(("%.0f"%round(self.hxm.HR,0)),True,black)
+		self.hrText = self.fontLarge.render(("%.0f"%round(self.hxm.HR,0)),True,white)
 		self._screen.blit(self.hrTextLabel, (hrTextPos[0], hrTextLabelPos[1]))
 		self._screen.blit(self.hrText, (hrTextPos[0], hrTextPos[1]))
 		for bullet in self.bullets:
@@ -131,6 +132,6 @@ class Player (Sprite):
 		elif self.hxm.color == 'Green':
 			self.color = green
 		else:
-			self.color = white
+			self.color = yellow
 		self.colorSurface.fill(self.color)
 		self._screen.blit(self.colorSurface, (self._x[0], self._x[1]+sizeY))

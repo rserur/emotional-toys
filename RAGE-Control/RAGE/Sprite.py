@@ -35,6 +35,7 @@ class Sprite (pygame.sprite.Sprite):
 		self._screen = screen
 		boundX, boundY = screen.get_size()
 		self._surface = pygame.transform.smoothscale(pygame.image.load(os.path.join(_mainDir, imageDir, imageFile)), size)
+		self._surface.convert_alpha()
 		sizeX, sizeY = self._surface.get_size()
 		self._bounds = numpy.array([boundX-sizeX, boundY-sizeY])
 		self._a = a
@@ -57,10 +58,10 @@ class Sprite (pygame.sprite.Sprite):
 	
 	def draw (self):
 		#rotate the surface for x-velocity
-		s = pygame.transform.rotate(self._surface, -((self._v / _maxV)[x] * _maxRot))
+		s = pygame.transform.rotozoom(self._surface, -((self._v / _maxV)[x] * _maxRot), 1)
 		
 		#rotate the surface for wobble
-		s = pygame.transform.rotate(s, self._wobbleAngle)
+		s = pygame.transform.rotozoom(s, self._wobbleAngle, 1)
 		
 		self._screen.blit(s, (self._x[0], self._x[1]))
 		

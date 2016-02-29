@@ -36,7 +36,7 @@ class Sprite (pygame.sprite.Sprite):
 		image_loc = os.path.join(_mainDir, imageDir, imageFile)
 		# print "current dir: " + os.path.split(os.path.abspath(__file__))[0]
 		# print "bout to open " + image_loc
-		self._surface = pygame.transform.smoothscale(pygame.image.load(image_loc), size)
+		self._surface = pygame.transform.smoothscale(pygame.image.load(image_loc).convert_alpha(), size)
 		sizeX, sizeY = self._surface.get_size()
 		self._bounds = numpy.array([boundX-sizeX, boundY-sizeY])
 		self._a = a

@@ -8,6 +8,7 @@ DATA_FILES= [('', ['RAGE/art']),
 
 setup(
 	app = ['game0.py'],
+  name = 'CALMS Game',
 	options = {'py2app': OPTIONS},
 	data_files = DATA_FILES,
 	)
