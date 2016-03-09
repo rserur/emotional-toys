@@ -1,4 +1,4 @@
-import pygame, Sprite, numpy, random, os
+import pygame, Sprite, numpy, random, os, time, datetime
 
 maxParticles = 150
 particleSpeed = 15
@@ -14,6 +14,11 @@ _SoundImage = 'art/sound.png'
 _MuteImage = 'art/sound_mute.png'
 _SoundSize = (100,100)
 _MuteSize = (100,100)
+t = datetime.datetime.fromtimestamp(time.time())
+d = t.strftime('%Y-%m-%d')
+_logDir = os.path.join(os.path.expanduser('~'),'Documents','CALMS-gameplay-logs/{0}/'.format(d))
+if not os.path.exists(_logDir):
+	os.makedirs(_logDir)
 
 class IntroScreen:
 

@@ -70,5 +70,5 @@ target/
 
 *.xcodeproj
 
-/Log/*
-RAGE/Log/*
+**/Log/**
+**/Log/***
