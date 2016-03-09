@@ -10,7 +10,9 @@ else:
 	_mainDir = os.path.split(os.path.abspath(__file__))[0]
 _soundDir = 'Sounds'
 _shotFileName = 'shot2.wav'
+_cometFileName = 'comet.wav'
 _explosionFileName = 'explosion.wav'
+_successFileName = 'success1.wav'
 _entryFileNames = ['entry1.wav','entry2.wav','entry3.wav','entry4.wav']
 
 lastStart = datetime.now() + timedelta(seconds=-3)
@@ -21,13 +23,21 @@ class Sounds:
 		pygame.mixer.init()
 		pygame.mixer.set_num_channels(32)
 		self.fireSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _shotFileName))
+		self.cometSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _cometFileName))
 		self.explosionSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _explosionFileName))
+		self.successSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _successFileName))
 		self.entrySounds = []
 		for file in _entryFileNames:
 			self.entrySounds.append(pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, file)))
 
 	def Fire (self):
 		self.fireSound.play()
+
+	def CometStart (self):
+		self.cometSound.play()
+
+	def SuccessStart (self):
+		self.successSound.play()
 
 	def VillianEntry (self):
 		#print lastStart, datetime.now() - self.lastStart

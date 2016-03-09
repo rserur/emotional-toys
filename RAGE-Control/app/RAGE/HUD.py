@@ -4,48 +4,59 @@ import pygame, numpy, sys, os, random, time, math
 
 white = (255,255,255,255)
 black = (0,0,0)
+teal = (0,180,214)
 if 'RESOURCEPATH' in os.environ:
 	_mainDir = os.environ['RESOURCEPATH']
 else:
 	_mainDir = os.path.split(os.path.abspath(__file__))[0]
-_defaultFont = os.path.join(_mainDir, 'fonts', 'fugaz.ttf')
+_defaultFont = os.path.join(_mainDir, 'fonts', 'sourcecodepro.ttf')
+_headerFont = os.path.join(_mainDir, 'fonts', 'fugaz.ttf')
 
 class HUD:
 
 	def __init__ (self, screen):
 		self._screen = screen
-		self._header = pygame.font.Font(_defaultFont, 20)
+		self._header = pygame.font.Font(_headerFont, 20)
 		self._details = pygame.font.Font(_defaultFont, 52)
-		self._BackFont = pygame.font.Font(_defaultFont, 32)
+		self._flashDetails = pygame.font.Font(_defaultFont, 25)
+		self._BackFont = pygame.font.Font(_headerFont, 32)
 		self._details.set_bold(True) 
-		self._scoreHeaderPos = (5, 0)
+		self._scoreHeaderPos = (5, 5)
 		self._scorePos = (5, 20)
+		self._flashPos = (200, 5)
 		self._hrHeaderPos = (0, 100)
 		self._hrPos = (0, 120)
 		self._headerTextColor = white
-		self._BackButtonPos = (680, 0)
+		self._flashTextColor = teal
+		self._BackButtonPos = (680, 5)
 		self._BackButton = self._BackFont.render('Back to Menu', True, self._headerTextColor)
 		self._scoreHeader = self._header.render('Score:',True,self._headerTextColor)
 		self._hrHeader = self._header.render('Heart Rate:',True,self._headerTextColor)
+		self.flash = ''
 		self.score = '0'
 		self.hr = '0'
 		self.hoverBackButton = False
 		self._scoreText = self._details.render(self.score,True,self._headerTextColor)
 		self._hrText = self._details.render(self.hr,True,self._headerTextColor)
+		self._flashText = self._flashDetails.render(self.flash,True,self._flashTextColor)
 		self.clock = Clock(screen)
 	
-	def setMessages(self, score=None, hr=None):
+	def setMessages(self, score=None, hr=None, flash=None,):
 		if (score is not None):
 			self.score = score
 			self._scoreText = self._details.render(self.score,True,self._headerTextColor)
 		if (hr is not None):
 			self.hr = hr
 			self._hrText = self._details.render(self.hr,True,self._headerTextColor)
+		if (flash is not None):
+			self.flash = flash
+			self._flashText = self._flashDetails.render(self.flash,True,self._flashTextColor)
 	
 	def draw(self):
 		self._screen.blit(self._scoreHeader, self._scoreHeaderPos)
 		self._screen.blit(self._scoreText, self._scorePos)
 		self._screen.blit(self._BackButton, self._BackButtonPos)
+		self._screen.blit(self._flashText, self._flashPos)
 		self.clock.draw()
 		#self._screen.blit(self._hrHeader, self._hrHeaderPos)
 		#self._screen.blit(self._hrText, self._hrPos)

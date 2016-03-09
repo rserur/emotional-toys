@@ -36,7 +36,7 @@ class Sprite (pygame.sprite.Sprite):
 		image_loc = os.path.join(_mainDir, imageDir, imageFile)
 		# print "current dir: " + os.path.split(os.path.abspath(__file__))[0]
 		# print "bout to open " + image_loc
-		self._surface = pygame.transform.smoothscale(pygame.image.load(image_loc).convert_alpha(), size)
+		self._surface = pygame.transform.smoothscale(pygame.image.load(image_loc), size)
 		sizeX, sizeY = self._surface.get_size()
 		self._bounds = numpy.array([boundX-sizeX, boundY-sizeY])
 		self._a = a
@@ -59,10 +59,10 @@ class Sprite (pygame.sprite.Sprite):
 	
 	def draw (self):
 		#rotate the surface for x-velocity
-		s = pygame.transform.rotate(self._surface, -((self._v / _maxV)[x] * _maxRot))
+		s = pygame.transform.rotozoom(self._surface, -((self._v / _maxV)[x] * _maxRot), 1)
 		
 		#rotate the surface for wobble
-		s = pygame.transform.rotate(s, self._wobbleAngle)
+		s = pygame.transform.rotozoom(s, self._wobbleAngle, 1)
 		
 		self._screen.blit(s, (self._x[0], self._x[1]))
 		

@@ -27,7 +27,8 @@ class Bosses:
 	def newBoss (self):
 		if (len(self.bossList) < self.maxBosses):
 			self.bossList.append(_Boss(self._containers, self._screen, uniform(self.minBossSpeed, self.maxBossSpeed)))
-		#Sounds().BossEntry()
+		if (self.sound_on):
+			Sounds().CometStart()
 
 	def move (self):
 		for boss in self.bossList:
@@ -54,6 +55,7 @@ class Bosses:
 		boss.kill()
 		if (self.sound_on):
 			Sounds().Explode()
+			Sounds().SuccessStart()
 		self.explosionList.append(Explosion.Explosion(self._containers, self._screen, numpy.array([centerX, centerY])))
 
 class _Boss (Sprite):

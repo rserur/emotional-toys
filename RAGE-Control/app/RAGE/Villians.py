@@ -60,7 +60,7 @@ class Villians:
 class _Villian (Sprite):
 
 	def __init__ (self, containers, screen, speed):
-		Sprite.__init__(self, containers, screen, imageFile='meteor.png', size=(50,50), wobble=0.)
+		Sprite.__init__(self, containers, screen, imageFile='meteor.png', size=(18,52), wobble=0.)
 		# self._surface.set_colorkey((255,255,255))
 		self._x = numpy.array([uniform(0., self._bounds[0]), 0.])
 		launchAngle = gauss(0, pi/4)

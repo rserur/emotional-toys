@@ -6,7 +6,10 @@ from math import pi
 from HXMReceiver import *
 from Sounds import *
 
-mainDir = os.path.split(os.path.abspath(__file__))[0]
+if 'RESOURCEPATH' in os.environ:
+	_mainDir = os.environ['RESOURCEPATH']
+else:
+	_mainDir = os.path.split(os.path.abspath(__file__))[0]
 sizeX = 50
 sizeY = 50
 difficulty = -1
@@ -18,6 +21,8 @@ yellow = (254, 250, 15)
 green = (0,255,0)
 blue = (0,0,255)
 maxCountdownTime = 5
+_defaultFont = os.path.join(_mainDir, 'fonts', 'sourcecodepro.ttf')
+_headerFont = os.path.join(_mainDir, 'fonts', 'fugaz.ttf')
 
 class Player (Sprite):
 	
@@ -30,8 +35,8 @@ class Player (Sprite):
 		self.bullets = []
 		self.score = 0
 		self.hxm = hxm
-		self.fontSmall = pygame.font.SysFont('Helvetica', 12)
-		self.fontLarge = pygame.font.SysFont('Helvetica', 38, bold=True)
+		self.fontSmall = pygame.font.SysFont(_defaultFont, 18)
+		self.fontLarge = pygame.font.SysFont(_defaultFont, 40, bold=True)
 		self.hrTextLabel = self.fontSmall.render('HR',True,white)
 		self.countdownMode = False
 		self.countdownOver = False

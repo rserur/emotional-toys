@@ -173,6 +173,7 @@ def detectBBCollisions(bullets1, bullets2, bosses):
 					bullet.kill()
 					#else:
 					#	impact_bullets[0] = [True, bullet]
+					print "p1hit detected"
 					break
 			except:
 				pass
@@ -187,6 +188,7 @@ def detectBBCollisions(bullets1, bullets2, bosses):
 					bullet.kill()
 					#else:
 					#	impact_bullets[1] = [True, bullet]
+					print "p2hit detected"
 					break
 			except:
 				pass
@@ -198,6 +200,7 @@ def detectBBCollisions(bullets1, bullets2, bosses):
 			# if (impact_bullets[1][0]):
 			# 	bullets1.remove(impact_bullets[1][1])
 			# 	impact_bullets[1][1].kill()
+			print "p1 and p2 hit detected"
 			return True
 
 def detectBFCollisions(bullets, friends):
@@ -433,12 +436,14 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 		for player in players.players:
 			if (detectBVCollisions(player.bullets, villians)):
 				players[0].changeScore(100)
+				hud.setMessages(flash=' ')
 				#hud.setMessages(score=str(player.score))
 			deadFriends = detectBFCollisions(player.bullets, friends)
 			detectPVBCollisions(player, villians, bosses)
 		if(len(players.players) == 2):
 			if(detectBBCollisions(players[0].bullets, players[1].bullets, bosses)) :
 				players[0].changeScore(500)
+				hud.setMessages(flash='METEOR DEFLECTED! +500')
 		deadFriends += detectFVCollisions(friends, villians)
 		deadFriends += detectFBCollisions(friends, bosses)
 		players[0].changeScore(deadFriends * -100)
