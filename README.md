@@ -23,6 +23,7 @@ To build a redistributable version of the application:
 ```
 $ python setup.py py2app --argv-emulation --graph
 ```
+py2app will build a standalone Mac OS X application compatible with the version of Mac OS you are currently running in the `\dist` directory.
 
 ### Contributors
 - Jason Khan (2013-)
