@@ -444,8 +444,8 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 			if(detectBBCollisions(players[0].bullets, players[1].bullets, bosses)) :
 				players[0].changeScore(500)
 				hud.setMessages(flash='METEOR DEFLECTED! +500')
-		deadFriends += detectFVCollisions(friends, villians)
-		deadFriends += detectFBCollisions(friends, bosses)
+		# deadFriends += detectFVCollisions(friends, villians)
+		# deadFriends += detectFBCollisions(friends, bosses)
 		players[0].changeScore(deadFriends * -100)
 		hud.setMessages(score=str(players[0].score))
 
