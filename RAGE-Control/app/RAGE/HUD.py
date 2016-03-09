@@ -5,6 +5,7 @@ import pygame, numpy, sys, os, random, time, math
 white = (255,255,255,255)
 black = (0,0,0)
 teal = (0,180,214)
+red = (254, 65, 3)
 if 'RESOURCEPATH' in os.environ:
 	_mainDir = os.environ['RESOURCEPATH']
 else:
@@ -27,7 +28,8 @@ class HUD:
 		self._hrHeaderPos = (0, 100)
 		self._hrPos = (0, 120)
 		self._headerTextColor = white
-		self._flashTextColor = teal
+		self._goodTextColor = teal
+		self._badTextColor = red
 		self._BackButtonPos = (680, 5)
 		self._BackButton = self._BackFont.render('Back to Menu', True, self._headerTextColor)
 		self._scoreHeader = self._header.render('Score:',True,self._headerTextColor)
@@ -38,10 +40,10 @@ class HUD:
 		self.hoverBackButton = False
 		self._scoreText = self._details.render(self.score,True,self._headerTextColor)
 		self._hrText = self._details.render(self.hr,True,self._headerTextColor)
-		self._flashText = self._flashDetails.render(self.flash,True,self._flashTextColor)
+		self._flashText = self._flashDetails.render(self.flash,True,self._goodTextColor)
 		self.clock = Clock(screen)
 	
-	def setMessages(self, score=None, hr=None, flash=None,):
+	def setMessages(self, score=None, hr=None, flash=None, flashType=None):
 		if (score is not None):
 			self.score = score
 			self._scoreText = self._details.render(self.score,True,self._headerTextColor)
@@ -50,8 +52,12 @@ class HUD:
 			self._hrText = self._details.render(self.hr,True,self._headerTextColor)
 		if (flash is not None):
 			self.flash = flash
-			self._flashText = self._flashDetails.render(self.flash,True,self._flashTextColor)
-	
+			if (flashType is 'good'):
+				self._flashText = self._flashDetails.render(self.flash,True,self._goodTextColor)
+			elif (flashType is 'bad'):
+				self._flashText = self._flashDetails.render(self.flash,True,self._badTextColor)
+			self.flash = ''
+			self._flashText = self._flashDetails.render(self.flash,True,self._badTextColor)
 	def draw(self):
 		self._screen.blit(self._scoreHeader, self._scoreHeaderPos)
 		self._screen.blit(self._scoreText, self._scorePos)

@@ -66,7 +66,7 @@ class _Friend (Sprite):
 						containers, 
 						screen, 
 						imageFile='friend.png', 
-						size=(70,35), 
+						size=(80,45), 
 						wobble=0., 
 						aether=numpy.array([0.,0.]), 
 						accelDecay=numpy.array([0.,0.]))
