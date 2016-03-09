@@ -13,6 +13,7 @@ _maxWobbleAngle = 45.
 _maxV = [20., 40.]
 x = 0
 y = 1
+white = (255,255,255)
 
 class Sprite (pygame.sprite.Sprite):
 	
@@ -37,6 +38,7 @@ class Sprite (pygame.sprite.Sprite):
 		# print "current dir: " + os.path.split(os.path.abspath(__file__))[0]
 		# print "bout to open " + image_loc
 		self._surface = pygame.transform.smoothscale(pygame.image.load(image_loc), size)
+		self._surface.set_colorkey(white)
 		sizeX, sizeY = self._surface.get_size()
 		self._bounds = numpy.array([boundX-sizeX, boundY-sizeY])
 		self._a = a
