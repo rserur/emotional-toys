@@ -222,11 +222,13 @@ def detectBFCollisions(bullets, friends):
 	return deadFriends
 
 def detectPVBCollisions(player, villians, bosses):
+	villianCrashes = 0
 	for villian in villians.villianList:
 		playerSize = array(player.getSize())
 		villianSize = array(villian.getSize())
 		if detectHit(player._x, playerSize, villian._x, villianSize):
 			villians.explode(villian)
+			villianCrashes += 1
 			if (villian._x[0] > player.getCenter()[0]):
 				player._v -= array([20,0])
 			else:
@@ -236,10 +238,13 @@ def detectPVBCollisions(player, villians, bosses):
 		bossSize = array(boss.getSize())
 		if detectHit(player._x, playerSize, boss._x, bossSize):
 			bosses.explode(boss)
+			villianCrashes += 1
 			if (boss._x[0] > boss.getCenter()[0]):
 				player._v -= array([30,0])
 			else:
 				player._v += array([30,0])
+	if villianCrashes > 0:
+		return True
 	
 def introLoop():
 	screen = pygame.display.get_surface()
@@ -439,7 +444,9 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 				players[0].changeScore(100)
 				#hud.setMessages(score=str(player.score))
 			deadFriends = detectBFCollisions(player.bullets, friends)
-			detectPVBCollisions(player, villians, bosses)
+			if detectPVBCollisions(player, villians, bosses):
+				players[0].changeScore(-100)
+				hud.setMessages(flash='PLAYER HIT! -100',flashType='bad')
 			if (deadFriends > 0):
 				hud.setMessages(flash='FRIEND HIT! -100',flashType='bad')
 		if(len(players.players) == 2):
