@@ -55,7 +55,6 @@ class Bosses:
 		boss.kill()
 		if (self.sound_on):
 			Sounds().Explode()
-			Sounds().SuccessStart()
 		self.explosionList.append(Explosion.Explosion(self._containers, self._screen, numpy.array([centerX, centerY])))
 
 class _Boss (Sprite):

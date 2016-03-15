@@ -2,7 +2,7 @@
 
 import pygame, sys, time, os, random
 from pygame.locals import *
-import RAGE.PlayerList, RAGE.Player, RAGE.Background, RAGE.Villians, RAGE.Bosses, RAGE.Friends, RAGE.HUD, RAGE.IntroScreen, RAGE.TutorialScreen
+import RAGE.PlayerList, RAGE.Player, RAGE.Background, RAGE.Villians, RAGE.Bosses, RAGE.Friends, RAGE.HUD, RAGE.IntroScreen, RAGE.TutorialScreen, RAGE.Sounds
 from numpy import array
 
 
@@ -402,6 +402,7 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 	villians = RAGE.Villians.Villians(all, screen, sound_on)
 	bosses = RAGE.Bosses.Bosses(all, screen, sound_on)
 	friends = RAGE.Friends.Friends(all, screen)
+	sounds = RAGE.Sounds.Sounds()
 	background = RAGE.Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,703), x=array([0.,0.]))
 	hud = RAGE.HUD.HUD(screen)
 	
@@ -447,6 +448,8 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 			if(detectBBCollisions(players[0].bullets, players[1].bullets, bosses)) :
 				players[0].changeScore(500)
 				hud.setMessages(flash='METEOR DEFLECTED! +500',flashType='good')
+				if (sound_on):
+					sounds.SuccessStart()
 		detectFVCollisions(friends, villians)
 		detectFBCollisions(friends, bosses)
 		players[0].changeScore(deadFriends * -100)
