@@ -16,7 +16,7 @@ class Bosses:
 		self.passedBosses = 0
 		self.maxBosses = 1
 		self.minBossSpeed = 1.5
-		self.maxBossSpeed = 3
+		self.maxBossSpeed = 2.25
 		self._containers = containers, self.bossGroup
 		self._screen = screen
 		self.sound_on = sound_on

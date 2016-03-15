@@ -47,7 +47,8 @@ class PlayerShot (Sprite):
 class PlayerShotParticle (Sprite):
 
 	def __init__ (self, loc, containers, screen, alpha=1.):
-		v0 = numpy.array([random.uniform(-0.25,0.25), 0])
+		v0 = numpy.array([random.uniform(-0.1,0.1), 0])
+		print v0
 		v1 = v0 * particleSpeed
 		Sprite.__init__(self, containers, screen, imageFile='star.png', size=(20,20), x=loc, v=v1)
 		self.alpha = alpha
