@@ -22,7 +22,7 @@ class Bosses:
 		self.sound_on = sound_on
 	
 	def inceaseDifficulty (self):
-		self.maxBossSpeed += 0.25
+		self.maxBossSpeed += 0.375
 	
 	def newBoss (self):
 		if (len(self.bossList) < self.maxBosses):
