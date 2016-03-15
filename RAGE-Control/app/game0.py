@@ -56,7 +56,6 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
 		# 		players.close()
 		# 		return True
 		elif event.type == KEYDOWN:
-			hud.setMessages(flash=' ')
 			keystate = pygame.key.get_pressed()
 			a0 = float(keystate[K_RIGHT]-keystate[K_LEFT])
 			a1 = float(keystate[K_d]-keystate[K_a])
@@ -438,7 +437,6 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 		for player in players.players:
 			if (detectBVCollisions(player.bullets, villians)):
 				players[0].changeScore(100)
-				
 				#hud.setMessages(score=str(player.score))
 			deadFriends = detectBFCollisions(player.bullets, friends)
 			detectPVBCollisions(player, villians, bosses)

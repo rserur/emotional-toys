@@ -35,6 +35,7 @@ class HUD:
 		self._scoreHeader = self._header.render('Score:',True,self._headerTextColor)
 		self._hrHeader = self._header.render('Heart Rate:',True,self._headerTextColor)
 		self.flash = ''
+		self.flashTime = 0
 		self.score = '0'
 		self.hr = '0'
 		self.hoverBackButton = False
@@ -52,17 +53,18 @@ class HUD:
 			self._hrText = self._details.render(self.hr,True,self._headerTextColor)
 		if (flash is not None):
 			self.flash = flash
+			self.flashTime = 5
 			if (flashType is 'good'):
 				self._flashText = self._flashDetails.render(self.flash,True,self._goodTextColor)
 			elif (flashType is 'bad'):
 				self._flashText = self._flashDetails.render(self.flash,True,self._badTextColor)
-			self.flash = ''
-			self._flashText = self._flashDetails.render(self.flash,True,self._badTextColor)
 	def draw(self):
 		self._screen.blit(self._scoreHeader, self._scoreHeaderPos)
 		self._screen.blit(self._scoreText, self._scorePos)
 		self._screen.blit(self._BackButton, self._BackButtonPos)
-		self._screen.blit(self._flashText, self._flashPos)
+		if (self.flashTime > 0):
+			self._screen.blit(self._flashText, self._flashPos)
+			self.flashTime -= 1
 		self.clock.draw()
 		#self._screen.blit(self._hrHeader, self._hrHeaderPos)
 		#self._screen.blit(self._hrText, self._hrPos)
