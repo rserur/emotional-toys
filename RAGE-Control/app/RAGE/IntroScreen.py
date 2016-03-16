@@ -1,5 +1,8 @@
 import pygame, Sprite, numpy, random, os, time, datetime
+from git import Repo
 
+REPO = Repo('../../')
+VERSION = str(REPO.tags[-1])
 maxParticles = 150
 particleSpeed = 15
 alphaDecay = 0.025
@@ -38,6 +41,7 @@ class IntroScreen:
 		self._TitleFont = pygame.font.Font(self._headerFont, 68)
 		print "setting positions"
 		self._TitlePos= (100,100)
+		self._VersionPos= (696,156)
 		self._OnePlayerPos = (100,300)
 		self._OnePlayerThresholdPos = (100,350)
 		self._OnePlayerThresholdValPos = (100, 375)
@@ -53,6 +57,7 @@ class IntroScreen:
 		self._UnselectedColor = white
 		self._SelectedColor = yellow
 		self._Title = self._TitleFont.render('CALMS: The Game',True,self._UnselectedColor)
+		self._Version = self._SmallerFont.render(VERSION,True,self._UnselectedColor)
 		self._OnePlayer = self._PlayerFont.render('One Player',True,self._UnselectedColor)
 		self._TwoPlayer = self._PlayerFont.render('Two Player',True,self._UnselectedColor)
 		self._OnePlayerThresholdTitle = self._SmallerFont.render('Player 1 Threshold',True,self._UnselectedColor)
@@ -83,6 +88,7 @@ class IntroScreen:
 		self.P2Up.draw(self._screen)
 		self.P2Down.draw(self._screen)
 		self._screen.blit(self._Title, self._TitlePos)
+		self._screen.blit(self._Version, self._VersionPos)
 		self._screen.blit(self._OnePlayer, self._OnePlayerPos)
 		self._screen.blit(self._TwoPlayer, self._TwoPlayerPos)
 		self._screen.blit(self._OnePlayerThresholdTitle, self._OnePlayerThresholdPos)

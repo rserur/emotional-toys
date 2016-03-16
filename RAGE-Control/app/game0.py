@@ -403,6 +403,7 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 	friends = RAGE.Friends.Friends(all, screen)
 	sounds = RAGE.Sounds.Sounds()
 	background = RAGE.Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,703), x=array([0.,0.]))
+	superzone = RAGE.Sprite.Sprite(all, screen, imageFile='super_zone.png', size=(300,174), x=array([380.,380.]))	
 	hud = RAGE.HUD.HUD(screen)
 	
 	#start time
@@ -465,6 +466,7 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 		villians.draw()
 		bosses.draw()
 		players.draw()
+		# superzone.draw()
 		pygame.display.flip()
 
 	players.close()
