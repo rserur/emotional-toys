@@ -1,7 +1,17 @@
 ## Change Log
 
-### v1.2.2 (2016/03/09 21:03)
-- [0978e37](https://github.com/rserur/emotional-toys/commit/0978e37b6bf1fd4d0428f11c5736aebca1840781) Added changelog. Retroactively versioned 1.0.0, demarcating codebase pre-CALMS fork. (@rserur)
+### v1.3.0 (2016/03/16 00:03)
+- [4e76500](https://github.com/rserur/emotional-toys/commit/4e76500674644f8303fd72dccae875ce98fc89c1) Removed boss-friend bounce effect. (@rserur)
+- [eb50cb3](https://github.com/rserur/emotional-toys/commit/eb50cb3d6abb94ee97a635e2ea76aedf8a8f4dfe) Tightened star bullet path boundaries. (@rserur)
+- [fea69d9](https://github.com/rserur/emotional-toys/commit/fea69d9092133d0274b7b67d06837e98a163ece5) Boss speed reduced by 1/4 rather than 1/2 based on participant trial. (@rserur)
+- [f65ab6f](https://github.com/rserur/emotional-toys/commit/f65ab6fdbf9910c04d0a8dc25cfa0a9c80d52adc) Subtracting 100 points when player crashes into an asteroid or boss. (@rserur)
+- [cefff38](https://github.com/rserur/emotional-toys/commit/cefff38ee446ad2f2709f6dbcf108e7a98d8ab1d) Good/bad flashes finished and made to be temporary. (@rserur)
+- [280e892](https://github.com/rserur/emotional-toys/commit/280e89279aab79b13fa436903f6086ce4507b6e7) Moved success sound for boss defeat. (@rserur)
+- [87bef67](https://github.com/rserur/emotional-toys/commit/87bef67b7c0ea503692b6a31808835de4851cf06) Made friends slightly larger. Restored friend death by meteor, but without any point substraction. (@rserur)
+- [684fc20](https://github.com/rserur/emotional-toys/commit/684fc20f3b29c882ec311fccb38680fc0b0a819a) Now only subtracting 100 if friend is hit by a player's bullet-- never when a friend is hit by villian or boss. (@rserur)
+- [74aa045](https://github.com/rserur/emotional-toys/commit/74aa0454db4fd4153b9272983e5d458216109bdc) Replaced sprite for regular meteors with a more recognizable graphic, half the size of the old original transparent bounding box for similar gameplay, but trimmed to visible pixels. Halved the boss speed. (@rserur)
+- [1db3f63](https://github.com/rserur/emotional-toys/commit/1db3f633eb017a3157923e686294d00f1bde463a) Smoothing graphic display, removing transparent bounding boxes, adding boss sound fx, new secondary font, and adding message flashes. (@rserur)
+- [80d41fe](https://github.com/rserur/emotional-toys/commit/80d41fe0e2af6f2068f11cf515eb2f927cfab1f5) Added changelog. Retroactively versioned 1.0.0, demarcating codebase pre-CALMS fork. (@rserur)
 
 ### v1.2.1 (2016/03/09 21:03)
 - [28d2d85](https://github.com/rserur/emotional-toys/commit/28d2d858ec8c1b27968af180fee5f3871b999b13) Removed Log directory from RAGE-Control. (@rserur)
