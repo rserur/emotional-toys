@@ -136,8 +136,6 @@ def detectFBCollisions(friends, bosses):
 						boss.deadFriends += 1
 						if(boss.deadFriends == boss.maxKills):
 							bosses.explode(boss)
-						else:
-							boss.bounce(friend._x)
 			except:
 				pass
 	return deadFriends
