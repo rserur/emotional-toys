@@ -10,7 +10,7 @@ if 'RESOURCEPATH' in os.environ:
 	_mainDir = os.environ['RESOURCEPATH']
 else:
 	_mainDir = os.path.split(os.path.abspath(__file__))[0]
-_defaultFont = os.path.join(_mainDir, 'fonts', 'sourcecodepro.ttf')
+_defaultFont = os.path.join(_mainDir, 'fonts', 'questrial.ttf')
 _headerFont = os.path.join(_mainDir, 'fonts', 'fugaz.ttf')
 
 class HUD:
@@ -23,7 +23,7 @@ class HUD:
 		self._BackFont = pygame.font.Font(_headerFont, 32)
 		self._details.set_bold(True) 
 		self._scoreHeaderPos = (5, 5)
-		self._scorePos = (5, 20)
+		self._scorePos = (5, 30)
 		self._flashPos = (200, 10)
 		self._hrHeaderPos = (0, 100)
 		self._hrPos = (0, 120)

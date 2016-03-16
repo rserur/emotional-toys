@@ -4,6 +4,7 @@ from Sprite import *
 from random import uniform, gauss
 from math import sin, cos, pi
 import Explosion
+from Sounds import *
 
 # for tomorrow -- keep working on Friends
 # friends should travel horizantally, and blow up on contact with an enemy
@@ -58,6 +59,7 @@ class Friends:
 		self.friendList.remove(friend)
 		friend.kill()
 		self.explosionList.append(Explosion.Explosion(self._containers, self._screen, numpy.array([centerX, centerY]), imageFile='star.png'))
+		Sounds().SmallExplode()
 
 class _Friend (Sprite):
 
