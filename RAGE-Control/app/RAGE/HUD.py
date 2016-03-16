@@ -24,7 +24,7 @@ class HUD:
 		self._details.set_bold(True) 
 		self._scoreHeaderPos = (5, 5)
 		self._scorePos = (5, 20)
-		self._flashPos = (200, 5)
+		self._flashPos = (200, 10)
 		self._hrHeaderPos = (0, 100)
 		self._hrPos = (0, 120)
 		self._headerTextColor = white
@@ -53,7 +53,7 @@ class HUD:
 			self._hrText = self._details.render(self.hr,True,self._headerTextColor)
 		if (flash is not None):
 			self.flash = flash
-			self.flashTime = 5
+			self.flashTime = 20
 			if (flashType is 'good'):
 				self._flashText = self._flashDetails.render(self.flash,True,self._goodTextColor)
 			elif (flashType is 'bad'):
