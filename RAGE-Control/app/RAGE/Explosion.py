@@ -61,5 +61,4 @@ class _ExplosionParticle (Sprite):
 	def move (self):
 		Sprite.move(self)
 		self._surface.set_alpha(255.*self.alpha)
-		#print self._surface.get_alpha(), self.alpha
 		self.alpha -= alphaDecay

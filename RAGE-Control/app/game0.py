@@ -171,7 +171,6 @@ def detectBBCollisions(bullets1, bullets2, bosses):
 					bullet.kill()
 					#else:
 					#	impact_bullets[0] = [True, bullet]
-					print "p1hit detected"
 					break
 			except:
 				pass
@@ -186,7 +185,6 @@ def detectBBCollisions(bullets1, bullets2, bosses):
 					bullet.kill()
 					#else:
 					#	impact_bullets[1] = [True, bullet]
-					print "p2hit detected"
 					break
 			except:
 				pass
@@ -198,7 +196,6 @@ def detectBBCollisions(bullets1, bullets2, bosses):
 			# if (impact_bullets[1][0]):
 			# 	bullets1.remove(impact_bullets[1][1])
 			# 	impact_bullets[1][1].kill()
-			print "p1 and p2 hit detected"
 			return True
 
 def detectBFCollisions(bullets, friends):
