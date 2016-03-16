@@ -1,5 +1,14 @@
 ## Change Log
 
+### v1.3.2 (2016/03/16 18:03)
+- [a58b8ff](https://github.com/rserur/emotional-toys/commit/a58b8ff837ff7768cb687a997a92e3f6f1af6709) Adding version # to intro screen and app build. (@rserur)
+- [ef57468](https://github.com/rserur/emotional-toys/commit/ef57468affe6562719850c361057575a8d38ff8b) Sound fx for friend hit. Better font. (@rserur)
+- [d0c4762](https://github.com/rserur/emotional-toys/commit/d0c4762b946281c2cd670914adcc118f9527e4d1) Lengthened flash message time. Using alternative explosion sprite for boss explosion. (Larger and fiery.) (@rserur)
+
+### v1.3.1 (2016/03/16 02:03)
+- [07da5d2](https://github.com/rserur/emotional-toys/commit/07da5d2c9602ac7fcbf8b8e6be7826d1984dadba) Removed print statements. (@rserur)
+- [9b680d1](https://github.com/rserur/emotional-toys/commit/9b680d1c5a77af51107590835d77566a0197e488) Updated changelog. (@rserur)
+
 ### v1.3.0 (2016/03/16 00:03)
 - [4e76500](https://github.com/rserur/emotional-toys/commit/4e76500674644f8303fd72dccae875ce98fc89c1) Removed boss-friend bounce effect. (@rserur)
 - [eb50cb3](https://github.com/rserur/emotional-toys/commit/eb50cb3d6abb94ee97a635e2ea76aedf8a8f4dfe) Tightened star bullet path boundaries. (@rserur)
