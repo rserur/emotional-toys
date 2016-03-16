@@ -29,7 +29,7 @@ class IntroScreen:
 		self.background = Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,703), x=numpy.array([0.,0.]))
 		self.titleParticles = Particles(all, screen, numpy.array([100.,100.]))
 		print "setting fonts"
-		self._defaultFont = os.path.join(_mainDir, 'fonts', 'sourcecodeprobd.ttf')#os.path.join(_mainDir, 'fonts', 'freesansbold.ttf')
+		self._defaultFont = os.path.join(_mainDir, 'fonts', 'questrial.ttf')#os.path.join(_mainDir, 'fonts', 'freesansbold.ttf')
 		self._headerFont = os.path.join(_mainDir, 'fonts', 'fugaz.ttf')#os.path.join(_mainDir, 'fonts', 'freesansbold.ttf')
 		self._PlayerFont = pygame.font.Font(self._headerFont, 30)#pygame.font.Font(os.path.join(_mainDir, 'fonts', 'Helvetica.dfont'), 30, bold=True)
 		self._TutorialFont = pygame.font.Font(self._headerFont, 42)#pygame.font.SysFont(os.path.join(_mainDir, 'fonts', 'Helvetica.dfont'), 42, bold=True)

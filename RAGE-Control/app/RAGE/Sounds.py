@@ -12,6 +12,7 @@ _soundDir = 'Sounds'
 _shotFileName = 'shot2.wav'
 _cometFileName = 'comet.wav'
 _explosionFileName = 'explosion.wav'
+_smallExplosionFileName = 'small_explosion.wav'
 _successFileName = 'success1.wav'
 _entryFileNames = ['entry1.wav','entry2.wav','entry3.wav','entry4.wav']
 
@@ -25,6 +26,7 @@ class Sounds:
 		self.fireSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _shotFileName))
 		self.cometSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _cometFileName))
 		self.explosionSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _explosionFileName))
+		self.smallExplosionSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _smallExplosionFileName))
 		self.successSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _successFileName))
 		self.entrySounds = []
 		for file in _entryFileNames:
@@ -48,4 +50,7 @@ class Sounds:
 
 	def Explode (self):
 		self.explosionSound.play()
+
+	def SmallExplode (self):
+		self.smallExplosionSound.play()
 		
