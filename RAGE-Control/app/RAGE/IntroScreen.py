@@ -1,8 +1,6 @@
 import pygame, Sprite, numpy, random, os, time, datetime
 from git import Repo
 
-REPO = Repo('../../')
-VERSION = str(REPO.tags[-1])
 maxParticles = 150
 particleSpeed = 15
 alphaDecay = 0.025
@@ -11,8 +9,14 @@ yellow = (254, 250, 15)
 white = (255,255,255)
 if 'RESOURCEPATH' in os.environ:
 	_mainDir = os.environ['RESOURCEPATH']
+	_versionFile = open('version.txt', 'r')
+	VERSION = _versionFile.read()
 else:
 	_mainDir = os.path.split(os.path.abspath(__file__))[0]
+	REPO = Repo('../../')
+	VERSION = str(REPO.tags[-1])
+	_versionFile = open('version.txt', 'w')
+	_versionFile.write(VERSION)
 _SoundImage = 'art/sound.png'
 _MuteImage = 'art/sound_mute.png'
 _SoundSize = (100,100)

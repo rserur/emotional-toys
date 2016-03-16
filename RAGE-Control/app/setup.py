@@ -5,7 +5,8 @@ OPTIONS = {'argv_emulation': True, 'iconfile': 'RAGE/art/game_icon.icns'}
 DATA_FILES= [('', ['RAGE/art']), 
 				('', ['RAGE/Log']), 
 				('',['fonts']),
-				('',['RAGE/Sounds']),]
+				('',['RAGE/Sounds']),
+        ('',['version.txt']),]
 REPO = Repo('../../')
 VERSION = str(REPO.tags[-1])
 
