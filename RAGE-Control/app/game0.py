@@ -2,7 +2,7 @@
 
 import pygame, sys, time, os, random
 from pygame.locals import *
-import RAGE.PlayerList, RAGE.Player, RAGE.Background, RAGE.Villians, RAGE.Bosses, RAGE.Friends, RAGE.HUD, RAGE.IntroScreen, RAGE.TutorialScreen, RAGE.Sounds
+import RAGE.PlayerList, RAGE.Player, RAGE.Background, RAGE.Villians, RAGE.Bosses, RAGE.Friends, RAGE.HUD, RAGE.IntroScreen, RAGE.TutorialScreen, RAGE.Sounds, RAGE.SuperZone
 from numpy import array
 
 
@@ -241,6 +241,13 @@ def detectPVBCollisions(player, villians, bosses):
 	if villianCrashes > 0:
 		return True
 	
+def detectSuperZone(player, superzone):	
+	superZoneSize = array(superzone.getSize())
+	playerSize = array(player.getSize())
+	if detectHit(player._x, playerSize, superzone._x, superZoneSize):
+		if (superzone._x[0] > player.getCenter()[0]):
+			return True
+
 def introLoop():
 	screen = pygame.display.get_surface()
 	background = RAGE.Background.Background(screen)
@@ -403,8 +410,9 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 	friends = RAGE.Friends.Friends(all, screen)
 	sounds = RAGE.Sounds.Sounds()
 	background = RAGE.Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,703), x=array([0.,0.]))
-	superzone = RAGE.Sprite.Sprite(all, screen, imageFile='super_zone.png', size=(300,174), x=array([380.,380.]))	
 	hud = RAGE.HUD.HUD(screen)
+	superzone = RAGE.SuperZone.SuperZone(all, screen)
+	superZoners = 0
 	
 	#start time
 	startTime = time.clock()
@@ -445,6 +453,8 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 				hud.setMessages(flash='PLAYER HIT! -100',flashType='bad')
 			if (deadFriends > 0):
 				hud.setMessages(flash='FRIEND HIT! -100',flashType='bad')
+			if (detectSuperZone(player, superzone)):
+				superZoners += 1
 		if(len(players.players) == 2):
 			if(detectBBCollisions(players[0].bullets, players[1].bullets, bosses)) :
 				players[0].changeScore(500)
@@ -456,17 +466,24 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 		players[0].changeScore(deadFriends * -100)
 		hud.setMessages(score=str(players[0].score))
 
+		if (players[0].score > -1):
+			superzone.setFlashTime(flashTime=100)
+			if (superZoners == 2):
+				superZoners = 0
+				print 'both in zone'
+
 		players.move()
 		friends.move()
 		villians.move()
 		bosses.move()
 		background.draw()
 		hud.draw()
+		superzone.draw()
 		friends.draw()
 		villians.draw()
 		bosses.draw()
 		players.draw()
-		# superzone.draw()
+		superzone.draw()
 		pygame.display.flip()
 
 	players.close()
