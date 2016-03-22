@@ -7,8 +7,8 @@ from numpy import array
 
 
 WIDTH =  900 #1080 # 720  # 1024 screen size effects gameplay dramatically-- too big = too easy; not enough enemy density
-HEIGHT =  550 #607 # 405 # 800
-SCREENRECT     = Rect(0, 0, WIDTH, HEIGHT)
+HEIGHT =  600 #607 # 405 # 800
+SCREENRECT     = Rect(0, 0, WIDTH, 550)
 
 GAME_LENGTH = 180 # seconds
 USE_DIFFICULTY = 1 # set to 0 to not reverse directions at 1 min remain

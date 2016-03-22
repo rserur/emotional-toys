@@ -29,7 +29,7 @@ class Player (Sprite):
 	
 	def __init__ (self, containers, screen, hxm=None, threshold=70, playerList=None, playerNum = 0, sound_on=True):
 		Sprite.__init__(self, containers, screen, imageFile='goodguy2.png', size=(sizeX,sizeY), wobble=0.)
-		self._x = numpy.array([0., float(self._bounds[1])-10])
+		self._x = numpy.array([0., float(self._bounds[1])-60])
 		self._v = numpy.array([0.,0.])
 		self._bulletOffset = numpy.array([float(sizeX)/2., 0.])
 		self.playerNum = playerNum
@@ -89,11 +89,11 @@ class Player (Sprite):
 		self.drawColor()
 
 	def drawHr (self, index):
-		hrTextLabelPos = numpy.array([60.,5.])
+		hrTextLabelPos = numpy.array([60.,560.])
 		if index == 0:
-			hrTextPos = numpy.array([180.,25.])
+			hrTextPos = numpy.array([200.,570.])
 		else:
-			hrTextPos = numpy.array([280.,25.])
+			hrTextPos = numpy.array([670.,570.])
 		self.hrText = self.fontLarge.render(("%.0f"%round(self.hxm.HR,0)),True,white)
 		self._screen.blit(self.hrTextLabel, (hrTextPos[0], hrTextLabelPos[1]))
 		self._screen.blit(self.hrText, (hrTextPos[0], hrTextPos[1]))
@@ -160,6 +160,6 @@ class Player (Sprite):
 			self.color = yellow
 		self.colorSurface.fill(self.color)
 		if (hrTextPosX is not None):
-			self._screen.blit(self.colorSurface, (hrTextPosX, 55.))
+			self._screen.blit(self.colorSurface, (hrTextPosX, 590.))
 		else:
 			self._screen.blit(self.colorSurface, (self._x[0], self._x[1]+sizeY))

@@ -13,7 +13,6 @@ else:
 	_mainDir = os.path.split(os.path.abspath(__file__))[0]
 _defaultFont = os.path.join(_mainDir, 'fonts', 'questrial.ttf')
 _headerFont = os.path.join(_mainDir, 'fonts', 'fugaz.ttf')
-
 class HUD:
 
 	def __init__ (self, containers, screen):
@@ -44,8 +43,8 @@ class HUD:
 		self._hrText = self._details.render(self.hr,True,self._headerTextColor)
 		self._flashText = self._flashDetails.render(self.flash,True,self._goodTextColor)
 		self.clock = Clock( screen)
-		self.heartMeterOne = HeartMeter(containers, screen, 'P1', numpy.array([200., 5.]))
-		self.heartMeterTwo = HeartMeter(containers, screen, 'P2', numpy.array([400., 5.]))
+		self.heartMeterOne = HeartMeter(containers, screen, 'P1', numpy.array([5., 555.]))
+		self.heartMeterTwo = HeartMeter(containers, screen, 'P2', numpy.array([710., 555.]))
 
 	def updateHeartMeter(self, player):
 		if player.playerNum == 1:
