@@ -19,12 +19,12 @@ class HUD:
 		self._screen = screen
 		self._header = pygame.font.Font(_headerFont, 20)
 		self._details = pygame.font.Font(_defaultFont, 52)
-		self._flashDetails = pygame.font.Font(_defaultFont, 25)
+		self._flashDetails = pygame.font.Font(_headerFont, 25)
 		self._BackFont = pygame.font.Font(_headerFont, 32)
 		self._details.set_bold(True) 
 		self._scoreHeaderPos = (5, 5)
 		self._scorePos = (5, 30)
-		self._flashPos = (350, 10)
+		self._flashPos = (150, 5)
 		self._hrHeaderPos = (0, 100)
 		self._hrPos = (0, 120)
 		self._headerTextColor = white
@@ -47,7 +47,7 @@ class HUD:
 		self.heartMeterTwo = HeartMeter(containers, screen, 'P2', numpy.array([710., 555.]))
 
 	def updateHeartMeter(self, player):
-		if player.playerNum == 1:
+		if player.playerNum == 0:
 			self.heartMeterOne.blockCount = player.thresholdScore/100
 		else:
 			self.heartMeterTwo.blockCount = player.thresholdScore/100
@@ -66,7 +66,7 @@ class HUD:
 				self._flashText = self._flashDetails.render(self.flash,True,self._goodTextColor)
 			elif (flashType is 'bad'):
 				self._flashText = self._flashDetails.render(self.flash,True,self._badTextColor)
-	def draw(self):
+	def draw(self,players_len):
 		self._screen.blit(self._scoreHeader, self._scoreHeaderPos)
 		self._screen.blit(self._scoreText, self._scorePos)
 		self._screen.blit(self._BackButton, self._BackButtonPos)
@@ -75,7 +75,8 @@ class HUD:
 			self.flashTime -= 1
 		self.clock.draw()
 		self.heartMeterOne.draw()
-		self.heartMeterTwo.draw()
+		if players_len >= 2:
+			self.heartMeterTwo.draw()
 		#self._screen.blit(self._hrHeader, self._hrHeaderPos)
 		#self._screen.blit(self._hrText, self._hrPos)
 
@@ -92,7 +93,7 @@ class HeartMeter (Sprite):
 		self._hrDetails = pygame.font.Font(_headerFont, 17)
 		self._playerTextPos = (x[0] + 20, x[1] + 10)
 		self._player = player
-		self._blockCount = blockCount
+		self.blockCount = blockCount
 		self._x = x
 		self._player = self._hrDetails.render(self._player, True, white)
 

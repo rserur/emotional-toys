@@ -14,6 +14,8 @@ _cometFileName = 'comet.wav'
 _explosionFileName = 'explosion.wav'
 _smallExplosionFileName = 'small_explosion.wav'
 _successFileName = 'success1.wav'
+_superPlayerFileName = 'superplayer.wav'
+_powerDownFileName = 'power-down.wav'
 _entryFileNames = ['entry1.wav','entry2.wav','entry3.wav','entry4.wav']
 
 lastStart = datetime.now() + timedelta(seconds=-3)
@@ -28,6 +30,8 @@ class Sounds:
 		self.explosionSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _explosionFileName))
 		self.smallExplosionSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _smallExplosionFileName))
 		self.successSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _successFileName))
+		self.superPlayerSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _superPlayerFileName))
+		self.powerDownSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _powerDownFileName))
 		self.entrySounds = []
 		for file in _entryFileNames:
 			self.entrySounds.append(pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, file)))
@@ -40,6 +44,13 @@ class Sounds:
 
 	def SuccessStart (self):
 		self.successSound.play()
+
+	def SuperPlayer (self):
+		self.superPlayerSound.play()
+
+	# def PowerDown (self):
+		# if self.powerDownSound.get_num_channels() < 1:
+		# 	self.powerDownSound.play()
 
 	def VillianEntry (self):
 		#print lastStart, datetime.now() - self.lastStart

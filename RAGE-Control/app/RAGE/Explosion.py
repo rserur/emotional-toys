@@ -21,6 +21,8 @@ class Explosion:
 		self._explosionType = explosionType
 		if (self._explosionType is 'boss'):
 			self._imageFile = 'explosion2.png'
+		elif (self._explosionType is 'superplayer'):
+			self._imageFile = 'spark.png'
 		else:
 			self._imageFile = imageFile
 	
@@ -33,6 +35,9 @@ class Explosion:
 		return time.time() - self.timeStart
 	
 	def expired (self):
+		explosionLifetime = .5
+		if self._explosionType is 'superplayer':
+			explosionLifetime = 2
 		if (self.timeElapsed() >= explosionLifetime):
 			return True
 		return False
@@ -59,6 +64,9 @@ class _ExplosionParticle (Sprite):
 		if (explosionType is 'boss'):
 			self._imageFile = 'explosion2.png'
 			Sprite.__init__(self, containers, screen, imageFile=imageFile, size=(50,50), x=loc, v=v1)
+		elif (explosionType is 'superplayer'):
+			self._imageFile = 'spark.png'
+			Sprite.__init__(self, containers, screen, imageFile=imageFile, size=(200,138), x=(loc[0]-100,loc[1]-100), v=(v1 * 2))
 		else:
 			self._imageFile = imageFile
 			Sprite.__init__(self, containers, screen, imageFile=imageFile, size=(15,15), x=loc, v=v1)

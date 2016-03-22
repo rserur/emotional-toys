@@ -4,6 +4,7 @@ from Sprite import *
 from PlayerGun import *
 from math import pi
 from HXMReceiver import *
+import Explosion
 from Sounds import *
 
 if 'RESOURCEPATH' in os.environ:
@@ -30,6 +31,7 @@ class SuperPlayer (Sprite):
 		self._x = numpy.array([x + 60., 460.])
 		self._v = numpy.array([0.,0.])
 		self._bulletOffset = numpy.array([float(sizeX)/2., 0.])
+		self.explosionList = []
 		self.bulletGroup = pygame.sprite.Group()
 		self.bullets = []
 		self.score = 0
@@ -55,6 +57,13 @@ class SuperPlayer (Sprite):
 		Sprite.draw(self)
 		for bullet in self.bullets:
 			bullet.draw()
+		for explosion in self.explosionList:
+			explosion.draw()
+
+	def entrance (self):
+		Sounds().SuperPlayer()
+		centerX, centerY = self.getCenter()
+		self.explosionList.append(Explosion.Explosion(self._containers, self._screen, numpy.array([centerX, centerY]), explosionType='superplayer'))
 	
 	def move (self):
 		Sprite.move(self)
@@ -64,6 +73,11 @@ class SuperPlayer (Sprite):
 				bullet.kill()
 			else:
 				bullet.move()
+		for explosion in self.explosionList:
+			if (explosion.expired()):
+				self.explosionList.remove(explosion)
+			else:
+				explosion.move()
 			
 	def changeScore(self, increment):
 		self.score += increment

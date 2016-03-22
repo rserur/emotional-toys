@@ -206,6 +206,25 @@ def detectBBCollisions(bullets1, bullets2, bosses):
 			# 	impact_bullets[1][1].kill()
 			return True
 
+def detectSBBCollisions(superbullets, bosses):
+	superhit = False
+
+	for boss in bosses.bossList:
+		for bullet in superbullets:
+			try:
+				bulletSize = array(bullet.getSize())
+				bossSize = array(boss.getSize())
+				if detectHit(bullet._x, bulletSize, boss._x, bossSize):
+					superhit = True
+					bullets1.remove(bullet)
+					bullet.kill()
+					break
+			except:
+				pass
+		if (superhit):
+			bosses.explode(boss)
+			return True
+
 def detectBFCollisions(bullets, friends):
 	deadFriends = 0
 	for bullet in bullets:
@@ -337,7 +356,7 @@ def tutorialLoop(sound_on = True):
 	all = pygame.sprite.RenderUpdates()
 	background = RAGE.Background.Background(screen)
 	tutorialScreen = RAGE.TutorialScreen.TutorialScreen(screen)
-	hud = RAGE.HUD.HUD(screen)
+	hud = RAGE.HUD.HUD(all, screen)
 	players = RAGE.PlayerList.PlayerList(all, screen, sound_on=sound_on)
 	villians = RAGE.Villians.Villians(all, screen, sound_on)
 	friends = RAGE.Friends.Friends(all, screen)
@@ -378,7 +397,7 @@ def tutorialLoop(sound_on = True):
 			hud.setMessages(score=str(players[0].score))
 		players.move()
 		background.draw()
-		hud.draw()
+		hud.draw(len(players.players))
 		tutorialScreen.draw()
 		if (tutorialScreen.step > 0):
 			villians.newVillian()
@@ -449,11 +468,6 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 				if hud.hoverBackButton:
 					players.close()
 					return True
-
-		if ((players[0].thresholdScore + players[1].thresholdScore) == 2000):
-			superzone._active = True
-		else:
-			superzone._active = False
 		
 		for player in players.players:
 			if (detectBVCollisions(player.bullets, villians)):
@@ -471,9 +485,14 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 					player.changeThresholdScore(1)
 					print str(players[0].thresholdScore)
 				elif (player.stressed is True):
-					player.wipeThresholdScore()
+					player.wipeThresholdScore()					
+					# sounds.PowerDown()
 
 		if(len(players.players) == 2):
+			if ((players[0].thresholdScore + players[1].thresholdScore) >= 2000):
+				superzone._active = True
+			else:
+				superzone._active = False
 			if(detectBBCollisions(players[0].bullets, players[1].bullets, bosses)) :
 				players[0].changeScore(500)
 				hud.setMessages(flash='METEOR DEFLECTED! +500',flashType='good')
@@ -485,18 +504,21 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 				if (superZoners == 2 and (not players.superPlayerActive)):
 					superZoners = 0
 					players.activateSuperPlayer(superzone._x[0])
-					print 'both in zone'
+					hud.setMessages(flash='SUPERPLAYER ACTIVATED! +500',flashType='good')
+					players[0].changeScore(500)
+					players[2].entrance()
 		detectFVCollisions(friends, villians)
 		detectFBCollisions(friends, bosses)
 		players[0].changeScore(deadFriends * -100)
 		hud.setMessages(score=str(players[0].score))
 
-
 		if players.superPlayerActive:
-			print 'superplayer activated'			
 			superzone._active = False
-		else:
-			print 'not a superplayer'
+			if (detectSBBCollisions(players[2].bullets, bosses)):
+				players[0].changeScore(500)
+				hud.setMessages(flash='METEOR DEFLECTED! +500',flashType='good')
+				if (sound_on):
+					sounds.SuccessStart()
 			
 		players.move()
 		friends.move()
@@ -508,7 +530,7 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 		bosses.draw()
 		players.draw()
 		superzone.draw()
-		hud.draw()
+		hud.draw(len(players.players))
 		pygame.display.flip()
 
 	players.close()

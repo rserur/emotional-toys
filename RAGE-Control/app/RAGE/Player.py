@@ -27,7 +27,7 @@ _headerFont = os.path.join(_mainDir, 'fonts', 'fugaz.ttf')
 
 class Player (Sprite):
 	
-	def __init__ (self, containers, screen, hxm=None, threshold=70, playerList=None, playerNum = 0, sound_on=True):
+	def __init__ (self, containers, screen, hxm=None, threshold=70, playerList=None, playerNum=0, sound_on=True):
 		Sprite.__init__(self, containers, screen, imageFile='goodguy2.png', size=(sizeX,sizeY), wobble=0.)
 		self._x = numpy.array([0., float(self._bounds[1])-60])
 		self._v = numpy.array([0.,0.])
@@ -93,7 +93,7 @@ class Player (Sprite):
 		if index == 0:
 			hrTextPos = numpy.array([200.,570.])
 		else:
-			hrTextPos = numpy.array([670.,570.])
+			hrTextPos = numpy.array([645.,570.])
 		self.hrText = self.fontLarge.render(("%.0f"%round(self.hxm.HR,0)),True,white)
 		self._screen.blit(self.hrTextLabel, (hrTextPos[0], hrTextLabelPos[1]))
 		self._screen.blit(self.hrText, (hrTextPos[0], hrTextPos[1]))

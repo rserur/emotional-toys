@@ -38,8 +38,8 @@ class PlayerList:
 			self.players[player].accel(a)
 	
 	def fire(self, player):
-		if (len(self.players) == player + 1):
-			self.players[player].fire()
+		if ((player == 2) and (len(self.players) == 3) or (player < 2)):
+			self.players[player].fire()	
 	
 	def move(self):
 		for player in self.players:
