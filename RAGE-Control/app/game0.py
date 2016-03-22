@@ -61,19 +61,26 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
 			a1 = float(keystate[K_d]-keystate[K_a])
 			if (keystate[K_SPACE] or keystate[K_UP]) and shooting:
 				players.fire(0)
+				players.fire(2)
 			if keystate[K_w] and shooting:
 				players.fire(1)
+				players.fire(2)
 			players.accel(0, [a0 * accel_modifier, 0.])
 			players.accel(1, [a1 * accel_modifier, 0.])
+			players.accel(2, [(a0 + a1) * accel_modifier, 0.])
 		elif (event.type == JOYBUTTONDOWN and shooting):
 			if (event.button == A_BUTTON) and (event.joy == 0):
 				players.fire(0)
+				players.fire(2)
 			if (event.button == B_BUTTON) and (event.joy == 0):
 				players.fire(0)
+				players.fire(2)
 			if (event.button == A_BUTTON) and (event.joy == 1):
 				players.fire(1)
+				players.fire(2)
 			if (event.button == B_BUTTON) and (event.joy == 1):
 				players.fire(1)
+				players.fire(2)
 		elif (event.type == JOYAXISMOTION):
 			a0 = float(0)
 			a1 = float(0)
@@ -83,6 +90,7 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
 				a1 = event.value
 			players.accel(0, [a0 * accel_modifier, 0.])
 			players.accel(1, [a1 * accel_modifier, 0.])
+			players.accel(2, [(a0 + a1) * accel_modifier, 0.])
 		return introInput(events)
 		#else: 
 		#	print event
@@ -368,7 +376,6 @@ def tutorialLoop(sound_on = True):
 			if(tutorialScreen.step > 3):
 				players[0].changeScore(deadFriends * -100)
 			hud.setMessages(score=str(players[0].score))
-
 		players.move()
 		background.draw()
 		hud.draw()
@@ -410,7 +417,7 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 	friends = RAGE.Friends.Friends(all, screen)
 	sounds = RAGE.Sounds.Sounds()
 	background = RAGE.Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,703), x=array([0.,0.]))
-	hud = RAGE.HUD.HUD(screen)
+	hud = RAGE.HUD.HUD(all, screen)
 	superzone = RAGE.SuperZone.SuperZone(all, screen)
 	superZoners = 0
 	
@@ -442,6 +449,11 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 				if hud.hoverBackButton:
 					players.close()
 					return True
+
+		if ((players[0].thresholdScore + players[1].thresholdScore) == 2000):
+			superzone._active = True
+		else:
+			superzone._active = False
 		
 		for player in players.players:
 			if (detectBVCollisions(player.bullets, villians)):
@@ -453,37 +465,50 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 				hud.setMessages(flash='PLAYER HIT! -100',flashType='bad')
 			if (deadFriends > 0):
 				hud.setMessages(flash='FRIEND HIT! -100',flashType='bad')
-			if (detectSuperZone(player, superzone)):
-				superZoners += 1
+			if player.isSuperPlayer is False:
+				hud.updateHeartMeter(player)
+				if (player.stressed is not True) and player.thresholdScore < 1000:
+					player.changeThresholdScore(1)
+					print str(players[0].thresholdScore)
+				elif (player.stressed is True):
+					player.wipeThresholdScore()
+
 		if(len(players.players) == 2):
 			if(detectBBCollisions(players[0].bullets, players[1].bullets, bosses)) :
 				players[0].changeScore(500)
 				hud.setMessages(flash='METEOR DEFLECTED! +500',flashType='good')
 				if (sound_on):
 					sounds.SuccessStart()
+			if superzone._active:
+				if (detectSuperZone(player, superzone)):
+						superZoners += 1
+				if (superZoners == 2 and (not players.superPlayerActive)):
+					superZoners = 0
+					players.activateSuperPlayer(superzone._x[0])
+					print 'both in zone'
 		detectFVCollisions(friends, villians)
 		detectFBCollisions(friends, bosses)
 		players[0].changeScore(deadFriends * -100)
 		hud.setMessages(score=str(players[0].score))
 
-		if (players[0].score > -1):
-			superzone.setFlashTime(flashTime=100)
-			if (superZoners == 2):
-				superZoners = 0
-				print 'both in zone'
 
+		if players.superPlayerActive:
+			print 'superplayer activated'			
+			superzone._active = False
+		else:
+			print 'not a superplayer'
+			
 		players.move()
 		friends.move()
 		villians.move()
 		bosses.move()
 		background.draw()
-		hud.draw()
-		superzone.draw()
 		friends.draw()
 		villians.draw()
 		bosses.draw()
 		players.draw()
 		superzone.draw()
+		hud.draw()
 		pygame.display.flip()
 
 	players.close()

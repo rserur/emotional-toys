@@ -1,4 +1,5 @@
 import pygame, numpy, sys, os, random, time, math
+from Sprite import *
 
 #gameFont = pygame.font.match_font('Century Gothic,Arial')
 
@@ -15,7 +16,7 @@ _headerFont = os.path.join(_mainDir, 'fonts', 'fugaz.ttf')
 
 class HUD:
 
-	def __init__ (self, screen):
+	def __init__ (self, containers, screen):
 		self._screen = screen
 		self._header = pygame.font.Font(_headerFont, 20)
 		self._details = pygame.font.Font(_defaultFont, 52)
@@ -24,7 +25,7 @@ class HUD:
 		self._details.set_bold(True) 
 		self._scoreHeaderPos = (5, 5)
 		self._scorePos = (5, 30)
-		self._flashPos = (200, 10)
+		self._flashPos = (350, 10)
 		self._hrHeaderPos = (0, 100)
 		self._hrPos = (0, 120)
 		self._headerTextColor = white
@@ -42,7 +43,15 @@ class HUD:
 		self._scoreText = self._details.render(self.score,True,self._headerTextColor)
 		self._hrText = self._details.render(self.hr,True,self._headerTextColor)
 		self._flashText = self._flashDetails.render(self.flash,True,self._goodTextColor)
-		self.clock = Clock(screen)
+		self.clock = Clock( screen)
+		self.heartMeterOne = HeartMeter(containers, screen, 'P1', numpy.array([200., 5.]))
+		self.heartMeterTwo = HeartMeter(containers, screen, 'P2', numpy.array([400., 5.]))
+
+	def updateHeartMeter(self, player):
+		if player.playerNum == 1:
+			self.heartMeterOne.blockCount = player.thresholdScore/100
+		else:
+			self.heartMeterTwo.blockCount = player.thresholdScore/100
 	
 	def setMessages(self, score=None, hr=None, flash=None, flashType=None):
 		if (score is not None):
@@ -66,6 +75,8 @@ class HUD:
 			self._screen.blit(self._flashText, self._flashPos)
 			self.flashTime -= 1
 		self.clock.draw()
+		self.heartMeterOne.draw()
+		self.heartMeterTwo.draw()
 		#self._screen.blit(self._hrHeader, self._hrHeaderPos)
 		#self._screen.blit(self._hrText, self._hrPos)
 
@@ -75,6 +86,24 @@ class HUD:
 	def BackButtonLeave(self):
 		self.hoverBackButton = False
 
+class HeartMeter (Sprite):
+
+	def __init__ (self, containers, screen, player, x, blockCount=0):
+		Sprite.__init__(self, containers, screen, imageFile='heart-meter.png', size=(180,46), wobble=0.)
+		self._hrDetails = pygame.font.Font(_headerFont, 17)
+		self._playerTextPos = (x[0] + 20, x[1] + 10)
+		self._player = player
+		self._blockCount = blockCount
+		self._x = x
+		self._player = self._hrDetails.render(self._player, True, white)
+
+	def draw(self):
+		pygame.draw.rect(self._screen, teal, (self._x[0] + 10, self._x[1] + 10, 160, 25), 3)
+		for block in range(self.blockCount):
+			blockX = self._x[0] + 54 + (block * 11)
+			pygame.draw.rect(self._screen, teal, (blockX, self._x[1] + 13, 9, 19), 0)
+		Sprite.draw(self)
+		self._screen.blit(self._player, self._playerTextPos)
 
 class Clock:
 

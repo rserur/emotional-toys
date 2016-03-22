@@ -1,4 +1,4 @@
-import Player, pygame, time, datetime, os
+import Player, SuperPlayer, pygame, time, datetime, os
 from HXMReceiver import *
 
 t = datetime.datetime.fromtimestamp(time.time())
@@ -9,17 +9,27 @@ class PlayerList:
 	
 	def __init__ (self, containers, screen, players=1, thresholds=(70,70), sound_on=True):
 		self._screen = screen
+		self._containers = containers
+		self._soundOn = sound_on
+		self.superPlayerActive = False
 		self.hxm = HXMReceiver(minDevices=players)
 		self.hxm.run()
 		self.players = []
 		self.stressedPlayers = []
 		for p in range(players):
-			self.players.append(Player.Player(containers, screen, self.hxm.devices[p], thresholds[p], self, sound_on))
+			self.players.append(Player.Player(containers, screen, self.hxm.devices[p], thresholds[p], self, p, sound_on))
 		self.outfile = _logDir + t.strftime('%Y-%m-%d %H.%M.%S') + '.csv'
 		f = open(self.outfile, 'w')
 		f.write('Start time: {0}, Players: {1}\n'.format(time.time(), players))
 		f.close()
-	
+
+	def activateSuperPlayer(self, x):
+		self.superPlayerActive = True
+		self.players.append(SuperPlayer.SuperPlayer(self._containers, self._screen, self, self._soundOn, x=x))
+
+	def deactivateSuperPlayer(self):
+		self.superPlayerActive = False
+
 	def __getitem__(self, key):
 		return self.players[key]
 
@@ -28,19 +38,27 @@ class PlayerList:
 			self.players[player].accel(a)
 	
 	def fire(self, player):
-		self.players[player].fire()
+		if (len(self.players) == player + 1):
+			self.players[player].fire()
 	
 	def move(self):
 		for player in self.players:
 			player.move()
 			if (len(self.stressedPlayers) > 0):
-				player.startCountdown()
+				if (player.isSuperPlayer is False):
+					player.startCountdown()
 			else:
-				player.stopCountdown()
+				if (player.isSuperPlayer is False):
+					player.stopCountdown()
 	
 	def draw(self):
-		for player in self.players:
-			player.draw()
+			for index, player in enumerate(self.players):
+				if (player.isSuperPlayer and self.superPlayerActive):
+					player.draw()
+				elif ((not player.isSuperPlayer) and (self.superPlayerActive)):
+					player.drawHr(index)
+				elif ((not player.isSuperPlayer) and (not self.superPlayerActive)):
+					player.draw()
 			
 	def playerBullets(self):
 		bullets = []
