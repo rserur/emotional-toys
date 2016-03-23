@@ -46,10 +46,8 @@ class PlayerList:
 		for player in self.players:
 			player.move()
 			if (len(self.stressedPlayers) > 0):
-				if (player.isSuperPlayer is False):
 					player.startCountdown()
 			else:
-				if (player.isSuperPlayer is False):
 					player.stopCountdown()
 	
 	def draw(self):

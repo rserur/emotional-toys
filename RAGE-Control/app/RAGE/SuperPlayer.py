@@ -3,7 +3,6 @@ from pygame.locals import *
 from Sprite import *
 from PlayerGun import *
 from math import pi
-from HXMReceiver import *
 import Explosion
 from Sounds import *
 
@@ -21,6 +20,7 @@ white = (255,255,255,255)
 yellow = (254, 250, 15)
 green = (0,255,0)
 blue = (0,0,255)
+maxCountdownTime = 5
 _defaultFont = os.path.join(_mainDir, 'fonts', 'sourcecodepro.ttf')
 _headerFont = os.path.join(_mainDir, 'fonts', 'fugaz.ttf')
 
@@ -40,18 +40,37 @@ class SuperPlayer (Sprite):
 		self.PlayerList = PlayerList
 		self.sound_on = sound_on
 		self.isSuperPlayer = True
+		self.stressed = False
+		self.countdownMode = False
+		self.countdownOver = False
+		self.countdownClockOutline = pygame.Surface((7,52))
+		self.countdownClockSurface = pygame.Surface((5,50))
+		self.color = white
+		self.countdownClockSurface.fill(white)
+		self.countdownTime = 0
+		self.countdownStartTime = 0.
 			
 	def accel (self, a):
 		self._a = numpy.array(a)*5
 	
 	def fire (self, stress=0):
 		if (len(self.bullets) < maxBullets):
-			self.bullets.append(PlayerShot(
+			if (not self.countdownOver):
+				for player in self.PlayerList.stressedPlayers:
+					stress += player.hxm.HR-player.threshold
+				self.bullets.append(PlayerShot(
 									self._x + self._bulletOffset, 
 									(self._containers, self.bulletGroup), 
 									self._screen, self.sound_on, 
 									angle=-(pi/180.)*self._wobbleAngle, 
-									stress=0))
+									stress=stress))
+			else:
+				self.bullets.append(PlayerShot(
+								   self._x + self._bulletOffset, 
+								   (self._containers, self.bulletGroup), 
+								   self._screen, self.sound_on,
+								   angle=-(pi/180.)*self._wobbleAngle, 
+								   stress=1))
 		
 	def draw (self):
 		Sprite.draw(self)
@@ -59,6 +78,7 @@ class SuperPlayer (Sprite):
 			bullet.draw()
 		for explosion in self.explosionList:
 			explosion.draw()
+		self.drawCountdownTimer()
 
 	def entrance (self):
 		Sounds().SuperPlayer()
@@ -78,6 +98,38 @@ class SuperPlayer (Sprite):
 				self.explosionList.remove(explosion)
 			else:
 				explosion.move()
+		if len(self.PlayerList.stressedPlayers) > 0:
+			self.stressed = True
+			self._wobble = 0
+			if self._wobble > 1.:
+				self._wobble = 1.
+		elif (self.countdownOver):
+			self._wobble = 1
+		else:
+			self._wobble = 0
+			self._wobbleAngle = 0
+		if len(self.PlayerList.stressedPlayers) == 0:
+			self.stressed = False
 			
 	def changeScore(self, increment):
 		self.score += increment
+
+	def startCountdown(self):
+		if not self.countdownMode:
+			self.countdownMode = True
+			self.countdownStartTime = time.clock()
+			
+	def stopCountdown(self):
+		self.countdownMode = False
+		self.countdownClockSurface.fill(white)
+		self.countdownOver = False
+
+	def drawCountdownTimer(self):
+		endHeight = 50
+		if (self.countdownMode):
+			countdownPct = ((time.clock() - self.countdownStartTime) / maxCountdownTime)
+			if countdownPct > 1:
+				countdownPct = 1
+				self.countdownOver = True
+			pygame.draw.rect(self.countdownClockSurface, red, (0,endHeight*(1-countdownPct),5,endHeight))
+			self._screen.blit(self.countdownClockSurface, (self._x[0]-25, self._x[1]))

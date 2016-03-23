@@ -489,7 +489,7 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 				hud.updateHeartMeter(player)
 				if (player.stressed is not True) and player.thresholdScore < 1000:
 					player.changeThresholdScore(1)
-				elif (player.stressed is True):
+				elif (player.stressed is True and players.superPlayerActive is False):
 					player.wipeThresholdScore()					
 					# sounds.PowerDown()
 
