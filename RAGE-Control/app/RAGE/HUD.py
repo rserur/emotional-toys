@@ -100,8 +100,8 @@ class HeartMeter (Sprite):
 	def draw(self):
 		pygame.draw.rect(self._screen, teal, (self._x[0] + 10, self._x[1] + 10, 160, 25), 3)
 		for block in range(self.blockCount):
-			blockX = self._x[0] + 54 + (block * 11)
-			pygame.draw.rect(self._screen, teal, (blockX, self._x[1] + 13, 9, 19), 0)
+			blockX = self._x[0] + 56 + (block * 16)
+			pygame.draw.rect(self._screen, teal, (blockX, self._x[1] + 13, 13, 19), 0)
 		Sprite.draw(self)
 		self._screen.blit(self._player, self._playerTextPos)
 

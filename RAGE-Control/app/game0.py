@@ -487,14 +487,14 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 				hud.setMessages(flash='FRIEND HIT! -100',flashType='bad')
 			if player.isSuperPlayer is False:
 				hud.updateHeartMeter(player)
-				if (player.stressed is not True) and player.thresholdScore < 1000:
+				if (player.stressed is not True) and player.thresholdScore < 700:
 					player.changeThresholdScore(1)
 				elif (player.stressed is True and players.superPlayerActive is False):
 					player.wipeThresholdScore()					
 					# sounds.PowerDown()
 
 		if(len(players.players) == 2):
-			if ((players[0].thresholdScore + players[1].thresholdScore) >= 2000):
+			if ((players[0].thresholdScore + players[1].thresholdScore) >= 1400):
 				superzone._active = True
 			else:
 				superzone._active = False
