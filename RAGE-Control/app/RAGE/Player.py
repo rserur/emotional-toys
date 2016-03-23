@@ -123,7 +123,10 @@ class Player (Sprite):
 			self.stressed = False
 
 	def wipeThresholdScore(self):
-		self.thresholdScore = 0
+		if self.thresholdScore > 0:
+			self.thresholdScore = 0
+			if self.sound_on:
+				Sounds().PowerDown()
 	
 	def changeThresholdScore(self, increment):
 		self.thresholdScore += increment

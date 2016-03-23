@@ -48,9 +48,8 @@ class Sounds:
 	def SuperPlayer (self):
 		self.superPlayerSound.play()
 
-	# def PowerDown (self):
-		# if self.powerDownSound.get_num_channels() < 1:
-		# 	self.powerDownSound.play()
+	def PowerDown (self):
+		self.powerDownSound.play()
 
 	def VillianEntry (self):
 		#print lastStart, datetime.now() - self.lastStart

@@ -491,7 +491,6 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 					player.changeThresholdScore(1)
 				elif (player.stressed is True and players.superPlayerActive is False):
 					player.wipeThresholdScore()					
-					# sounds.PowerDown()
 
 		if(len(players.players) == 2):
 			if ((players[0].thresholdScore + players[1].thresholdScore) >= 1400):
