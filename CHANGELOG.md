@@ -1,5 +1,20 @@
 ## Change Log
 
+### v1.5.3 (2016/03/23 00:03)
+- [b5bb347](https://github.com/rserur/emotional-toys/commit/b5bb3472c17a33dd612585e10e84bfdd9b37207a) Optimized images. Tweaked firing logic. (@rserur)
+
+### v1.5.2 (2016/03/22 22:03)
+- [fd0f8ce](https://github.com/rserur/emotional-toys/commit/fd0f8ce2d48f3f36f6e0a33836b22279c7d6085e) Added graphic and sound fx for new features. (@rserur)
+- [b7469ae](https://github.com/rserur/emotional-toys/commit/b7469ae6da484ba11388614bf82b176d230f88e0) Moved HR meter and superzone HRs to HUD area beneath players. (@rserur)
+
+### v1.5.0 (2016/03/22 17:03)
+- [73ee19d](https://github.com/rserur/emotional-toys/commit/73ee19dc01292044ba36fe2dc223575cc996ce8c) Created HR meters for HUD and added 'thresholdScore' based on how long a player stays under threshold. Now using threshold scores from both players to activate superzone. (@rserur)
+
+### v1.4.0 (2016/03/21 00:03)
+- [ee670f2](https://github.com/rserur/emotional-toys/commit/ee670f2869e03815f4f105bc545b9bf8295b4b97) Using sprite for superzone. Successfully detecting when both players enter the superzone. (@rserur)
+- [bfad3b9](https://github.com/rserur/emotional-toys/commit/bfad3b9c86569c37697894c7e8d5f58f900a03c1) Using version.txt instead of gitpython to display version on app introscreen. (@rserur)
+- [9e63652](https://github.com/rserur/emotional-toys/commit/9e63652a211ef2162b346dafb92e1076ab79b12a) Updated changelog. (@rserur)
+
 ### v1.3.2 (2016/03/16 18:03)
 - [a58b8ff](https://github.com/rserur/emotional-toys/commit/a58b8ff837ff7768cb687a997a92e3f6f1af6709) Adding version # to intro screen and app build. (@rserur)
 - [ef57468](https://github.com/rserur/emotional-toys/commit/ef57468affe6562719850c361057575a8d38ff8b) Sound fx for friend hit. Better font. (@rserur)
