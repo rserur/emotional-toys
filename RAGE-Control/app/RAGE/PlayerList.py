@@ -29,6 +29,7 @@ class PlayerList:
 
 	def deactivateSuperPlayer(self):
 		self.superPlayerActive = False
+		self.players.pop()
 
 	def __getitem__(self, key):
 		return self.players[key]

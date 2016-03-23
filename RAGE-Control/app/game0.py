@@ -435,10 +435,11 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 	bosses = RAGE.Bosses.Bosses(all, screen, sound_on)
 	friends = RAGE.Friends.Friends(all, screen)
 	sounds = RAGE.Sounds.Sounds()
-	background = RAGE.Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,703), x=array([0.,0.]))
+	background = RAGE.Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,803), x=array([0.,0.]))
 	hud = RAGE.HUD.HUD(all, screen)
 	superzone = RAGE.SuperZone.SuperZone(all, screen)
 	superZoners = 0
+	superCrashLimit = 5
 	
 	#start time
 	startTime = time.clock()
@@ -471,11 +472,16 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 		
 		for player in players.players:
 			if (detectBVCollisions(player.bullets, villians)):
-				players[0].changeScore(100)
+				if players.superPlayerActive:
+					players[0].changeScore(200)
+				else:
+					players[0].changeScore(100)
 				#hud.setMessages(score=str(player.score))
 			deadFriends = detectBFCollisions(player.bullets, friends)
 			if detectPVBCollisions(player, villians, bosses):
 				players[0].changeScore(-100)
+				if players.superPlayerActive:
+					superCrashLimit -= 1
 				hud.setMessages(flash='PLAYER HIT! -100',flashType='bad')
 			if (deadFriends > 0):
 				hud.setMessages(flash='FRIEND HIT! -100',flashType='bad')
@@ -494,7 +500,7 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 				superzone._active = False
 			if(detectBBCollisions(players[0].bullets, players[1].bullets, bosses)) :
 				players[0].changeScore(500)
-				hud.setMessages(flash='METEOR DEFLECTED! +500',flashType='good')
+				hud.setMessages(flash='METEOR DEFLECTED! +500', flashType='good')
 				if (sound_on):
 					sounds.SuccessStart()
 			if superzone._active:
@@ -503,7 +509,7 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 				if (superZoners == 2 and (not players.superPlayerActive)):
 					superZoners = 0
 					players.activateSuperPlayer(superzone._x[0])
-					hud.setMessages(flash='SUPERPLAYER ACTIVATED! +500',flashType='good')
+					hud.setMessages(flash='SUPERPLAYER ACTIVATED! +500', flashType='good')
 					players[0].changeScore(500)
 					players[2].entrance()
 		detectFVCollisions(friends, villians)
@@ -515,9 +521,15 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 			superzone._active = False
 			if (detectSBBCollisions(players[2].bullets, bosses)):
 				players[0].changeScore(500)
-				hud.setMessages(flash='METEOR DEFLECTED! +500',flashType='good')
+				hud.setMessages(flash='METEOR DEFLECTED! +500', flashType='good')
 				if (sound_on):
 					sounds.SuccessStart()
+			if superCrashLimit == 0:
+				players.deactivateSuperPlayer()
+				hud.setMessages(flash='TOO MANY HITS! SUPERPLAYER DEACTIVATED', flashType='bad')
+				superCrashLimit = 5
+				players[0].wipeThresholdScore()					
+				players[1].wipeThresholdScore()					
 			
 		players.move()
 		friends.move()
@@ -541,7 +553,7 @@ def startGame():
 if __name__ == '__main__':
 	pygame.init()
 	window = pygame.display.set_mode((WIDTH, HEIGHT)) 
-	pygame.display.set_caption('RAGE-0')
+	pygame.display.set_caption('CALMS: The Game')
 	screen = pygame.display.get_surface()
 	status = startGame()
 	while(status == True):

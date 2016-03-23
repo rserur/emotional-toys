@@ -19,12 +19,12 @@ class HUD:
 		self._screen = screen
 		self._header = pygame.font.Font(_headerFont, 20)
 		self._details = pygame.font.Font(_defaultFont, 52)
-		self._flashDetails = pygame.font.Font(_headerFont, 25)
+		self._flashDetails = pygame.font.Font(_headerFont, 22)
 		self._BackFont = pygame.font.Font(_headerFont, 32)
 		self._details.set_bold(True) 
 		self._scoreHeaderPos = (5, 5)
 		self._scorePos = (5, 30)
-		self._flashPos = (150, 5)
+		self._flashPos = (100, 5)
 		self._hrHeaderPos = (0, 100)
 		self._hrPos = (0, 120)
 		self._headerTextColor = white

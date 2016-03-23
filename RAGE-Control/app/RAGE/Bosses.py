@@ -14,7 +14,7 @@ class Bosses:
 		self.bossGroup = pygame.sprite.Group()
 		self.deadBosses = 0
 		self.passedBosses = 0
-		self.maxBosses = 1
+		self.maxBosses = 5
 		self.minBossSpeed = 1.5
 		self.maxBossSpeed = 2.25
 		self._containers = containers, self.bossGroup
@@ -22,7 +22,7 @@ class Bosses:
 		self.sound_on = sound_on
 	
 	def inceaseDifficulty (self):
-		self.maxBossSpeed += 0.375
+		self.maxBossSpeed += 0.5
 	
 	def newBoss (self):
 		if (len(self.bossList) < self.maxBosses):
