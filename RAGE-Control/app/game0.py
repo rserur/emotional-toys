@@ -268,12 +268,17 @@ def detectPVBCollisions(player, villians, bosses):
 	if villianCrashes > 0:
 		return True
 	
-def detectSuperZone(player, superzone):	
+def superZoning(players, superzone):	
 	superZoneSize = array(superzone.getSize())
-	playerSize = array(player.getSize())
-	if detectHit(player._x, playerSize, superzone._x, superZoneSize):
-		if (superzone._x[0] > player.getCenter()[0]):
-			return True
+	superZoners = 0
+	for player in players:
+		playerSize = array(player.getSize())
+		if detectHit(player._x, playerSize, superzone._x, superZoneSize):
+			superZoners +=1
+	if superZoners == 2:
+		return 1
+	else:
+		return 0
 
 def introLoop():
 	screen = pygame.display.get_surface()
@@ -438,8 +443,8 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 	background = RAGE.Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,803), x=array([0.,0.]))
 	hud = RAGE.HUD.HUD(all, screen)
 	superzone = RAGE.SuperZone.SuperZone(all, screen)
-	superZoners = 0
 	superCrashLimit = 5
+	superZoningTime = 0
 	
 	#start time
 	startTime = time.clock()
@@ -493,7 +498,9 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 					player.wipeThresholdScore()					
 
 		if(len(players.players) == 2):
-			if ((players[0].thresholdScore + players[1].thresholdScore) >= 1400):
+			if ((players[0].thresholdScore + players[1].thresholdScore) == 1400):
+				if (sound_on and not superzone._active):
+					sounds.OpenSuperZone()
 				superzone._active = True
 			else:
 				superzone._active = False
@@ -503,10 +510,14 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 				if (sound_on):
 					sounds.SuccessStart()
 			if superzone._active:
-				if (detectSuperZone(player, superzone)):
-						superZoners += 1
-				if (superZoners == 2 and (not players.superPlayerActive)):
-					superZoners = 0
+				if superZoning(players, superzone) == 1:
+					superZoningTime += 1
+				else: 
+					superZoningTime = 0
+				if 0 < superZoningTime < 30:
+					hud.setMessages(flash='HOLD STEADY...', flashType='good')
+				elif superZoningTime == 30:
+					superZoningTime = 0
 					players.activateSuperPlayer(superzone._x[0])
 					hud.setMessages(flash='SUPERPLAYER ACTIVATED! +500', flashType='good')
 					players[0].changeScore(500)
@@ -525,6 +536,8 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 					sounds.SuccessStart()
 			if superCrashLimit == 0:
 				players.deactivateSuperPlayer()
+				if (sound_on):
+					sounds.SuperPlayerSplit()
 				hud.setMessages(flash='TOO MANY HITS! SUPERPLAYER DEACTIVATED', flashType='bad')
 				superCrashLimit = 5
 				players[0].wipeThresholdScore()					

@@ -5,7 +5,7 @@ from Sprite import *
 
 white = (255,255,255,255)
 black = (0,0,0)
-teal = (0,180,214)
+teal = (0,180,214, 100)
 red = (254, 65, 3)
 if 'RESOURCEPATH' in os.environ:
 	_mainDir = os.environ['RESOURCEPATH']
@@ -89,7 +89,7 @@ class HUD:
 class HeartMeter (Sprite):
 
 	def __init__ (self, containers, screen, player, x, blockCount=0):
-		Sprite.__init__(self, containers, screen, imageFile='heart-meter.png', size=(180,46), wobble=0.)
+		Sprite.__init__(self, containers, screen, imageFile='heart-meter-bg.png', size=(180,46), wobble=0.)
 		self._hrDetails = pygame.font.Font(_headerFont, 17)
 		self._playerTextPos = (x[0] + 20, x[1] + 10)
 		self._player = player
@@ -98,7 +98,7 @@ class HeartMeter (Sprite):
 		self._player = self._hrDetails.render(self._player, True, white)
 
 	def draw(self):
-		pygame.draw.rect(self._screen, teal, (self._x[0] + 10, self._x[1] + 10, 160, 25), 3)
+		pygame.draw.rect(self._screen, teal, (self._x[0] + 10, self._x[1] + 10, 162, 25), 2)
 		for block in range(self.blockCount):
 			blockX = self._x[0] + 56 + (block * 16)
 			pygame.draw.rect(self._screen, teal, (blockX, self._x[1] + 13, 13, 19), 0)

@@ -9,16 +9,15 @@ if 'RESOURCEPATH' in os.environ:
 else:
 	_mainDir = os.path.split(os.path.abspath(__file__))[0]
 _soundDir = 'Sounds'
-_shotFileName = 'shot2.wav'
+_shotFileName = 'shot.wav'
 _cometFileName = 'comet.wav'
 _explosionFileName = 'explosion.wav'
 _smallExplosionFileName = 'small_explosion.wav'
 _successFileName = 'success1.wav'
 _superPlayerFileName = 'superplayer.wav'
 _powerDownFileName = 'power-down.wav'
-_entryFileNames = ['entry1.wav','entry2.wav','entry3.wav','entry4.wav']
-
-lastStart = datetime.now() + timedelta(seconds=-3)
+_openSuperZoneFileName = 'open-superzone.wav'
+_superPlayerSplitFileName = 'player-split.wav'
 
 class Sounds:
 
@@ -32,9 +31,8 @@ class Sounds:
 		self.successSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _successFileName))
 		self.superPlayerSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _superPlayerFileName))
 		self.powerDownSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _powerDownFileName))
-		self.entrySounds = []
-		for file in _entryFileNames:
-			self.entrySounds.append(pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, file)))
+		self.openSuperZoneSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _openSuperZoneFileName))
+		self.superPlayerSplitSound = pygame.mixer.Sound(os.path.join(_mainDir, _soundDir, _superPlayerSplitFileName))
 
 	def Fire (self):
 		self.fireSound.play()
@@ -51,12 +49,8 @@ class Sounds:
 	def PowerDown (self):
 		self.powerDownSound.play()
 
-	def VillianEntry (self):
-		#print lastStart, datetime.now() - self.lastStart
-		#if (datetime.now() - lastStart) > timedelta(seconds=3):
-		#lastStart = datetime.now()
-		#choice(self.entrySounds).play()
-		return
+	def OpenSuperZone (self):
+		self.openSuperZoneSound.play()
 
 	def Explode (self):
 		self.explosionSound.play()
@@ -64,3 +58,5 @@ class Sounds:
 	def SmallExplode (self):
 		self.smallExplosionSound.play()
 		
+	def SuperPlayerSplit (self):
+		self.superPlayerSplitSound.play()
