@@ -141,9 +141,9 @@ def detectFBCollisions(friends, bosses):
 					if friend._wobble >= 1:
 						friends.explode(friend)
 						deadFriends += 1
-						boss.deadFriends += 1
-						if(boss.deadFriends == boss.maxKills):
-							bosses.explode(boss)
+						# boss.deadFriends += 1
+						# if(boss.deadFriends == boss.maxKills):
+						# 	bosses.explode(boss)
 			except:
 				pass
 	return deadFriends
@@ -453,7 +453,7 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 	while ((time.clock()-startTime) < GAME_LENGTH): 
 		villians.newVillian()
 		friends.newFriend()
-		if(len(players.players) > 1 and (time.clock()-startTime) > 0 and random.randint(1, 500) == 77):
+		if(len(players.players) > 1 and (time.clock()-startTime) > 0 and random.randint(1, 400) == 77):
 			bosses.newBoss()
 		
 		difficulty = 0
