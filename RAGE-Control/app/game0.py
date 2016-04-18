@@ -67,7 +67,8 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
 				players.fire(2)
 			players.accel(0, [a0 * accel_modifier, 0.])
 			players.accel(1, [a1 * accel_modifier, 0.])
-			players.accel(2, [(a0 + a1) * accel_modifier, 0.])
+			if (a0 > float(0) and a1 > float(0)) or (a0 < float(0) and a1 < float(0)):
+				players.accel(2, [(a0 + a1) * accel_modifier, 0.])
 		elif (event.type == JOYBUTTONDOWN and shooting):
 			if (event.button == A_BUTTON) and (event.joy == 0):
 				players.fire(0)
@@ -90,7 +91,8 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
 				a1 = event.value
 			players.accel(0, [a0 * accel_modifier, 0.])
 			players.accel(1, [a1 * accel_modifier, 0.])
-			players.accel(2, [(a0 + a1) * accel_modifier, 0.])
+			if (a0 > float(0) and a1 > float(0)) or (a0 < float(0) and a1 < float(0)):
+				players.accel(2, [(a0 + a1) * accel_modifier, 0.])
 		return introInput(events)
 		#else: 
 		#	print event
