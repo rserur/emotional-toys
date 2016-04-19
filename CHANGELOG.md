@@ -1,5 +1,16 @@
 ## Change Log
 
+### v1.6.1 (2016/04/18 02:04)
+- [abdbcce](https://github.com/rserur/emotional-toys/commit/abdbcce0fc1b5a4218d13b59f23b77a3389165be) Updated changelog and version. (@rserur)
+
+### v1.6.0 (2016/03/24 15:03)
+- [da48cfd](https://github.com/rserur/emotional-toys/commit/da48cfda542a40d0a55ac2fe351c51ac1011f675) Improved superzoning process, messaging, and collision sensitivity. Cleaned up and add super sound fx for more player hinting. (@rserur)
+- [36833e6](https://github.com/rserur/emotional-toys/commit/36833e6579e28b32de6d2af590f0983336a2e654) Completed implementation of power down sound for threshold score wipe. (@rserur)
+- [380863a](https://github.com/rserur/emotional-toys/commit/380863ae5c17066b59c76d74a2971f2c765a2013) Shortened time needed under threshold to achieve superzone, so superplayer can be achieved more times in one game. (@rserur)
+- [a337362](https://github.com/rserur/emotional-toys/commit/a337362dd8783aa2d6e92899e07b9bd62478bcb7) Limiting superplayer ability based on player stress levels. (@rserur)
+- [5a05bd1](https://github.com/rserur/emotional-toys/commit/5a05bd16302c53bc709d5340bf4656d03cf61327) Doubled superplayer-villian hit points. Breaking apart superplayer after 5 asteroid/boss hits. Displaying bosses more frequently. Updated window caption. (@rserur)
+- [1acb56d](https://github.com/rserur/emotional-toys/commit/1acb56dcbe087e2435f1f4e62152849e2bfa1cb0) Updated changelog and version. (@rserur)
+
 ### v1.5.3 (2016/03/23 00:03)
 - [b5bb347](https://github.com/rserur/emotional-toys/commit/b5bb3472c17a33dd612585e10e84bfdd9b37207a) Optimized images. Tweaked firing logic. (@rserur)
 
