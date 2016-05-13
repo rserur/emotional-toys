@@ -42,6 +42,8 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
 	accel_modifier = 1.
 	if (difficulty == 1):
 		accel_modifier = -1.
+	a0 = float(0)
+	a1 = float(0)
 	for event in events: 
 		if event.type == QUIT: 
 			players.close()
@@ -83,20 +85,18 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
 				players.fire(1)
 				players.fire(2)
 		elif (event.type == JOYAXISMOTION):
-			a0 = float(0)
-			a1 = float(0)
 			if (event.axis == LEFT_RIGHT_AXIS) and (event.joy == 0):
 				a0 = event.value
 			elif (event.axis == LEFT_RIGHT_AXIS) and (event.joy == 1):
 				a1 = event.value
 			players.accel(0, [a0 * accel_modifier, 0.])
 			players.accel(1, [a1 * accel_modifier, 0.])
-			if (a0 > float(0) and a1 > float(0)) or (a0 < float(0) and a1 < float(0)):
-				players.accel(2, [(a0 + a1) * accel_modifier, 0.])
-		return introInput(events)
 		#else: 
 		#	print event
-		 
+	if (a0 > float(0) and a1 > float(0)) or (a0 < float(0) and a1 < float(0)):
+		players.accel(2, [(a0 + a1) * accel_modifier, 0.])		 
+		return introInput(events)
+		
 def detectHit(box1Pos, box1Size, box2Pos, box2Size):
 	if ((box1Pos[0] <= box2Pos[0] + box2Size[0]) and 
 		(box1Pos[0] + box1Size[0] >= box2Pos[0]) and
