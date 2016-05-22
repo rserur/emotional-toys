@@ -20,9 +20,10 @@ class HUD:
 		self._header = pygame.font.Font(_headerFont, 20)
 		self._details = pygame.font.Font(_defaultFont, 52)
 		self._flashDetails = pygame.font.Font(_headerFont, 22)
-		self._BackFont = pygame.font.Font(_headerFont, 32)
+		self._BackFont = pygame.font.Font(_headerFont, 28)
 		self._details.set_bold(True) 
 		self._scoreHeaderPos = (5, 5)
+		self._remainingHeaderPos = (570, 5)
 		self._scorePos = (5, 30)
 		self._flashPos = (100, 5)
 		self._hrHeaderPos = (0, 100)
@@ -30,8 +31,8 @@ class HUD:
 		self._headerTextColor = white
 		self._goodTextColor = teal
 		self._badTextColor = red
-		self._BackButtonPos = (680, 5)
-		self._BackButton = self._BackFont.render('Back to Menu', True, self._headerTextColor)
+		self._BackButtonPos = (790, 5)
+		self._BackButton = self._BackFont.render('Menu', True, self._headerTextColor)
 		self._scoreHeader = self._header.render('Score:',True,self._headerTextColor)
 		self._hrHeader = self._header.render('Heart Rate:',True,self._headerTextColor)
 		self.flash = ''
@@ -43,6 +44,7 @@ class HUD:
 		self._hrText = self._details.render(self.hr,True,self._headerTextColor)
 		self._flashText = self._flashDetails.render(self.flash,True,self._goodTextColor)
 		self.clock = Clock( screen)
+		self._remainingHeader = self._header.render('Time Left: ' + self.clock.timeFormatted(), True, self._headerTextColor)
 		self.heartMeterOne = HeartMeter(containers, screen, 'P1', numpy.array([5., 555.]))
 		self.heartMeterTwo = HeartMeter(containers, screen, 'P2', numpy.array([710., 555.]))
 
@@ -66,14 +68,15 @@ class HUD:
 				self._flashText = self._flashDetails.render(self.flash,True,self._goodTextColor)
 			elif (flashType is 'bad'):
 				self._flashText = self._flashDetails.render(self.flash,True,self._badTextColor)
+
 	def draw(self,players_len):
 		self._screen.blit(self._scoreHeader, self._scoreHeaderPos)
+		self._screen.blit(self._header.render('Time Left: ' + self.clock.timeFormatted(), True, self._headerTextColor), self._remainingHeaderPos)
 		self._screen.blit(self._scoreText, self._scorePos)
 		self._screen.blit(self._BackButton, self._BackButtonPos)
 		if (self.flashTime > 0):
 			self._screen.blit(self._flashText, self._flashPos)
 			self.flashTime -= 1
-		self.clock.draw()
 		self.heartMeterOne.draw()
 		if players_len >= 2:
 			self.heartMeterTwo.draw()
@@ -114,22 +117,8 @@ class Clock:
 		self.startTime = time.clock()
 		self._screen = screen
 
-	def draw(self):
-		self._surface.fill(black)
-		seconds = self.duration - (time.clock() - self.startTime)
-		minutes = seconds / 60.
-		minuteHandAngle = 2 * math.pi * ((minutes % 12)/12.) # We're going to pretend a clock shows 12 minutes, not 12 hours
-		secondHandAngle = 2 * math.pi * ((seconds % 60) / 60)
-		minHandLen = 10
-		secHandLen = 25
-		minHandCoord = (math.sin(minuteHandAngle) * minHandLen + 25, -math.cos(minuteHandAngle) * minHandLen + 25)
-		secHandCoord = (math.sin(secondHandAngle) * secHandLen + 25, -math.cos(secondHandAngle) * secHandLen + 25)
-		pygame.draw.aaline(self._surface, white, (25,25), minHandCoord)
-		pygame.draw.aaline(self._surface, white, (25,25), secHandCoord)
-		pygame.draw.circle(self._surface, white, (25,25), secHandLen, 2)
-		self._screen.blit(self._surface, (600, 10))
-
 	def time(self):
 		return self.duration - (time.clock() - self.startTime)
 		
-
+	def timeFormatted(self):
+		return time.strftime("%-M:%S", time.localtime(int(self.time())))
