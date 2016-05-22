@@ -62,7 +62,7 @@ class _Boss (Sprite):
 	def __init__ (self, containers, screen, speed):
 		Sprite.__init__(self, containers, screen, imageFile='big_meteor.png', size=(110,135), wobble=0.)
 		# self._surface.set_colorkey((255,255,255))
-		self._x = numpy.array([uniform(0., self._bounds[0]), 0.])
+		self._x = numpy.array([uniform(self._bounds[0]/3, self._bounds[0]), 0.])
 		launchAngle = gauss(0, pi/4)
 		launchV = numpy.array([sin(launchAngle), cos(launchAngle)]) * speed
 		if launchV[1] < 0:
