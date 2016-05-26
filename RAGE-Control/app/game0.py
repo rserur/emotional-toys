@@ -2,7 +2,7 @@
 
 import pygame, sys, time, os, random
 from pygame.locals import *
-import RAGE.PlayerList, RAGE.Player, RAGE.Background, RAGE.Villians, RAGE.Bosses, RAGE.Friends, RAGE.HUD, RAGE.IntroScreen, RAGE.TutorialScreen, RAGE.Sounds, RAGE.SuperZone
+import RAGE.PlayerList, RAGE.Player, RAGE.Background, RAGE.Villians, RAGE.Bosses, RAGE.Friends, RAGE.HUD, RAGE.IntroScreen, RAGE.TutorialScreen, RAGE.Sounds, RAGE.SuperZone, RAGE.EndingScreen
 from numpy import array
 
 
@@ -24,7 +24,7 @@ LEFT_RIGHT_AXIS = 3
 LEFT_DIRECTION = -0.5
 RIGHT_DIRECTION = 0.5
 
-def introInput(events):
+def mouseInput(events):
 	for event in events: 
 		#print event
 		if event.type == MOUSEMOTION:
@@ -51,12 +51,6 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
 		elif (event.type == KEYDOWN) and (event.key == K_ESCAPE):
 			players.close()
 			sys.exit(0)
-		# elif (event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0] == 1):
-		# 	r = hud._BackButton.get_rect()
-		# 	m = pygame.mouse.get_pos()
-		# 	if detectHit(hud._BackButtonPos, r.bottomright, m, (0,0,)):
-		# 		players.close()
-		# 		return True
 		elif event.type == KEYDOWN:
 			keystate = pygame.key.get_pressed()
 			a0 = float(keystate[K_RIGHT]-keystate[K_LEFT])
@@ -95,7 +89,7 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
 		#	print event
 	if (a0 > float(0) and a1 > float(0)) or (a0 < float(0) and a1 < float(0)):
 		players.accel(2, [(a0 + a1) * accel_modifier, 0.])		 
-		return introInput(events)
+	return mouseInput(events)
 		
 def detectHit(box1Pos, box1Size, box2Pos, box2Size):
 	if ((box1Pos[0] <= box2Pos[0] + box2Size[0]) and 
@@ -288,7 +282,7 @@ def introLoop():
 	introScreen = RAGE.IntroScreen.IntroScreen(screen)
 	sound_on = True
 	while True:
-		action = introInput(pygame.event.get())
+		action = mouseInput(pygame.event.get())
 		if (action):
 			if ('MOUSEMOVE' in action):
 				r1 = introScreen._OnePlayer.get_rect()
@@ -459,6 +453,7 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 			bosses.newBoss()
 		
 		difficulty = 0
+		players.changeMaxThresholdScore(1.)
 		if (hud.clock.time() < 60):
 			difficulty = 1
 		
@@ -480,20 +475,25 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 		for player in players.players:
 			if (detectBVCollisions(player.bullets, villians)):
 				if players.superPlayerActive:
-					players[0].changeScore(200)
+					player.changeScore(200)
 				else:
-					players[0].changeScore(100)
-				#hud.setMessages(score=str(player.score))
+					player.changeScore(100)
+				player.asteroidsHit += 1
 			deadFriends = detectBFCollisions(player.bullets, friends)
 			if detectPVBCollisions(player, villians, bosses):
-				players[0].changeScore(-100)
+				player.changeScore(-100)
+				player.hitsTaken += 1
 				if players.superPlayerActive:
 					superCrashLimit -= 1
 				hud.setMessages(flash='PLAYER HIT! -100',flashType='bad')
 			if (deadFriends > 0):
+				player.friendsHit += 1
 				hud.setMessages(flash='FRIEND HIT! -100',flashType='bad')
+				player.changeScore(deadFriends * -100)
 			if player.isSuperPlayer is False:
 				hud.updateHeartMeter(player)
+				if (player.stressed is not True):
+					player.changeTotalThresholdScore(1.)
 				if (player.stressed is not True) and player.thresholdScore < 700:
 					player.changeThresholdScore(1)
 				elif (player.stressed is True and players.superPlayerActive is False):
@@ -507,8 +507,9 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 			else:
 				superzone._active = False
 			if(detectBBCollisions(players[0].bullets, players[1].bullets, bosses)) :
-				players[0].changeScore(500)
+				player.changeScore(500)
 				hud.setMessages(flash='METEOR DEFLECTED! +500', flashType='good')
+				players[0].bossesHit += 1
 				if (sound_on):
 					sounds.SuccessStart()
 			if superzone._active:
@@ -522,17 +523,21 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 					superZoningTime = 0
 					players.activateSuperPlayer(superzone._x[0])
 					hud.setMessages(flash='SUPERPLAYER ACTIVATED! +500', flashType='good')
-					players[0].changeScore(500)
+					players[2].changeScore(500)
 					players[2].entrance()
+		if(len(players.players) > 1):
+			thresholdScores = [players[0].totalThresholdScore, players[1].totalThresholdScore]
+		else:
+			thresholdScores = [players[0].totalThresholdScore]
 		detectFVCollisions(friends, villians)
 		detectFBCollisions(friends, bosses)
-		players[0].changeScore(deadFriends * -100)
-		hud.setMessages(score=str(players[0].score))
+		hud.setMessages(score=str(players.totalScore()))
 
 		if players.superPlayerActive:
 			superzone._active = False
 			if (detectSBBCollisions(players[2].bullets, bosses)):
-				players[0].changeScore(500)
+				players[2].changeScore(500)
+				players[0].bossesHit += 1
 				hud.setMessages(flash='METEOR DEFLECTED! +500', flashType='good')
 				if (sound_on):
 					sounds.SuccessStart()
@@ -559,7 +564,28 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 		pygame.display.flip()
 
 	players.close()
+	endingLoop(thresholdScores, players)
 		
+def endingLoop(thresholdScores, players):
+	screen = pygame.display.get_surface()
+	background = RAGE.Background.Background(screen)
+	endingScreen = RAGE.EndingScreen.EndingScreen(screen, thresholdScores=thresholdScores, players=players)
+	sound_on = True
+
+	while True:
+		action = mouseInput(pygame.event.get())
+		background.draw()
+		endingScreen.draw()
+		pygame.display.flip()	
+		action = mouseInput(pygame.event.get())
+		# if (action):
+		# 	if ('MOUSEPRESS' in action):
+		# 		r = endingScreen._BackButton.get_rect()
+		# 		m = pygame.mouse.get_pos()
+		# 		if detectHit(endingScreen._BackButtonPos, r.bottomright, m, (0,0,)):
+		# 			players.close()
+		# 			return True
+
 def startGame():
 	players, thresholds, sound_on = introLoop()
 	return gameLoop(players, thresholds, sound_on)

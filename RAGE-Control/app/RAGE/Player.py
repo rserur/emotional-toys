@@ -37,6 +37,7 @@ class Player (Sprite):
 		self.bullets = []
 		self.score = 0
 		self.thresholdScore = 0
+		self.totalThresholdScore = 0.
 		self.hxm = hxm
 		self.fontSmall = pygame.font.SysFont(_defaultFont, 18)
 		self.fontLarge = pygame.font.SysFont(_defaultFont, 40, bold=True)
@@ -55,6 +56,10 @@ class Player (Sprite):
 		self.playerList = playerList
 		self.sound_on = sound_on
 		self.isSuperPlayer = False
+		self.asteroidsHit = 0
+		self.friendsHit = 0
+		self.bossesHit = 0
+		self.hitsTaken = 0
 
 	def accel (self, a):
 		self._a = numpy.array(a)*5
@@ -130,6 +135,9 @@ class Player (Sprite):
 	
 	def changeThresholdScore(self, increment):
 		self.thresholdScore += increment
+
+	def changeTotalThresholdScore(self, increment):
+		self.totalThresholdScore += increment
 	
 	def changeScore(self, increment):
 		self.score += increment

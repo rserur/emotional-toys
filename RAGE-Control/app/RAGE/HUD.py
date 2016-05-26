@@ -23,7 +23,7 @@ class HUD:
 		self._BackFont = pygame.font.Font(_headerFont, 28)
 		self._details.set_bold(True) 
 		self._scoreHeaderPos = (5, 5)
-		self._remainingHeaderPos = (570, 5)
+		self._remainingHeaderPos = (580, 5)
 		self._scorePos = (5, 30)
 		self._flashPos = (100, 5)
 		self._hrHeaderPos = (0, 100)
@@ -80,8 +80,8 @@ class HUD:
 		self.heartMeterOne.draw()
 		if players_len >= 2:
 			self.heartMeterTwo.draw()
-		#self._screen.blit(self._hrHeader, self._hrHeaderPos)
-		#self._screen.blit(self._hrText, self._hrPos)
+		# self._screen.blit(self._hrHeader, self._hrHeaderPos)
+		# self._screen.blit(self._hrText, self._hrPos)
 
 	def BackButtonHover(self):
 		self.hoverBackButton = True

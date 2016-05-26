@@ -49,6 +49,10 @@ class SuperPlayer (Sprite):
 		self.countdownClockSurface.fill(white)
 		self.countdownTime = 0
 		self.countdownStartTime = 0.
+		self.asteroidsHit = 0
+		self.friendsHit = 0
+		self.bossesHit = 0
+		self.hitsTaken = 0
 			
 	def accel (self, a):
 		self._a = numpy.array(a)*5

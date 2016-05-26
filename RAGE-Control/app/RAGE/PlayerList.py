@@ -16,12 +16,23 @@ class PlayerList:
 		self.hxm.run()
 		self.players = []
 		self.stressedPlayers = []
+		self.maxThresholdScore = 0
+		self.totalScore()
 		for p in range(players):
 			self.players.append(Player.Player(containers, screen, self.hxm.devices[p], thresholds[p], self, p, sound_on))
 		self.outfile = _logDir + t.strftime('%Y-%m-%d %H.%M.%S') + '.csv'
 		f = open(self.outfile, 'w')
 		f.write('Start time: {0}, Players: {1}\n'.format(time.time(), players))
 		f.close()
+
+	def totalScore(self):
+		total = 0
+		for player in self.players:
+			total += player.score
+		return total
+
+	def changeMaxThresholdScore(self, increment):
+		self.maxThresholdScore += increment
 
 	def activateSuperPlayer(self, x):
 		self.superPlayerActive = True
@@ -78,7 +89,7 @@ class PlayerList:
 
 	def close (self):
 		f = open(self.outfile, 'a')
-		f.write('End time: {0}, Score: {1}\n'.format(time.time(), self.players[0].score))
+		f.write('End time: {0}, Score: {1}\n'.format(time.time(), self.totalScore()))
 		f.write(self.hxm.log())
 		f.close()
 		self.__del__()
