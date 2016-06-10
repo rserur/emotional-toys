@@ -2,13 +2,13 @@
 
 import pygame, sys, time, os, random
 from pygame.locals import *
-import RAGE.PlayerList, RAGE.Player, RAGE.Background, RAGE.Villians, RAGE.Bosses, RAGE.Friends, RAGE.HUD, RAGE.IntroScreen, RAGE.TutorialScreen, RAGE.Sounds
+import RAGE.PlayerList, RAGE.Player, RAGE.Background, RAGE.Villians, RAGE.Bosses, RAGE.Friends, RAGE.HUD, RAGE.IntroScreen, RAGE.TutorialScreen, RAGE.Sounds, RAGE.SuperZone, RAGE.EndingScreen
 from numpy import array
 
 
 WIDTH =  900 #1080 # 720  # 1024 screen size effects gameplay dramatically-- too big = too easy; not enough enemy density
-HEIGHT =  550 #607 # 405 # 800
-SCREENRECT     = Rect(0, 0, WIDTH, HEIGHT)
+HEIGHT =  600 #607 # 405 # 800
+SCREENRECT     = Rect(0, 0, WIDTH, 550)
 
 GAME_LENGTH = 180 # seconds
 USE_DIFFICULTY = 1 # set to 0 to not reverse directions at 1 min remain
@@ -24,7 +24,7 @@ LEFT_RIGHT_AXIS = 3
 LEFT_DIRECTION = -0.5
 RIGHT_DIRECTION = 0.5
 
-def introInput(events):
+def mouseInput(events):
 	for event in events: 
 		#print event
 		if event.type == MOUSEMOTION:
@@ -42,6 +42,8 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
 	accel_modifier = 1.
 	if (difficulty == 1):
 		accel_modifier = -1.
+	a0 = float(0)
+	a1 = float(0)
 	for event in events: 
 		if event.type == QUIT: 
 			players.close()
@@ -49,44 +51,46 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
 		elif (event.type == KEYDOWN) and (event.key == K_ESCAPE):
 			players.close()
 			sys.exit(0)
-		# elif (event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0] == 1):
-		# 	r = hud._BackButton.get_rect()
-		# 	m = pygame.mouse.get_pos()
-		# 	if detectHit(hud._BackButtonPos, r.bottomright, m, (0,0,)):
-		# 		players.close()
-		# 		return True
 		elif event.type == KEYDOWN:
 			keystate = pygame.key.get_pressed()
 			a0 = float(keystate[K_RIGHT]-keystate[K_LEFT])
 			a1 = float(keystate[K_d]-keystate[K_a])
 			if (keystate[K_SPACE] or keystate[K_UP]) and shooting:
 				players.fire(0)
+				players.fire(2)
 			if keystate[K_w] and shooting:
 				players.fire(1)
+				players.fire(2)
 			players.accel(0, [a0 * accel_modifier, 0.])
 			players.accel(1, [a1 * accel_modifier, 0.])
+			if (a0 > float(0) and a1 > float(0)) or (a0 < float(0) and a1 < float(0)):
+				players.accel(2, [(a0 + a1) * accel_modifier, 0.])
 		elif (event.type == JOYBUTTONDOWN and shooting):
 			if (event.button == A_BUTTON) and (event.joy == 0):
 				players.fire(0)
+				players.fire(2)
 			if (event.button == B_BUTTON) and (event.joy == 0):
 				players.fire(0)
+				players.fire(2)
 			if (event.button == A_BUTTON) and (event.joy == 1):
 				players.fire(1)
+				players.fire(2)
 			if (event.button == B_BUTTON) and (event.joy == 1):
 				players.fire(1)
+				players.fire(2)
 		elif (event.type == JOYAXISMOTION):
-			a0 = float(0)
-			a1 = float(0)
 			if (event.axis == LEFT_RIGHT_AXIS) and (event.joy == 0):
 				a0 = event.value
 			elif (event.axis == LEFT_RIGHT_AXIS) and (event.joy == 1):
 				a1 = event.value
 			players.accel(0, [a0 * accel_modifier, 0.])
 			players.accel(1, [a1 * accel_modifier, 0.])
-		return introInput(events)
 		#else: 
 		#	print event
-		 
+	if (a0 > float(0) and a1 > float(0)) or (a0 < float(0) and a1 < float(0)):
+		players.accel(2, [(a0 + a1) * accel_modifier, 0.])		 
+	return mouseInput(events)
+		
 def detectHit(box1Pos, box1Size, box2Pos, box2Size):
 	if ((box1Pos[0] <= box2Pos[0] + box2Size[0]) and 
 		(box1Pos[0] + box1Size[0] >= box2Pos[0]) and
@@ -133,9 +137,9 @@ def detectFBCollisions(friends, bosses):
 					if friend._wobble >= 1:
 						friends.explode(friend)
 						deadFriends += 1
-						boss.deadFriends += 1
-						if(boss.deadFriends == boss.maxKills):
-							bosses.explode(boss)
+						# boss.deadFriends += 1
+						# if(boss.deadFriends == boss.maxKills):
+						# 	bosses.explode(boss)
 			except:
 				pass
 	return deadFriends
@@ -198,6 +202,25 @@ def detectBBCollisions(bullets1, bullets2, bosses):
 			# 	impact_bullets[1][1].kill()
 			return True
 
+def detectSBBCollisions(superbullets, bosses):
+	superhit = False
+
+	for boss in bosses.bossList:
+		for bullet in superbullets:
+			try:
+				bulletSize = array(bullet.getSize())
+				bossSize = array(boss.getSize())
+				if detectHit(bullet._x, bulletSize, boss._x, bossSize):
+					superhit = True
+					bullets1.remove(bullet)
+					bullet.kill()
+					break
+			except:
+				pass
+		if (superhit):
+			bosses.explode(boss)
+			return True
+
 def detectBFCollisions(bullets, friends):
 	deadFriends = 0
 	for bullet in bullets:
@@ -241,13 +264,25 @@ def detectPVBCollisions(player, villians, bosses):
 	if villianCrashes > 0:
 		return True
 	
+def superZoning(players, superzone):	
+	superZoneSize = array(superzone.getSize())
+	superZoners = 0
+	for player in players:
+		playerSize = array(player.getSize())
+		if detectHit(player._x, playerSize, superzone._x, superZoneSize):
+			superZoners +=1
+	if superZoners == 2:
+		return 1
+	else:
+		return 0
+
 def introLoop():
 	screen = pygame.display.get_surface()
 	background = RAGE.Background.Background(screen)
 	introScreen = RAGE.IntroScreen.IntroScreen(screen)
 	sound_on = True
 	while True:
-		action = introInput(pygame.event.get())
+		action = mouseInput(pygame.event.get())
 		if (action):
 			if ('MOUSEMOVE' in action):
 				r1 = introScreen._OnePlayer.get_rect()
@@ -322,7 +357,7 @@ def tutorialLoop(sound_on = True):
 	all = pygame.sprite.RenderUpdates()
 	background = RAGE.Background.Background(screen)
 	tutorialScreen = RAGE.TutorialScreen.TutorialScreen(screen)
-	hud = RAGE.HUD.HUD(screen)
+	hud = RAGE.HUD.HUD(all, screen)
 	players = RAGE.PlayerList.PlayerList(all, screen, sound_on=sound_on)
 	villians = RAGE.Villians.Villians(all, screen, sound_on)
 	friends = RAGE.Friends.Friends(all, screen)
@@ -361,10 +396,9 @@ def tutorialLoop(sound_on = True):
 			if(tutorialScreen.step > 3):
 				players[0].changeScore(deadFriends * -100)
 			hud.setMessages(score=str(players[0].score))
-
 		players.move()
 		background.draw()
-		hud.draw()
+		hud.draw(len(players.players))
 		tutorialScreen.draw()
 		if (tutorialScreen.step > 0):
 			villians.newVillian()
@@ -402,9 +436,11 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 	bosses = RAGE.Bosses.Bosses(all, screen, sound_on)
 	friends = RAGE.Friends.Friends(all, screen)
 	sounds = RAGE.Sounds.Sounds()
-	background = RAGE.Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,703), x=array([0.,0.]))
-	superzone = RAGE.Sprite.Sprite(all, screen, imageFile='super_zone.png', size=(300,174), x=array([380.,380.]))	
-	hud = RAGE.HUD.HUD(screen)
+	background = RAGE.Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,803), x=array([0.,0.]))
+	hud = RAGE.HUD.HUD(all, screen)
+	superzone = RAGE.SuperZone.SuperZone(all, screen)
+	superCrashLimit = 5
+	superZoningTime = 0
 	
 	#start time
 	startTime = time.clock()
@@ -413,10 +449,11 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 	while ((time.clock()-startTime) < GAME_LENGTH): 
 		villians.newVillian()
 		friends.newFriend()
-		if(len(players.players) > 1 and (time.clock()-startTime) > 0 and random.randint(1, 500) == 77):
+		if(len(players.players) > 1 and (time.clock()-startTime) > 0 and random.randint(1, 400) == 77):
 			bosses.newBoss()
 		
 		difficulty = 0
+		players.changeMaxThresholdScore(1.)
 		if (hud.clock.time() < 60):
 			difficulty = 1
 		
@@ -437,40 +474,118 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 		
 		for player in players.players:
 			if (detectBVCollisions(player.bullets, villians)):
-				players[0].changeScore(100)
-				#hud.setMessages(score=str(player.score))
+				if players.superPlayerActive:
+					player.changeScore(200)
+				else:
+					player.changeScore(100)
+				player.asteroidsHit += 1
 			deadFriends = detectBFCollisions(player.bullets, friends)
 			if detectPVBCollisions(player, villians, bosses):
-				players[0].changeScore(-100)
+				player.changeScore(-100)
+				player.hitsTaken += 1
+				if players.superPlayerActive:
+					superCrashLimit -= 1
 				hud.setMessages(flash='PLAYER HIT! -100',flashType='bad')
 			if (deadFriends > 0):
+				player.friendsHit += 1
 				hud.setMessages(flash='FRIEND HIT! -100',flashType='bad')
+				player.changeScore(deadFriends * -100)
+			if player.isSuperPlayer is False:
+				hud.updateHeartMeter(player)
+				if (player.stressed is not True):
+					player.changeTotalThresholdScore(1.)
+				if (player.stressed is not True) and player.thresholdScore < 700:
+					player.changeThresholdScore(1)
+				elif (player.stressed is True and players.superPlayerActive is False):
+					player.wipeThresholdScore()					
+
 		if(len(players.players) == 2):
+			if ((players[0].thresholdScore + players[1].thresholdScore) == 1400):
+				if (sound_on and not superzone._active):
+					sounds.OpenSuperZone()
+				superzone._active = True
+			else:
+				superzone._active = False
 			if(detectBBCollisions(players[0].bullets, players[1].bullets, bosses)) :
-				players[0].changeScore(500)
-				hud.setMessages(flash='METEOR DEFLECTED! +500',flashType='good')
+				player.changeScore(500)
+				hud.setMessages(flash='METEOR DEFLECTED! +500', flashType='good')
+				players[0].bossesHit += 1
 				if (sound_on):
 					sounds.SuccessStart()
+			if superzone._active:
+				if superZoning(players, superzone) == 1:
+					superZoningTime += 1
+				else: 
+					superZoningTime = 0
+				if 0 < superZoningTime < 30:
+					hud.setMessages(flash='HOLD STEADY...', flashType='good')
+				elif superZoningTime == 30:
+					superZoningTime = 0
+					players.activateSuperPlayer(superzone._x[0])
+					hud.setMessages(flash='SUPERPLAYER ACTIVATED! +500', flashType='good')
+					players[2].changeScore(500)
+					players[2].entrance()
+		if(len(players.players) > 1):
+			thresholdScores = [players[0].totalThresholdScore, players[1].totalThresholdScore]
+		else:
+			thresholdScores = [players[0].totalThresholdScore]
 		detectFVCollisions(friends, villians)
 		detectFBCollisions(friends, bosses)
-		players[0].changeScore(deadFriends * -100)
-		hud.setMessages(score=str(players[0].score))
+		hud.setMessages(score=str(players.totalScore()))
 
+		if players.superPlayerActive:
+			superzone._active = False
+			if (detectSBBCollisions(players[2].bullets, bosses)):
+				players[2].changeScore(500)
+				players[0].bossesHit += 1
+				hud.setMessages(flash='METEOR DEFLECTED! +500', flashType='good')
+				if (sound_on):
+					sounds.SuccessStart()
+			if superCrashLimit == 0:
+				players.deactivateSuperPlayer()
+				if (sound_on):
+					sounds.SuperPlayerSplit()
+				hud.setMessages(flash='TOO MANY HITS! SUPERPLAYER DEACTIVATED', flashType='bad')
+				superCrashLimit = 5
+				players[0].wipeThresholdScore()					
+				players[1].wipeThresholdScore()					
+			
 		players.move()
 		friends.move()
 		villians.move()
 		bosses.move()
 		background.draw()
-		hud.draw()
 		friends.draw()
 		villians.draw()
 		bosses.draw()
 		players.draw()
-		# superzone.draw()
+		superzone.draw()
+		hud.draw(len(players.players))
 		pygame.display.flip()
 
 	players.close()
+	endingLoop(thresholdScores, players)
 		
+def endingLoop(thresholdScores, players):
+	screen = pygame.display.get_surface()
+	background = RAGE.Background.Background(screen)
+	endingScreen = RAGE.EndingScreen.EndingScreen(screen, thresholdScores=thresholdScores, players=players)
+	sound_on = True
+
+	while True:
+		action = mouseInput(pygame.event.get())
+		background.draw()
+		endingScreen.draw()
+		pygame.display.flip()	
+		action = mouseInput(pygame.event.get())
+		# if (action):
+		# 	if ('MOUSEPRESS' in action):
+		# 		r = endingScreen._BackButton.get_rect()
+		# 		m = pygame.mouse.get_pos()
+		# 		if detectHit(endingScreen._BackButtonPos, r.bottomright, m, (0,0,)):
+		# 			players.close()
+		# 			return True
+
 def startGame():
 	players, thresholds, sound_on = introLoop()
 	return gameLoop(players, thresholds, sound_on)
@@ -478,7 +593,7 @@ def startGame():
 if __name__ == '__main__':
 	pygame.init()
 	window = pygame.display.set_mode((WIDTH, HEIGHT)) 
-	pygame.display.set_caption('RAGE-0')
+	pygame.display.set_caption('CALMS: The Game')
 	screen = pygame.display.get_surface()
 	status = startGame()
 	while(status == True):
