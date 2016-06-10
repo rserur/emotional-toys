@@ -23,8 +23,8 @@ class PlayerShot (Sprite):
 		else:
 			if (sound_on):
 				Sounds().Fire()
-		Sprite.__init__(self, containers, screen, imageFile='star.jpg', size=(20,20), x=loc, v=_v, a=_a)
-		self._surface.set_colorkey((255,255,255))
+		Sprite.__init__(self, containers, screen, imageFile='star.png', size=(20,20), x=loc, v=_v, a=_a)
+		# self._surface.set_colorkey((255,255,255))
 	
 	def move (self):
 		Sprite.move(self)
@@ -47,11 +47,11 @@ class PlayerShot (Sprite):
 class PlayerShotParticle (Sprite):
 
 	def __init__ (self, loc, containers, screen, alpha=1.):
-		v0 = numpy.array([random.uniform(-0.25,0.25), 0])
+		v0 = numpy.array([random.uniform(-0.1,0.1), 0])
 		v1 = v0 * particleSpeed
-		Sprite.__init__(self, containers, screen, imageFile='star.jpg', size=(20,20), x=loc, v=v1)
+		Sprite.__init__(self, containers, screen, imageFile='star.png', size=(20,20), x=loc, v=v1)
 		self.alpha = alpha
-		self._surface.set_colorkey((255,255,255))
+		# self._surface.set_colorkey((255,255,255))
 		self.kill()	# particle don't get to be in any group
 	
 	def move (self):

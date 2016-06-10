@@ -4,6 +4,7 @@ from Sprite import *
 from random import uniform, gauss
 from math import sin, cos, pi
 import Explosion
+from Sounds import *
 
 # for tomorrow -- keep working on Friends
 # friends should travel horizantally, and blow up on contact with an enemy
@@ -57,7 +58,8 @@ class Friends:
 		centerX, centerY = friend.getCenter()
 		self.friendList.remove(friend)
 		friend.kill()
-		self.explosionList.append(Explosion.Explosion(self._containers, self._screen, numpy.array([centerX, centerY]), imageFile='star.jpg'))
+		self.explosionList.append(Explosion.Explosion(self._containers, self._screen, numpy.array([centerX, centerY]), imageFile='star.png'))
+		Sounds().SmallExplode()
 
 class _Friend (Sprite):
 
@@ -65,15 +67,15 @@ class _Friend (Sprite):
 		Sprite.__init__(self, 
 						containers, 
 						screen, 
-						imageFile='friend.jpg', 
-						size=(70,35), 
+						imageFile='friend.png', 
+						size=(80,45), 
 						wobble=0., 
 						aether=numpy.array([0.,0.]), 
 						accelDecay=numpy.array([0.,0.]))
 		s = self._surface
 		s = pygame.transform.flip(s, True, False)
 		self._surface = s
-		self._surface.set_colorkey((255,255,255))
+		# self._surface.set_colorkey((0,0,0))
 		self._x = numpy.array([0., gauss(self._bounds[1]/2., self._bounds[1]/8.)])
 		launchAngle = gauss(pi/4., pi/16.)
 		launchV = numpy.array([cos(launchAngle), -sin(launchAngle)]) * speed

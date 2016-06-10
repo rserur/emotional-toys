@@ -1,16 +1,31 @@
-import pygame, Sprite, numpy, random, os
+import pygame, Sprite, numpy, random, os, time, datetime
+from git import Repo
 
 maxParticles = 150
 particleSpeed = 15
 alphaDecay = 0.025
 black = (0,0,0)
-red = (255,0,0)
+yellow = (254, 250, 15)
 white = (255,255,255)
-_mainDir = os.environ['RESOURCEPATH']#os.path.split(os.path.abspath(__file__))[0]
-_SoundImage = 'art/sound.jpg'
+if 'RESOURCEPATH' in os.environ:
+	_mainDir = os.environ['RESOURCEPATH']
+	_versionFile = open('version.txt', 'r')
+	VERSION = _versionFile.read()
+else:
+	_mainDir = os.path.split(os.path.abspath(__file__))[0]
+	REPO = Repo('../../')
+	VERSION = str(REPO.tags[-1])
+	_versionFile = open('version.txt', 'w')
+	_versionFile.write(VERSION)
+_SoundImage = 'art/sound.png'
 _MuteImage = 'art/sound_mute.png'
 _SoundSize = (100,100)
-_MuteSize = (50,100)
+_MuteSize = (100,100)
+t = datetime.datetime.fromtimestamp(time.time())
+d = t.strftime('%Y-%m-%d')
+_logDir = os.path.join(os.path.expanduser('~'),'Documents','CALMS-gameplay-logs/{0}/'.format(d))
+if not os.path.exists(_logDir):
+	os.makedirs(_logDir)
 
 class IntroScreen:
 
@@ -18,15 +33,19 @@ class IntroScreen:
 		print "reached introscreen init"
 		all = pygame.sprite.RenderUpdates()
 		self._screen = screen
-		self.title = Sprite.Sprite(all, screen, imageFile='RAGE_title.jpg', size=(424,57), x=numpy.array([100.,100.]))
+		self.background = Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,703), x=numpy.array([0.,0.]))
 		self.titleParticles = Particles(all, screen, numpy.array([100.,100.]))
 		print "setting fonts"
-		self._defaultFont = os.path.join(_mainDir, 'fonts', 'freesansbold.ttf')#os.path.join(_mainDir, 'fonts', 'freesansbold.ttf')
-		self._PlayerFont = pygame.font.Font(self._defaultFont, 30)#pygame.font.Font(os.path.join(_mainDir, 'fonts', 'Helvetica.dfont'), 30, bold=True)
-		self._TutorialFont = pygame.font.Font(self._defaultFont, 42)#pygame.font.SysFont(os.path.join(_mainDir, 'fonts', 'Helvetica.dfont'), 42, bold=True)
+		self._defaultFont = os.path.join(_mainDir, 'fonts', 'questrial.ttf')#os.path.join(_mainDir, 'fonts', 'freesansbold.ttf')
+		self._headerFont = os.path.join(_mainDir, 'fonts', 'fugaz.ttf')#os.path.join(_mainDir, 'fonts', 'freesansbold.ttf')
+		self._PlayerFont = pygame.font.Font(self._headerFont, 30)#pygame.font.Font(os.path.join(_mainDir, 'fonts', 'Helvetica.dfont'), 30, bold=True)
+		self._TutorialFont = pygame.font.Font(self._headerFont, 42)#pygame.font.SysFont(os.path.join(_mainDir, 'fonts', 'Helvetica.dfont'), 42, bold=True)
 		self._SmallerFont = pygame.font.Font(self._defaultFont, 16)#pygame.font.SysFont(os.path.join(_mainDir, 'fonts', 'Baskerville.ttc'), 16)
 		self._LargerFont = pygame.font.Font(self._defaultFont, 60)#pygame.font.SysFont(os.path.join(_mainDir, 'fonts', 'Helvetica.dfont'), 60, bold=True)
+		self._TitleFont = pygame.font.Font(self._headerFont, 68)
 		print "setting positions"
+		self._TitlePos= (100,100)
+		self._VersionPos= (696,156)
 		self._OnePlayerPos = (100,300)
 		self._OnePlayerThresholdPos = (100,350)
 		self._OnePlayerThresholdValPos = (100, 375)
@@ -39,8 +58,10 @@ class IntroScreen:
 		self._2pDownArrowPos = (500, 412)
 		self._SoundPos = (700, 350)
 		self._TutorialPos = (100, 200)
-		self._UnselectedColor = (0,0,0)
-		self._SelectedColor = (255, 0, 0)
+		self._UnselectedColor = white
+		self._SelectedColor = yellow
+		self._Title = self._TitleFont.render('CALMS: The Game',True,self._UnselectedColor)
+		self._Version = self._SmallerFont.render(VERSION,True,self._UnselectedColor)
 		self._OnePlayer = self._PlayerFont.render('One Player',True,self._UnselectedColor)
 		self._TwoPlayer = self._PlayerFont.render('Two Player',True,self._UnselectedColor)
 		self._OnePlayerThresholdTitle = self._SmallerFont.render('Player 1 Threshold',True,self._UnselectedColor)
@@ -63,13 +84,15 @@ class IntroScreen:
 		
 	def draw(self):
 		#print self._screen.get_size()
+		self.background.draw()
 		self.titleParticles.move()
 		self.titleParticles.draw()
-		self.title.draw()
 		self.P1Up.draw(self._screen)
 		self.P1Down.draw(self._screen)
 		self.P2Up.draw(self._screen)
 		self.P2Down.draw(self._screen)
+		self._screen.blit(self._Title, self._TitlePos)
+		self._screen.blit(self._Version, self._VersionPos)
 		self._screen.blit(self._OnePlayer, self._OnePlayerPos)
 		self._screen.blit(self._TwoPlayer, self._TwoPlayerPos)
 		self._screen.blit(self._OnePlayerThresholdTitle, self._OnePlayerThresholdPos)
@@ -149,9 +172,9 @@ class Particle (Sprite.Sprite):
 	def __init__ (self, loc, containers, screen, alpha=1.):
 		v0 = numpy.array([random.uniform(-0.25,0.25), random.uniform(-0.25,0.25)])
 		v1 = v0 * particleSpeed
-		Sprite.Sprite.__init__(self, containers, screen, imageFile='star.jpg', size=(20,20), x=loc, v=v1)
+		Sprite.Sprite.__init__(self, containers, screen, imageFile='star.png', size=(20,20), x=loc, v=v1)
 		self.alpha = alpha
-		self._surface.set_colorkey((255,255,255))
+		# self._surface.set_colorkey((255,255,255))
 		self.kill()	# particle don't get to be in any group
 	
 	def move (self):
@@ -164,21 +187,21 @@ class Triange (pygame.Surface):
 	def __init__ (self, size=(30,30), location=(0,0), flipped=False):
 		super(Triange, self).__init__(size)
 		self.size = size
-		self.fill((255,255,255,255))
+		self.set_colorkey(black)
 		self.location = location
 		self.flipped = flipped
 		self.selected = False
-		pygame.draw.polygon(self, black, self._getCoordinates(), 2)
+		pygame.draw.polygon(self, white, self._getCoordinates(), 2)
 	
 	def draw (self, screen):
 		screen.blit(self, self.location)
 
 	def highlight (self):
-		pygame.draw.polygon(self, red, self._getCoordinates(), 2)
+		pygame.draw.polygon(self, yellow, self._getCoordinates(), 2)
 		self.selected = True
 	
 	def unhighlight (self):
-		pygame.draw.polygon(self, black, self._getCoordinates(), 2)
+		pygame.draw.polygon(self, white, self._getCoordinates(), 2)
 		self.selected = False
 
 	def _getCoordinates (self):

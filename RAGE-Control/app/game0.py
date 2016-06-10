@@ -2,7 +2,7 @@
 
 import pygame, sys, time, os, random
 from pygame.locals import *
-import RAGE.PlayerList, RAGE.Player, RAGE.Background, RAGE.Villians, RAGE.Bosses, RAGE.Friends, RAGE.HUD, RAGE.IntroScreen, RAGE.TutorialScreen
+import RAGE.PlayerList, RAGE.Player, RAGE.Background, RAGE.Villians, RAGE.Bosses, RAGE.Friends, RAGE.HUD, RAGE.IntroScreen, RAGE.TutorialScreen, RAGE.Sounds
 from numpy import array
 
 
@@ -136,8 +136,6 @@ def detectFBCollisions(friends, bosses):
 						boss.deadFriends += 1
 						if(boss.deadFriends == boss.maxKills):
 							bosses.explode(boss)
-						else:
-							boss.bounce(friend._x)
 			except:
 				pass
 	return deadFriends
@@ -219,11 +217,13 @@ def detectBFCollisions(bullets, friends):
 	return deadFriends
 
 def detectPVBCollisions(player, villians, bosses):
+	villianCrashes = 0
 	for villian in villians.villianList:
 		playerSize = array(player.getSize())
 		villianSize = array(villian.getSize())
 		if detectHit(player._x, playerSize, villian._x, villianSize):
 			villians.explode(villian)
+			villianCrashes += 1
 			if (villian._x[0] > player.getCenter()[0]):
 				player._v -= array([20,0])
 			else:
@@ -233,10 +233,13 @@ def detectPVBCollisions(player, villians, bosses):
 		bossSize = array(boss.getSize())
 		if detectHit(player._x, playerSize, boss._x, bossSize):
 			bosses.explode(boss)
+			villianCrashes += 1
 			if (boss._x[0] > boss.getCenter()[0]):
 				player._v -= array([30,0])
 			else:
 				player._v += array([30,0])
+	if villianCrashes > 0:
+		return True
 	
 def introLoop():
 	screen = pygame.display.get_surface()
@@ -398,7 +401,9 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 	villians = RAGE.Villians.Villians(all, screen, sound_on)
 	bosses = RAGE.Bosses.Bosses(all, screen, sound_on)
 	friends = RAGE.Friends.Friends(all, screen)
-	background = RAGE.Background.Background(screen)
+	sounds = RAGE.Sounds.Sounds()
+	background = RAGE.Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,703), x=array([0.,0.]))
+	superzone = RAGE.Sprite.Sprite(all, screen, imageFile='super_zone.png', size=(300,174), x=array([380.,380.]))	
 	hud = RAGE.HUD.HUD(screen)
 	
 	#start time
@@ -435,12 +440,19 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 				players[0].changeScore(100)
 				#hud.setMessages(score=str(player.score))
 			deadFriends = detectBFCollisions(player.bullets, friends)
-			detectPVBCollisions(player, villians, bosses)
+			if detectPVBCollisions(player, villians, bosses):
+				players[0].changeScore(-100)
+				hud.setMessages(flash='PLAYER HIT! -100',flashType='bad')
+			if (deadFriends > 0):
+				hud.setMessages(flash='FRIEND HIT! -100',flashType='bad')
 		if(len(players.players) == 2):
 			if(detectBBCollisions(players[0].bullets, players[1].bullets, bosses)) :
 				players[0].changeScore(500)
-		deadFriends += detectFVCollisions(friends, villians)
-		deadFriends += detectFBCollisions(friends, bosses)
+				hud.setMessages(flash='METEOR DEFLECTED! +500',flashType='good')
+				if (sound_on):
+					sounds.SuccessStart()
+		detectFVCollisions(friends, villians)
+		detectFBCollisions(friends, bosses)
 		players[0].changeScore(deadFriends * -100)
 		hud.setMessages(score=str(players[0].score))
 
@@ -454,6 +466,7 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
 		villians.draw()
 		bosses.draw()
 		players.draw()
+		# superzone.draw()
 		pygame.display.flip()
 
 	players.close()

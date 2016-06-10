@@ -1,5 +1,9 @@
-import Player, pygame, time, datetime
+import Player, pygame, time, datetime, os
 from HXMReceiver import *
+
+t = datetime.datetime.fromtimestamp(time.time())
+d = t.strftime('%Y-%m-%d')
+_logDir = os.path.join(os.path.expanduser('~'),'Documents','CALMS-gameplay-logs/{0}/'.format(d))
 
 class PlayerList:
 	
@@ -11,8 +15,7 @@ class PlayerList:
 		self.stressedPlayers = []
 		for p in range(players):
 			self.players.append(Player.Player(containers, screen, self.hxm.devices[p], thresholds[p], self, sound_on))
-		t = datetime.datetime.fromtimestamp(time.time())
-		self.outfile = './Log/Log ' + t.strftime('%Y-%m-%d %H.%M.%S') + '.csv'
+		self.outfile = _logDir + t.strftime('%Y-%m-%d %H.%M.%S') + '.csv'
 		f = open(self.outfile, 'w')
 		f.write('Start time: {0}, Players: {1}\n'.format(time.time(), players))
 		f.close()
