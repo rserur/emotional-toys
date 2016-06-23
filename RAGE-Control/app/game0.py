@@ -51,10 +51,13 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
 		elif (event.type == KEYDOWN) and (event.key == K_ESCAPE):
 			players.close()
 			sys.exit(0)
-		elif event.type == KEYDOWN:
+		elif event.type == KEYDOWN or event.type == KEYUP:
 			keystate = pygame.key.get_pressed()
 			a0 = float(keystate[K_RIGHT]-keystate[K_LEFT])
-			a1 = float(keystate[K_d]-keystate[K_a])
+			a1 = float(keystate[K_d]-keystate[K_a])	
+			if (len(players.players) == 3):
+				players[0]._moving = a0
+				players[1]._moving = a1
 			if (keystate[K_SPACE] or keystate[K_UP]) and shooting:
 				players.fire(0)
 				players.fire(2)
@@ -63,8 +66,6 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
 				players.fire(2)
 			players.accel(0, [a0 * accel_modifier, 0.])
 			players.accel(1, [a1 * accel_modifier, 0.])
-			if (a0 > float(0) and a1 > float(0)) or (a0 < float(0) and a1 < float(0)):
-				players.accel(2, [(a0 + a1) * accel_modifier, 0.])
 		elif (event.type == JOYBUTTONDOWN and shooting):
 			if (event.button == A_BUTTON) and (event.joy == 0):
 				players.fire(0)
@@ -81,14 +82,23 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
 		elif (event.type == JOYAXISMOTION):
 			if (event.axis == LEFT_RIGHT_AXIS) and (event.joy == 0):
 				a0 = event.value
+				if (len(players.players) == 3):				
+					players[0]._moving = a0
 			elif (event.axis == LEFT_RIGHT_AXIS) and (event.joy == 1):
 				a1 = event.value
+				if (len(players.players) == 3):
+					players[1]._moving = a1
 			players.accel(0, [a0 * accel_modifier, 0.])
 			players.accel(1, [a1 * accel_modifier, 0.])
 		#else: 
-		#	print event
-	if (a0 > float(0) and a1 > float(0)) or (a0 < float(0) and a1 < float(0)):
-		players.accel(2, [(a0 + a1) * accel_modifier, 0.])		 
+
+	if (len(players.players) == 3):
+		if (players[0]._moving == players[1]._moving):
+			if ((int(players[0]._moving) == 0) or (int(players[1]._moving) == 0)):
+				players.accel(2, [0., 0.]) 
+			else:
+				players.accel(2, [players[0]._moving, 0.])		 
+
 	return mouseInput(events)
 		
 def detectHit(box1Pos, box1Size, box2Pos, box2Size):
