@@ -1,5 +1,10 @@
 ## Change Log
 
+### v1.8.0 (2016/06/23)
+- [d429fff](https://github.com/rserur/emotional-toys/commit/d429fff87c259ed37498b986b36b3c2440917da9) Updated version number. (@rserur)
+- [7cb3200](https://github.com/rserur/emotional-toys/commit/7cb320081ac22550e132fdabbc4f1b2cbe3f6460) Refactored superplayer movement so syncing can be inexact. (@rserur)
+- [c6411c6](https://github.com/rserur/emotional-toys/commit/c6411c67bb6a8856307a538c35d2d2d9d43152f8) Updated version and changelog. (@rserur)
+
 ### v1.7.0 (2016/05/31)
 - [401ab44](https://github.com/rserur/emotional-toys/commit/401ab44cd598fc28bfab2ed92cf4c2745cdc1c8c) Ending screen. Numerous types of hits now tracked on player model. Time under threshold calculated. (@rserur)
 
