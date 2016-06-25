@@ -31,7 +31,6 @@ class Player (Sprite):
 		Sprite.__init__(self, containers, screen, imageFile='goodguy2.png', size=(sizeX,sizeY), wobble=0.)
 		self._x = numpy.array([0., float(self._bounds[1])-60])
 		self._v = numpy.array([0.,0.])
-		self._moving = 0.
 		self._bulletOffset = numpy.array([float(sizeX)/2., 0.])
 		self.playerNum = playerNum
 		self.bulletGroup = pygame.sprite.Group()
@@ -60,7 +59,7 @@ class Player (Sprite):
 		self.asteroidsHit = 0
 		self.friendsHit = 0
 		self.bossesHit = 0
-		self.hitsTaken = 0		
+		self.hitsTaken = 0
 
 	def accel (self, a):
 		self._a = numpy.array(a)*5
