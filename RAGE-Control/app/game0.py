@@ -48,10 +48,8 @@ def input(events, players, shooting=True):
         players[1]._moving = int(keystate[K_d]-keystate[K_a])
       if (keystate[K_SPACE] or keystate[K_UP]) and shooting:
         players.fire(0)
-        players.fire(2)
       if keystate[K_w] and shooting:
         players.fire(1)
-        players.fire(2)
       if keystate[K_ESCAPE]:
         players.close()
         sys.exit(0)
@@ -60,20 +58,15 @@ def input(events, players, shooting=True):
     elif (event.type == JOYBUTTONDOWN and shooting):
       if (event.button == A_BUTTON) or (event.button == B_BUTTON):
         players.fire(event.joy)
-        players.fire(2)
     elif (event.type == JOYAXISMOTION):
-      if (event.axis == LEFT_RIGHT_AXIS) and (event.joy == 0):
-        players[0]._moving = int(event.value)
-      elif (event.axis == LEFT_RIGHT_AXIS) and (event.joy == 1):
-        if (len(players.players) >= 2):
-          players[1]._moving = int(event.value)
-      players.accel(0)
-      players.accel(1)
+      if (event.axis == LEFT_RIGHT_AXIS):
+        players[event.joy]._moving = int(event.value)
+      players.accel(event.joy)
     elif event.type == QUIT:
       players.close()
       sys.exit(0)
 
-  if (len(players.players) == 3):
+  if players.superPlayerActive:
     if (players[0]._moving == players[1]._moving):
       if ((int(players[0]._moving) == 0) or (int(players[1]._moving) == 0)):
         players.decel(2)

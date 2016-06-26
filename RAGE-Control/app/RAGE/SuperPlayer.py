@@ -56,7 +56,6 @@ class SuperPlayer (Sprite):
 
 	def decel(self):
 		self._a = numpy.array([.0, .0]) * 5
-		print 'decelerating'
 			
 	def superAccel (self, accel_modifier):
 		self._a = numpy.array([accel_modifier, .0])*5

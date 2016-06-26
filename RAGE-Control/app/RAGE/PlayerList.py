@@ -60,8 +60,9 @@ class PlayerList:
 				self.players[player].accel(self._difficulty)
 	
 	def fire(self, player):
-		if (((player == 2) and (len(self.players) == 3)) or (player < 2)):
-			self.players[player].fire()	
+		self.players[player].fire()
+		if self.superPlayerActive:
+			self.players[2].fire()
 	
 	def move(self):
 		for player in self.players:
