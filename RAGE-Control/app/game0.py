@@ -40,9 +40,6 @@ def mouseInput(events):
 
 def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
 
-  accel_modifier = 1.
-  if (difficulty == 1):
-    accel_modifier = -1.
   for event in events: 
     if event.type == QUIT: 
       players.close()
@@ -61,8 +58,8 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
       if keystate[K_w] and shooting:
         players.fire(1)
         players.fire(2)
-      players.accel(0, [players[0]._moving * accel_modifier, 0.])
-      players.accel(1, [players[1]._moving * accel_modifier, 0.])
+      players.accel(0, [players[0]._moving * difficulty, 0.])
+      players.accel(1, [players[1]._moving * difficulty, 0.])
     elif (event.type == JOYBUTTONDOWN and shooting):
       if (event.button == A_BUTTON) or (event.button == B_BUTTON):
         players.fire(event.joy)
@@ -73,8 +70,8 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
       elif (event.axis == LEFT_RIGHT_AXIS) and (event.joy == 1):
         if (len(players.players) >= 2):
           players[1]._moving = int(event.value)
-      players.accel(0, [players[0]._moving * accel_modifier, 0.])
-      players.accel(1, [players[1]._moving * accel_modifier, 0.])
+      players.accel(0, [players[0]._moving * difficulty, 0.])
+      players.accel(1, [players[1]._moving * difficulty, 0.])
 
   if (len(players.players) == 3):
     if (players[0]._moving == players[1]._moving):
@@ -432,10 +429,10 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
     if(len(players.players) > 1 and (time.clock()-startTime) > 0 and random.randint(1, 400) == 77):
       bosses.newBoss()
     
-    difficulty = 0
+    difficulty = 1.
     players.changeMaxThresholdScore(1.)
     if (hud.clock.time() < 60):
-      difficulty = 1
+      difficulty = -1.
     
     action = input(hud, pygame.event.get(), players, difficulty * USE_DIFFICULTY)
 
