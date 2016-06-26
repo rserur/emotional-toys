@@ -38,28 +38,25 @@ def mouseInput(events):
       sys.exit(0)
   return False
 
-def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
+def input(events, players, shooting=True):
 
-  for event in events: 
-    if event.type == QUIT: 
-      players.close()
-      sys.exit(0) 
-    elif (event.type == KEYDOWN) and (event.key == K_ESCAPE):
-      players.close()
-      sys.exit(0)
-    elif event.type == KEYDOWN or event.type == KEYUP:
+  for event in events:
+    if event.type == KEYDOWN or event.type == KEYUP:
       keystate = pygame.key.get_pressed()
       players[0]._moving = int(keystate[K_RIGHT]-keystate[K_LEFT])
       if (len(players.players) >= 2):       
-        players[1]._moving = int(keystate[K_d]-keystate[K_a]) 
+        players[1]._moving = int(keystate[K_d]-keystate[K_a])
       if (keystate[K_SPACE] or keystate[K_UP]) and shooting:
         players.fire(0)
         players.fire(2)
       if keystate[K_w] and shooting:
         players.fire(1)
         players.fire(2)
-      players.accel(0, [players[0]._moving * difficulty, 0.])
-      players.accel(1, [players[1]._moving * difficulty, 0.])
+      if keystate[K_ESCAPE]:
+        players.close()
+        sys.exit(0)
+      players.accel(0)
+      players.accel(1)
     elif (event.type == JOYBUTTONDOWN and shooting):
       if (event.button == A_BUTTON) or (event.button == B_BUTTON):
         players.fire(event.joy)
@@ -70,15 +67,18 @@ def input(hud, events, players, difficulty=None, shooting=True, tutorial=False):
       elif (event.axis == LEFT_RIGHT_AXIS) and (event.joy == 1):
         if (len(players.players) >= 2):
           players[1]._moving = int(event.value)
-      players.accel(0, [players[0]._moving * difficulty, 0.])
-      players.accel(1, [players[1]._moving * difficulty, 0.])
+      players.accel(0)
+      players.accel(1)
+    elif event.type == QUIT:
+      players.close()
+      sys.exit(0)
 
   if (len(players.players) == 3):
     if (players[0]._moving == players[1]._moving):
       if ((int(players[0]._moving) == 0) or (int(players[1]._moving) == 0)):
-        players.accel(2, [0., 0.]) 
+        players.decel(2)
       else:
-        players.accel(2, [players[0]._moving, 0.])     
+        players.accel(2)
 
   return mouseInput(events)
     
@@ -347,9 +347,9 @@ def tutorialLoop(sound_on = True):
 
   while(tutorialScreen.step < tutorialScreen.numSteps):
     if (tutorialScreen.step < 2):
-      action = input(hud, pygame.event.get(), players, shooting=False)
+      action = input(pygame.event.get(), players, shooting=False)
     else:
-      action = input(hud, pygame.event.get(), players)
+      action = input(pygame.event.get(), players)
     # getNext(action, tutorialScreen)
     if (action):
       if ('MOUSEMOVE' in action):
@@ -411,7 +411,7 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
   players = RAGE.PlayerList.PlayerList(all, screen, players, thresholds, sound_on)
   villians = RAGE.Villians.Villians(all, screen, sound_on)
   bosses = RAGE.Bosses.Bosses(all, screen, sound_on)
-  friends = RAGE.Friends.Friends(all, screen)
+  friends = RAGE.Friends.Friends(all, screen, sound_on)
   sounds = RAGE.Sounds.Sounds()
   background = RAGE.Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,803), x=array([0.,0.]))
   hud = RAGE.HUD.HUD(all, screen)
@@ -428,18 +428,17 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
     friends.newFriend()
     if(len(players.players) > 1 and (time.clock()-startTime) > 0 and random.randint(1, 400) == 77):
       bosses.newBoss()
-    
-    difficulty = 1.
+
+    players.setDifficulty(1.)
     players.changeMaxThresholdScore(1.)
     if (hud.clock.time() < 60):
-      difficulty = -1.
+      players.setDifficulty(-1.)
     
-    action = input(hud, pygame.event.get(), players, difficulty * USE_DIFFICULTY)
+    action = input(pygame.event.get(), players)
 
     if(action):
       if ('MOUSEMOVE' in action):
         r = hud._BackButton.get_rect()
-        m = pygame.mouse.get_pos()
         if detectHit(hud._BackButtonPos, r.bottomright, action['MOUSEMOVE'], (0,0)):
           hud.BackButtonHover()
         else:

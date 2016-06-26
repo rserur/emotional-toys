@@ -53,9 +53,13 @@ class SuperPlayer (Sprite):
 		self.friendsHit = 0
 		self.bossesHit = 0
 		self.hitsTaken = 0
+
+	def decel(self):
+		self._a = numpy.array([.0, .0]) * 5
+		print 'decelerating'
 			
-	def accel (self, a):
-		self._a = numpy.array(a)*5
+	def superAccel (self, accel_modifier):
+		self._a = numpy.array([accel_modifier, .0])*5
 	
 	def fire (self, stress=0):
 		if (len(self.bullets) < maxBullets):
@@ -85,7 +89,8 @@ class SuperPlayer (Sprite):
 		self.drawCountdownTimer()
 
 	def entrance (self):
-		Sounds().SuperPlayer()
+		if self.sound_on:
+			Sounds().SuperPlayer()
 		centerX, centerY = self.getCenter()
 		self.explosionList.append(Explosion.Explosion(self._containers, self._screen, numpy.array([centerX, centerY]), explosionType='superplayer'))
 	

@@ -11,6 +11,7 @@ class PlayerList:
 		self._screen = screen
 		self._containers = containers
 		self._soundOn = sound_on
+		self.difficulty = 1.
 		self.superPlayerActive = False
 		self.hxm = HXMReceiver(minDevices=players)
 		self.hxm.run()
@@ -45,9 +46,18 @@ class PlayerList:
 	def __getitem__(self, key):
 		return self.players[key]
 
-	def accel(self, player, a):
+	def setDifficulty(self, difficulty):
+		self._difficulty = difficulty
+
+	def decel(self, player):
+		self.players[player].decel()
+
+	def accel(self, player):
 		if len(self.players) > player:
-			self.players[player].accel(a)
+			if player == 2:
+				self.players[player].superAccel(self.players[0]._moving * self._difficulty)
+			else:
+				self.players[player].accel(self._difficulty)
 	
 	def fire(self, player):
 		if (((player == 2) and (len(self.players) == 3)) or (player < 2)):
