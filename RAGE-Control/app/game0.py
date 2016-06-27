@@ -41,15 +41,15 @@ def mouseInput(events):
 def input(events, players, shooting=True):
 
   for event in events:
-    if event.type == KEYDOWN or event.type == KEYUP:
+    if event.type in (KEYUP, KEYDOWN):
       keystate = pygame.key.get_pressed()
       players[0]._moving = int(keystate[K_RIGHT]-keystate[K_LEFT])
-      if (len(players.players) >= 2):       
-        players[1]._moving = int(keystate[K_d]-keystate[K_a])
-      if (keystate[K_SPACE] or keystate[K_UP]) and shooting:
-        players.fire(0)
-      if keystate[K_w] and shooting:
-        players.fire(1)
+      players[1]._moving = int(keystate[K_d]-keystate[K_a])
+      if shooting:
+        if (keystate[K_SPACE] or keystate[K_UP]):
+          players.fire(0)
+        if keystate[K_w]:
+          players.fire(1)
       if keystate[K_ESCAPE]:
         players.close()
         sys.exit(0)
@@ -58,10 +58,9 @@ def input(events, players, shooting=True):
     elif (event.type == JOYBUTTONDOWN and shooting):
       if (event.button == A_BUTTON) or (event.button == B_BUTTON):
         players.fire(event.joy)
-    elif (event.type == JOYAXISMOTION):
-      if (event.axis == LEFT_RIGHT_AXIS):
+    elif (event.type == JOYAXISMOTION) and (event.axis == LEFT_RIGHT_AXIS):
         players[event.joy]._moving = int(event.value)
-      players.accel(event.joy)
+        players.accel(event.joy)
     elif event.type == QUIT:
       players.close()
       sys.exit(0)
