@@ -100,8 +100,9 @@ class PlayerList:
 		f = open(self.outfile, 'a')
 		f.write('End time: {0}, Score: {1}\n'.format(time.time(), self.totalScore()))
 		for index, player in enumerate(self.players):
-			self.hxm.devices[index].calculate_stats()
-			f.write(self.hxm.devices[index].log())
+			if not player.isSuperPlayer:
+				self.hxm.devices[index].calculate_stats()
+				f.write(self.hxm.devices[index].log())
 		f.close()
 		self.__del__()
 

@@ -29,7 +29,7 @@ class EndingScreen:
 		all = pygame.sprite.RenderUpdates()
 		self._screen = screen
 		self._players = players
-		self.background = Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,803), x=numpy.array([0.,0.]))
+		self.background = Sprite.Sprite(all, screen, imageFile='background2.png', size=(1432,803), x=numpy.array([0.,0.]))
 		self.titleParticles = Particles(all, screen, numpy.array([100.,100.]))
 		print "setting fonts"
 		self._defaultFont = os.path.join(_mainDir, 'fonts', 'questrial.ttf')#os.path.join(_mainDir, 'fonts', 'freesansbold.ttf')
@@ -44,8 +44,8 @@ class EndingScreen:
 		self._TitlePos = (100, 20)
 		self._SubtitlePos = (100, 120)
 		self._PlayerOnePos = (100, 180)
-		self._PlayerTwoPos = (400, 180)
-		self._StatStartXs = [100, 400]
+		self._PlayerTwoPos = (500, 180)
+		self._StatStartXs = [100, 500]
 		self._StatStartY = 200
 		self._Title = self._TitleFont.render('Game Over',True,white)
 		self._Subtitle = self._SubtitleFont.render('Final Score: {}'.format(self._players.totalScore()),True,white)
@@ -55,8 +55,9 @@ class EndingScreen:
 		for index, player in enumerate(self._players):
 			self._PlayerStats[index] = [  
 				"Time Below HR: {0:.0f}%".format(player.hxm.underThreshold),
+				"Times Threshold Crossed: {}".format(player.thresholdCrosses),
 				"Threshold HR: {}".format(player.threshold),
-				"Average HR: {}".format(round(player.hxm.avgHR)),
+				"Average HR: {}".format(player.hxm.avgHR),
 				"Min HR: {}".format(player.hxm.minHR),
 				"Max HR: {}".format(player.hxm.maxHR),
 				"Score: {}".format(player.score),

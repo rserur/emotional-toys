@@ -37,7 +37,7 @@ class HXMWidget:
 		self.stress = 0.
 		self.color = 'White'
 		self.hrHistory = []
-		self.avgHR = 0.
+		self.avgHR = 0
 		self.minHR = 0
 		self.maxHR = 0
 		self.threshold = 0.
@@ -53,9 +53,9 @@ class HXMWidget:
 
 	def calculate_stats(self):
 		if self.hrHistory:
-			self.avgHR = sum(item['HR'] for item in self.hrHistory)/len(self.hrHistory)
-			self.minHR = min(item['HR'] for item in self.hrHistory)
-			self.maxHR = max(item['HR'] for item in self.hrHistory)			
+			self.avgHR = int(sum(item['HR'] for item in self.hrHistory)/len(self.hrHistory))
+			self.minHR = int(min(item['HR'] for item in self.hrHistory))
+			self.maxHR = int(max(item['HR'] for item in self.hrHistory))
 			self.underThreshold = float(sum(item['UnderThreshold'] == True for item in self.hrHistory))/len(self.hrHistory)*100
 
 	def log(self):
