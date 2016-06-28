@@ -10,7 +10,7 @@ WIDTH =  900 #1080 # 720  # 1024 screen size effects gameplay dramatically-- too
 HEIGHT =  600 #607 # 405 # 800
 SCREENRECT     = Rect(0, 0, WIDTH, 550)
 
-GAME_LENGTH = 25 # seconds
+GAME_LENGTH = 180 # seconds
 USE_DIFFICULTY = 1 # set to 0 to not reverse directions at 1 min remain
 THRESHOLD_GOAL = 1400
 
@@ -422,7 +422,6 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
       bosses.newBoss()
 
     players.setDifficulty(1.)
-    players.changeMaxThresholdScore(1.)
     if (hud.clock.time() < 60):
       players.setDifficulty(-1.)
     
@@ -494,10 +493,6 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
           hud.setMessages(flash='SUPERPLAYER ACTIVATED! +500', flashType='good')
           players[2].changeScore(500)
           players[2].entrance()
-    if(len(players.players) > 1):
-      thresholdScores = [players[0].totalThresholdScore, players[1].totalThresholdScore]
-    else:
-      thresholdScores = [players[0].totalThresholdScore]
     detectFVCollisions(friends, villians)
     detectFBCollisions(friends, bosses)
     hud.setMessages(score=str(players.totalScore()))
@@ -533,12 +528,12 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
     pygame.display.flip()
 
   players.close()
-  endingLoop(thresholdScores, players)
+  endingLoop(players)
     
-def endingLoop(thresholdScores, players):
+def endingLoop(players):
   screen = pygame.display.get_surface()
   background = RAGE.Background.Background(screen)
-  endingScreen = RAGE.EndingScreen.EndingScreen(screen, thresholdScores=thresholdScores, players=players)
+  endingScreen = RAGE.EndingScreen.EndingScreen(screen, players=players)
 
   while True:
     background.draw()

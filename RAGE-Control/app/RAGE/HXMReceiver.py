@@ -60,7 +60,7 @@ class HXMWidget:
 
 	def log(self):
 		out = "Player,Threshold,Time Under Threshold,Min HR,Max HR, Average HR\n"
-		out += "{0},{1},{2:.0f}%,{3},{4},{5}\n".format(self.color, self.threshold, self.underThreshold, self.minHR, self.maxHR, self.avgHR)
+		out += "{0},{1},{2:.0f}%,{3},{4},{5}\n".format(self.color, self.threshold, self.underThreshold, self.minHR, self.maxHR, round(self.avgHR,1))
 		out += "Player,Time,HR,Under Threshold?\n"	
 		for item in self.hrHistory:
 			out += "{0},{1},{2},{3}\n".format(self.color, item['Timestamp'], item['HR'], item['UnderThreshold'])

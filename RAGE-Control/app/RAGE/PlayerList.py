@@ -18,7 +18,6 @@ class PlayerList:
 		self.hxm.run()
 		self.players = []
 		self.stressedPlayers = []
-		self.maxThresholdScore = 0
 		self.totalScore()
 		for p in range(players):
 			self.players.append(Player.Player(containers, screen, self.hxm.devices[p], thresholds[p], self, p, sound_on))
@@ -33,9 +32,6 @@ class PlayerList:
 		for player in self.players:
 			total += player.score
 		return total
-
-	def changeMaxThresholdScore(self, increment):
-		self.maxThresholdScore += increment
 
 	def activateSuperPlayer(self, x):
 		self.superPlayerActive = True
