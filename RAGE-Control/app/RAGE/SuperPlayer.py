@@ -55,7 +55,7 @@ class SuperPlayer (Sprite):
 		self.hitsTaken = 0
 
 	def decel(self):
-		self._a = numpy.array([.0, .0]) * 5
+		self._v = numpy.array([.5, .0])
 			
 	def superAccel (self, accel_modifier):
 		self._a = numpy.array([accel_modifier, .0])*5

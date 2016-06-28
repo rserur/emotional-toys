@@ -67,10 +67,10 @@ def input(events, players, shooting=True):
 
   if players.superPlayerActive:
     if (players[0]._moving == players[1]._moving):
-      if ((int(players[0]._moving) == 0) or (int(players[1]._moving) == 0)):
-        players.decel(2)
-      else:
-        players.accel(2)
+      players.accel(2)        
+    else:
+      players.decel(2)
+        
 
   return mouseInput(events)
     

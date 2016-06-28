@@ -3,17 +3,6 @@ import threading, OSC, datetime
 colors = ['Blue', 'Green']
 
 class HXMReceiver:
-	
-	def HXM_handler(self, addr, tags, data, source):
-		device = data[0]
-		if (len(self.devices) < (device + 1)):
-			self.devices.append(HXMWidget())
-		self.devices[device].HR=data[1]
-		self.devices[device].HRV=data[2]
-		self.devices[device].stress = data[3]
-		self.devices[device].color = data[4]
-		log = {'Timestamp': str(datetime.datetime.now()), 'Player': self.devices[device].color, 'HR':self.devices[device].HR}
-		self.hrHistory.append(log)
 
 	def __init__(self, minDevices=1):
 		addr = '127.0.0.1', 9000
@@ -24,7 +13,14 @@ class HXMReceiver:
 			self.devices.append(HXMWidget())
 		self.devices[0].HR = 70
 		self.hrHistory = []
-		#self.devices[1].HR = 81
+
+	def HXM_handler(self, addr, tags, data, source):
+		device = data.pop(0)
+		if (len(self.devices) < (device + 1)):
+			self.devices.append(HXMWidget())
+		self.devices[device].set_stats(*data)
+		log = {'Timestamp': str(datetime.datetime.now()), 'Player': self.devices[device].color, 'HR':self.devices[device].HR}
+		self.hrHistory.append(log)
 	
 	def run(self):
 		self.st = threading.Thread( target = self.s.serve_forever )
@@ -45,6 +41,12 @@ class HXMWidget:
 
 	def __init__ (self):
 		self.HR = 0
-		self.HRV = 0
-		self.stress = 0
+		self.HRV = 0.
+		self.stress = 0.
 		self.color = 'White'
+
+	def set_stats(self, HR, HRV, stress, color='White'):
+		self.HR = HR
+		self.HRV = HRV
+		self.stress = stress
+		self.color = color
