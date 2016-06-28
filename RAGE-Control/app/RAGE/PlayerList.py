@@ -1,5 +1,6 @@
 import Player, SuperPlayer, pygame, time, datetime, os
 from HXMReceiver import *
+from IPython import embed
 
 t = datetime.datetime.fromtimestamp(time.time())
 d = t.strftime('%Y-%m-%d')
@@ -21,6 +22,7 @@ class PlayerList:
 		self.totalScore()
 		for p in range(players):
 			self.players.append(Player.Player(containers, screen, self.hxm.devices[p], thresholds[p], self, p, sound_on))
+			self.hxm.devices[p].threshold = thresholds[p]
 		self.outfile = _logDir + t.strftime('%Y-%m-%d %H.%M.%S') + '.csv'
 		f = open(self.outfile, 'w')
 		f.write('Start time: {0}, Players: {1}\n'.format(time.time(), players))
@@ -101,7 +103,9 @@ class PlayerList:
 	def close (self):
 		f = open(self.outfile, 'a')
 		f.write('End time: {0}, Score: {1}\n'.format(time.time(), self.totalScore()))
-		f.write(self.hxm.log())
+		for index, player in enumerate(self.players):
+			self.hxm.devices[index].calculate_stats()
+			f.write(self.hxm.devices[index].log())
 		f.close()
 		self.__del__()
 
