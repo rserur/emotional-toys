@@ -22,7 +22,7 @@ class SuperZone (Sprite):
 
 	def __init__ (self, containers, screen, active=False):
 		Sprite.__init__(self, containers, screen, imageFile='super_zone.png', size=(sizeX,sizeY), wobble=0.)
-		self._x = numpy.array([uniform(100., self._bounds[0]), 460.])
+		self._x = numpy.array([uniform(100., 700.), 460.])
 		self._header = pygame.font.Font(_headerFont, 20)
 		self._details = pygame.font.Font(_defaultFont, 14)
 		self._details.set_bold(True) 

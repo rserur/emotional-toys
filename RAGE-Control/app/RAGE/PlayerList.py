@@ -53,7 +53,7 @@ class PlayerList:
 	def accel(self, player):
 		if len(self.players) > player:
 			if player == 2:
-				self.players[player].superAccel(self.players[0]._moving * self._difficulty)
+				self.players[player].superAccel(self.players[0].moving * self._difficulty)
 			else:
 				self.players[player].accel(self._difficulty)
 	

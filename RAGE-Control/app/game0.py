@@ -43,8 +43,8 @@ def input(events, players, shooting=True):
   for event in events:
     if event.type in (KEYUP, KEYDOWN):
       keystate = pygame.key.get_pressed()
-      players[0]._moving = int(keystate[K_RIGHT]-keystate[K_LEFT])
-      players[1]._moving = int(keystate[K_d]-keystate[K_a])
+      players[0].moving = int(keystate[K_RIGHT]-keystate[K_LEFT])
+      players[1].moving = int(keystate[K_d]-keystate[K_a])
       if shooting:
         if (keystate[K_SPACE] or keystate[K_UP]):
           players.fire(0)
@@ -59,14 +59,14 @@ def input(events, players, shooting=True):
       if (event.button == A_BUTTON) or (event.button == B_BUTTON):
         players.fire(event.joy)
     elif (event.type == JOYAXISMOTION) and (event.axis == LEFT_RIGHT_AXIS):
-        players[event.joy]._moving = int(event.value)
+        players[event.joy].moving = int(event.value)
         players.accel(event.joy)
     elif event.type == QUIT:
       players.close()
       sys.exit(0)
 
   if players.superPlayerActive:
-    if (players[0]._moving == players[1]._moving):
+    if (players[0].moving == players[1].moving) and (players[0].moving != 0):
       players.accel(2)        
     else:
       players.decel(2)

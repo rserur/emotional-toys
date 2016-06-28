@@ -53,19 +53,20 @@ class EndingScreen:
 		self._PlayerTwo = self._PlayerFont.render('Player 2',True,white)
 		self._PlayerStats = {}
 		for index, player in enumerate(self._players):
-			self._PlayerStats[index] = [  
-				"Time Below HR: {0:.0f}%".format(player.hxm.underThreshold),
-				"Times Threshold Crossed: {}".format(player.thresholdCrosses),
-				"Threshold HR: {}".format(player.threshold),
-				"Average HR: {}".format(player.hxm.avgHR),
-				"Min HR: {}".format(player.hxm.minHR),
-				"Max HR: {}".format(player.hxm.maxHR),
-				"Score: {}".format(player.score),
-				"Asteroids Hit: {}".format(player.asteroidsHit),
-				"Friends Hit: {}".format(player.friendsHit),
-				"Bosses Hit: {}".format(players[0].bossesHit),
-				"Hits Taken: {}".format(player.hitsTaken) 
-			]			
+			if not player.isSuperPlayer:
+				self._PlayerStats[index] = [  
+					"Time Below HR: {0:.0f}%".format(player.hxm.underThreshold),
+					"Times Threshold Crossed: {}".format(player.thresholdCrosses),
+					"Threshold HR: {}".format(player.threshold),
+					"Average HR: {}".format(player.hxm.avgHR),
+					"Min HR: {}".format(player.hxm.minHR),
+					"Max HR: {}".format(player.hxm.maxHR),
+					"Score: {}".format(player.score),
+					"Asteroids Hit: {}".format(player.asteroidsHit),
+					"Friends Hit: {}".format(player.friendsHit),
+					"Bosses Hit: {}".format(players[0].bossesHit),
+					"Hits Taken: {}".format(player.hitsTaken) 
+				]			
 		print "leaving endingscreen init"
 		
 	def draw(self):
@@ -79,11 +80,12 @@ class EndingScreen:
 		self._screen.blit(self._PlayerOne, self._PlayerOnePos)
 		self._screen.blit(self._PlayerTwo, self._PlayerTwoPos)
 		for p in xrange(len(self._players.players)):
-			for index, stat in enumerate(self._PlayerStats[p],1):
-				if (index > 6):
-					self._screen.blit(self._SmallerFont.render(stat,True,white), (self._StatStartXs[p] + 30, self._StatStartY + 30 * index))			
-				else:
-					self._screen.blit(self._SmallerFont.render(stat,True,white), (self._StatStartXs[p], self._StatStartY + 30 * index))			
+			if p is not 2:
+				for index, stat in enumerate(self._PlayerStats[p],1):
+					if (index > 6):
+						self._screen.blit(self._SmallerFont.render(stat,True,white), (self._StatStartXs[p] + 30, self._StatStartY + 30 * index))			
+					else:
+						self._screen.blit(self._SmallerFont.render(stat,True,white), (self._StatStartXs[p], self._StatStartY + 30 * index))			
 
 class Particles:
 

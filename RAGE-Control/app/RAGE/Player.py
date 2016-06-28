@@ -61,9 +61,10 @@ class Player (Sprite):
 		self.friendsHit = 0
 		self.bossesHit = 0
 		self.hitsTaken = 0
+		self.moving = 0
 
 	def accel (self, accel_modifier):
-		self._a = numpy.array([accel_modifier * self._moving, 0.])*5
+		self._a = numpy.array([accel_modifier * self.moving, 0.])*5
 	
 	def fire (self, stress=0):
 		if (len(self.bullets) < maxBullets):
