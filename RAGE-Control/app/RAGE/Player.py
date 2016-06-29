@@ -5,7 +5,6 @@ from PlayerGun import *
 from math import pi
 from HXMReceiver import *
 from Sounds import *
-from HXMReceiver import *
 
 if 'RESOURCEPATH' in os.environ:
 	_mainDir = os.environ['RESOURCEPATH']

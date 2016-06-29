@@ -61,7 +61,7 @@ class PlayerList:
 		self.players[player].fire()
 		if self.superPlayerActive:
 			self.players[2].fire()
-	
+	ß
 	def move(self):
 		for player in self.players:
 			player.move()
