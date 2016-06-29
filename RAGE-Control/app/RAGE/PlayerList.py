@@ -1,6 +1,5 @@
 import Player, SuperPlayer, pygame, time, datetime, os
 from HXMReceiver import *
-from IPython import embed
 
 t = datetime.datetime.fromtimestamp(time.time())
 d = t.strftime('%Y-%m-%d')
@@ -61,7 +60,7 @@ class PlayerList:
 		self.players[player].fire()
 		if self.superPlayerActive:
 			self.players[2].fire()
-	ß
+	
 	def move(self):
 		for player in self.players:
 			player.move()

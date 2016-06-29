@@ -1,5 +1,4 @@
 import threading, OSC, datetime
-from IPython import embed
 
 colors = ['Blue', 'Green']
 
