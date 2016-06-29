@@ -1,19 +1,9 @@
 import threading, OSC, datetime
+from IPython import embed
 
 colors = ['Blue', 'Green']
 
 class HXMReceiver:
-	
-	def HXM_handler(self, addr, tags, data, source):
-		device = data[0]
-		if (len(self.devices) < (device + 1)):
-			self.devices.append(HXMWidget())
-		self.devices[device].HR=data[1]
-		self.devices[device].HRV=data[2]
-		self.devices[device].stress = data[3]
-		self.devices[device].color = data[4]
-		log = {'Timestamp': str(datetime.datetime.now()), 'Player': self.devices[device].color, 'HR':self.devices[device].HR}
-		self.hrHistory.append(log)
 
 	def __init__(self, minDevices=1):
 		addr = '127.0.0.1', 9000
@@ -23,8 +13,12 @@ class HXMReceiver:
 		for d in range(minDevices):
 			self.devices.append(HXMWidget())
 		self.devices[0].HR = 70
-		self.hrHistory = []
-		#self.devices[1].HR = 81
+
+	def HXM_handler(self, addr, tags, data, source):
+		device = data.pop(0)
+		if (len(self.devices) < (device + 1)):
+			self.devices.append(HXMWidget())
+		self.devices[device].set_stats(*data)
 	
 	def run(self):
 		self.st = threading.Thread( target = self.s.serve_forever )
@@ -35,16 +29,39 @@ class HXMReceiver:
 		self.st.join()
 		print "Done..."
 
-	def log(self):
-		out = "Player,Time,HR\n"
-		for item in self.hrHistory:
-			out += "{0},{1},{2}\n".format(item['Player'],item['Timestamp'],item['HR'])
-		return out
-
 class HXMWidget:
 
 	def __init__ (self):
-		self.HR = 0
-		self.HRV = 0
-		self.stress = 0
+		self.HR = 0.
+		self.HRV = 0.
+		self.stress = 0.
 		self.color = 'White'
+		self.hrHistory = []
+		self.avgHR = 0
+		self.minHR = 0
+		self.maxHR = 0
+		self.threshold = 0.
+		self.underThreshold = 0.
+
+	def set_stats(self, HR, HRV, stress, color='White'):
+		self.HR = HR
+		self.HRV = HRV
+		self.stress = stress
+		self.color = color
+		log = {'Timestamp': str(datetime.datetime.now()), 'HR':self.HR, 'UnderThreshold': self.HR <= self.threshold }
+		self.hrHistory.append(log)
+
+	def calculate_stats(self):
+		if self.hrHistory:
+			self.avgHR = int(sum(item['HR'] for item in self.hrHistory)/len(self.hrHistory))
+			self.minHR = int(min(item['HR'] for item in self.hrHistory))
+			self.maxHR = int(max(item['HR'] for item in self.hrHistory))
+			self.underThreshold = float(sum(item['UnderThreshold'] == True for item in self.hrHistory))/len(self.hrHistory)*100
+
+	def log(self):
+		out = "Player,Threshold,Time Under Threshold,Min HR,Max HR, Average HR\n"
+		out += "{0},{1},{2:.0f}%,{3},{4},{5}\n".format(self.color, self.threshold, self.underThreshold, self.minHR, self.maxHR, round(self.avgHR,1))
+		out += "Player,Time,HR,Under Threshold?\n"	
+		for item in self.hrHistory:
+			out += "{0},{1},{2},{3}\n".format(self.color, item['Timestamp'], item['HR'], item['UnderThreshold'])
+		return out

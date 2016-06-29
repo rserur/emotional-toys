@@ -110,5 +110,3 @@ class Sprite (pygame.sprite.Sprite):
 		self._v[x] = fabs(self._v[x] * 2)
 		if(collisionPos > self._x[x]):
 			self._v[x] = -self._v[x]
-
-		

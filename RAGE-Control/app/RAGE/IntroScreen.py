@@ -33,7 +33,7 @@ class IntroScreen:
 		print "reached introscreen init"
 		all = pygame.sprite.RenderUpdates()
 		self._screen = screen
-		self.background = Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,703), x=numpy.array([0.,0.]))
+		self.background = Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,803), x=numpy.array([0.,0.]))
 		self.titleParticles = Particles(all, screen, numpy.array([100.,100.]))
 		print "setting fonts"
 		self._defaultFont = os.path.join(_mainDir, 'fonts', 'questrial.ttf')#os.path.join(_mainDir, 'fonts', 'freesansbold.ttf')

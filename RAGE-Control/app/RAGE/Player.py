@@ -26,14 +26,18 @@ _headerFont = os.path.join(_mainDir, 'fonts', 'fugaz.ttf')
 
 class Player (Sprite):
 	
-	def __init__ (self, containers, screen, hxm=None, threshold=70, playerList=None, sound_on=True):
+	def __init__ (self, containers, screen, hxm=None, threshold=70, playerList=None, playerNum=0, sound_on=True):
 		Sprite.__init__(self, containers, screen, imageFile='goodguy2.png', size=(sizeX,sizeY), wobble=0.)
-		self._x = numpy.array([0., float(self._bounds[1])-10])
+		self._x = numpy.array([0., float(self._bounds[1])-60])
 		self._v = numpy.array([0.,0.])
 		self._bulletOffset = numpy.array([float(sizeX)/2., 0.])
+		self.playerNum = playerNum
 		self.bulletGroup = pygame.sprite.Group()
 		self.bullets = []
 		self.score = 0
+		self.thresholdScore = 0
+		self.totalThresholdScore = 0.
+		self.thresholdCrosses = 0
 		self.hxm = hxm
 		self.fontSmall = pygame.font.SysFont(_defaultFont, 18)
 		self.fontLarge = pygame.font.SysFont(_defaultFont, 40, bold=True)
@@ -51,9 +55,15 @@ class Player (Sprite):
 		self.stressed = False
 		self.playerList = playerList
 		self.sound_on = sound_on
-			
-	def accel (self, a):
-		self._a = numpy.array(a)*5
+		self.isSuperPlayer = False
+		self.asteroidsHit = 0
+		self.friendsHit = 0
+		self.bossesHit = 0
+		self.hitsTaken = 0
+		self.moving = 0
+
+	def accel (self, accel_modifier):
+		self._a = numpy.array([accel_modifier * self.moving, 0.])*5
 	
 	def fire (self, stress=0):
 		if (len(self.bullets) < maxBullets):
@@ -83,7 +93,18 @@ class Player (Sprite):
 			bullet.draw()
 		self.drawCountdownTimer()
 		self.drawColor()
-	
+
+	def drawHr (self, index):
+		hrTextLabelPos = numpy.array([60.,560.])
+		if index == 0:
+			hrTextPos = numpy.array([200.,570.])
+		else:
+			hrTextPos = numpy.array([645.,570.])
+		self.hrText = self.fontLarge.render(("%.0f"%round(self.hxm.HR,0)),True,white)
+		self._screen.blit(self.hrTextLabel, (hrTextPos[0], hrTextLabelPos[1]))
+		self._screen.blit(self.hrText, (hrTextPos[0], hrTextPos[1]))
+		self.drawColor(hrTextPos[0])
+
 	def move (self):
 		Sprite.move(self)
 		for bullet in self.bullets:
@@ -94,7 +115,7 @@ class Player (Sprite):
 				bullet.move()
 		if (self.hxm.HR-self.threshold) > 0:
 			self.playerList.tellEveryoneImStressed(self)
-			self.stressed = True
+			self.triggerStress()
 			self._wobble = self.hxm.stress/7.
 			if self._wobble > 1.:
 				self._wobble = 1.
@@ -106,11 +127,27 @@ class Player (Sprite):
 		if (self.stressed) and ((self.hxm.HR-self.threshold) < 0):
 			self.playerList.tellEveryoneImBetter(self)
 			self.stressed = False
-			
+
+	def wipeThresholdScore(self):
+		if self.thresholdScore > 0:
+			self.thresholdScore = 0
+			if self.sound_on:
+				Sounds().PowerDown()
+	
+	def triggerStress(self):
+		if self.stressed == False:
+			self.stressed = True
+			self.thresholdCrosses += 1
+
+	def changeThresholdScore(self, increment):
+		self.thresholdScore += increment
+
+	def changeTotalThresholdScore(self, increment):
+		self.totalThresholdScore += increment
 	
 	def changeScore(self, increment):
-		self.score += increment
-	
+		self.score += increment	
+
 	def startCountdown(self):
 		if (not self.countdownMode) and (not self.stressed):
 			self.countdownMode = True
@@ -131,7 +168,7 @@ class Player (Sprite):
 			pygame.draw.rect(self.countdownClockSurface, red, (0,endHeight*(1-countdownPct),5,endHeight))
 			self._screen.blit(self.countdownClockSurface, (self._x[0]-25, self._x[1]))
 
-	def drawColor(self):
+	def drawColor(self, hrTextPosX=None):
 		if self.hxm.color == 'Blue':
 			self.color = blue
 		elif self.hxm.color == 'Green':
@@ -139,4 +176,7 @@ class Player (Sprite):
 		else:
 			self.color = yellow
 		self.colorSurface.fill(self.color)
-		self._screen.blit(self.colorSurface, (self._x[0], self._x[1]+sizeY))
+		if (hrTextPosX is not None):
+			self._screen.blit(self.colorSurface, (hrTextPosX, 590.))
+		else:
+			self._screen.blit(self.colorSurface, (self._x[0], self._x[1]+sizeY))
