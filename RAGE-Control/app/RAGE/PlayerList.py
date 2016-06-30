@@ -46,18 +46,23 @@ class PlayerList:
 	def setDifficulty(self, difficulty):
 		self._difficulty = difficulty
 
+	def setMovement(self, player, moving):
+		if player < len(self.players):
+			self.players[player].moving = moving
+
 	def decel(self, player):
 		self.players[player].decel()
 
 	def accel(self, player):
-		if len(self.players) > player:
+		if player < len(self.players):
 			if player == 2:
 				self.players[player].superAccel(self.players[0].moving * self._difficulty)
 			else:
-				self.players[player].accel(self._difficulty)
+				self.players[player].accel(self.players[player].moving * self._difficulty)
 	
 	def fire(self, player):
-		self.players[player].fire()
+		if len(self.players) > player:
+			self.players[player].fire()
 		if self.superPlayerActive:
 			self.players[2].fire()
 	
