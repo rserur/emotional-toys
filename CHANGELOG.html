@@ -1,0 +1,1162 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>body {
+  width: 45em;
+  border: 1px solid #ddd;
+  outline: 1300px solid #fff;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 30px;
+}
+
+@font-face {
+  font-family: fontawesome-mini;
+  src: url(data:font/woff;charset=utf-8;base64,d09GRgABAAAAAAzUABAAAAAAFNgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAABbAAAABwAAAAcZMzaOEdERUYAAAGIAAAAHQAAACAAOQAET1MvMgAAAagAAAA+AAAAYHqhde9jbWFwAAAB6AAAAFIAAAFa4azkLWN2dCAAAAI8AAAAKAAAACgFgwioZnBnbQAAAmQAAAGxAAACZVO0L6dnYXNwAAAEGAAAAAgAAAAIAAAAEGdseWYAAAQgAAAFDgAACMz7eroHaGVhZAAACTAAAAAwAAAANgWEOEloaGVhAAAJYAAAAB0AAAAkDGEGa2htdHgAAAmAAAAAEwAAADBEgAAQbG9jYQAACZQAAAAaAAAAGgsICJBtYXhwAAAJsAAAACAAAAAgASgBD25hbWUAAAnQAAACZwAABOD4no+3cG9zdAAADDgAAABsAAAAmF+yXM9wcmVwAAAMpAAAAC4AAAAusPIrFAAAAAEAAAAAyYlvMQAAAADLVHQgAAAAAM/u9uZ4nGNgZGBg4ANiCQYQYGJgBEJuIGYB8xgABMMAPgAAAHicY2Bm42OcwMDKwMLSw2LMwMDQBqGZihmiwHycoKCyqJjB4YPDh4NsDP+BfNb3DIuAFCOSEgUGRgAKDgt4AAB4nGNgYGBmgGAZBkYGEAgB8hjBfBYGCyDNxcDBwMTA9MHhQ9SHrA8H//9nYACyQyFs/sP86/kX8HtB9UIBIxsDXICRCUgwMaACRoZhDwA3fxKSAAAAAAHyAHABJQB/AIEAdAFGAOsBIwC/ALgAxACGAGYAugBNACcA/wCIeJxdUbtOW0EQ3Q0PA4HE2CA52hSzmZDGe6EFCcTVjWJkO4XlCGk3cpGLcQEfQIFEDdqvGaChpEibBiEXSHxCPiESM2uIojQ7O7NzzpkzS8qRqnfpa89T5ySQwt0GzTb9Tki1swD3pOvrjYy0gwdabGb0ynX7/gsGm9GUO2oA5T1vKQ8ZTTuBWrSn/tH8Cob7/B/zOxi0NNP01DoJ6SEE5ptxS4PvGc26yw/6gtXhYjAwpJim4i4/plL+tzTnasuwtZHRvIMzEfnJNEBTa20Emv7UIdXzcRRLkMumsTaYmLL+JBPBhcl0VVO1zPjawV2ys+hggyrNgQfYw1Z5DB4ODyYU0rckyiwNEfZiq8QIEZMcCjnl3Mn+pED5SBLGvElKO+OGtQbGkdfAoDZPs/88m01tbx3C+FkcwXe/GUs6+MiG2hgRYjtiKYAJREJGVfmGGs+9LAbkUvvPQJSA5fGPf50ItO7YRDyXtXUOMVYIen7b3PLLirtWuc6LQndvqmqo0inN+17OvscDnh4Lw0FjwZvP+/5Kgfo8LK40aA4EQ3o3ev+iteqIq7wXPrIn07+xWgAAAAABAAH//wAPeJyFlctvG1UUh+/12DPN1B7P3JnYjj2Ox4/MuDHxJH5N3UdaEUQLqBIkfQQioJWQ6AMEQkIqsPGCPwA1otuWSmTBhjtps2ADWbJg3EpIXbGouqSbCraJw7kzNo2dRN1cnXN1ZvT7zuuiMEI7ncizyA0URofRBJpCdbQuIFShYY+GZRrxMDVtih5TwQPHtXDFFSIKoWIbuREBjLH27Ny4MsbVx+uOJThavebgVrNRLAiYx06rXsvhxLgWx9xpfHdrs/ekc2Pl2cpPCVEITQpwbj8VQhfXSq2m+Wxqaq2D73Kne5e3NjHqQNj3CRYlJlgUl/jRNP+2Gs2pNYRQiOnmUaQDqm30KqKiTTWPWjboxnTWpvgxjXo0KrtZXAHt7hwIz0YVcj88JnKlJKi3NPAwLyDwZudSmJSMMJFDYaOkaol6XtESx3Gt1VTytdZJ3DCLeaVhVnCBH1fycHTxFXwPX+l2e3d6H/TufGGmMTLTnbSJUdo00zuBswMO/nl3YLeL/wnu9/limCuD3vC54h5NBVz6Li414AI8Vx3iiosKcQXUbrvhFFiYb++HN4DaF4XzFW0fIN4XDWJ3a3XQoq9V8WiyRmdsatV9xUcHims1JloH0YUa090G3Tro3mC6c01f+YwCPquINr1PTaCP6rVTOOmf0GE2dBc7zWIhji3/5MchSuBHgDbU99RMWt3YUNMZMJmx92YP6NsHx/5/M1yvInpnkIOM3Z8fA3JQ2lW1RFC1KaBPDFXNAHYYvGy73aYZZZ3HifbeuiVZCpwA3oQBs0wGPYJbJfg60xrKEbKiNtTe1adwrpBRwlAuQ3q3VRaX0QmQ9a49BTSCuF1MLfQ6+tinOubRBZuWPNoMevGMT+V41KitO1is3D/tpMcq1JHZqDHGs8DoYGDkxJgKjHROeTCmhZvzPm9pod+ltKm4PN7Dyvvldlpsg8D+4AUJZ3F/JBstZz7cbFRxsaAGV6yX/dkcycWf8eS3QlQea+YLjdm3yrOnrhFpUyKVvFE4lpv4bO3Svx/6F/4xmiDu/RT5iI++lko18mY1oX+5UGKR6kmVjM/Zb76yfHtxy+h/SyQ0lLdpdKy/lWB6szatetQJ8nZ80A2Qt6ift6gJeavU3BO4gtxs/KCtNPVibCtYCWY3SIlSBPKXZALXiIR9oZeJ1AuMyxLpHIy/yO7vSiSE+kZvk0ihJ30HgHfzZtEMmvV58x6dtqns0XTAW7Vdm4HJ04OCp/crOO7rd9SGxQAE/mVA9xRN+kVSMRFF6S9JFGUtthkjBA5tFCWc2l4V43Ex9GmUP3SI37Jjmir9KqlaDJ4S4JB3vuM/jzyH1+8MuoZ+QGzfnvPoJb96cZlWjMcKLfgDwB7E634JTY+asjsPzS5CiVnEWY+KsrsIN5rn3mAPjqmQBxGjcGKB9f9ZxY3mYC2L85CJ2FXIxKKyHk+dg0FHbuEc7D5NzWUX32WxFcWNGRAbvwSx0RmIXVDuYySafluQBmzA/ssqJAMLnli+WIC90Gw4lm85wcp0qjArEDPJJV/sSx4P9ungTpgMw5gVC1XO4uULq0s3v1rqLi0vX/z65vlH50f8T/RHmSPTk5xxWBWOluMT6WiOy+tdvWxlV/XQb3o3c6Ssr+r6I708GsX9/nzp1tKFh0s3v7m4vAy/Hnb/KMOvc1wump6Il48K6mGDy02X9Yd65pa+nQIjk76lWxCkG8NBCP0HQS9IpAAAeJxjYGRgYGBhcCrq214Qz2/zlUGenQEEzr/77oug/zewFbB+AHI5GJhAogBwKQ0qeJxjYGRgYH3/P46BgZ0BBNgKGBgZUAEPAE/7At0AAAB4nGNngAB2IGYjhBsYBAAIYADVAAAAAAAAAAAAAFwAyAEeAaACCgKmAx4DggRmAAAAAQAAAAwAagAEAAAAAAACAAEAAgAWAAABAAChAAAAAHiclZI7bxQxFIWPd/JkUYQChEhIyAVKgdBMskm1QkKrRETpQiLRUczueB/K7HhlOxttg8LvoKPgP9DxFxANDR0tHRWi4NjrPIBEgh1p/dm+vufcawNYFWsQmP6e4jSyQB2fI9cwj++RE9wTjyPP4LYoI89iWbyLPIe6+Bh5Hs9rryMv4GbtW+RF3EhuRa7jbrIbeQkPkjdUETOLnL0Kip4FVvAhco1RXyMnSPEz8gzWxE7kWTwUp5HnsCLeR57HW/El8gJWa58iL+JO7UfkOh4l9yMv4UnyEtvQGGECgwF66MNBooF1bGCL1ELB/TYU+ZBRlvsKQ44Se6jQ4a7hef+fh72Crv25kp+8lNWGmeKoOI5jJLb1aGIGvb6TjfWNLdkqdFvJw4l1amjlXtXRZqRN7lSRylZZyhBqpVFWmTEXgWfUrpi/hZOQXdOd4rKuXOtEWT3k5IArPRzTUU5tHKjecZkTpnVbNOnt6jzN8240GD4xtikvZW56043rPMg/dS+dlOceXoR+WPbJ55Dsekq1lJpnypsMUsYOdCW30o103Ytu/lvh+5RWFLfBjm9/N8hJntPhvx92rnoE/kyHdGasGy754kw36vsVf/lFeBi+0COu+cfgQr42G3CRpeLoZ53gmfe3X6rcKt5oVxnptHR9JS8ehVUd5wvvahN2uqxOOpMXapibI5k7Zwbt4xBSaTfoKBufhAnO/uqNcfK8OTs0OQ6l7JIqFjDhYj5WcjevCnI/1DDiI8j4ndWb/5YzDZWh79yomWXeXj7Nnw70/2TIeFPTrlSh89k1ObOSRVZWZfgF0r/zJQB4nG2JUQuCQBCEd07TTg36fb2IyBaLd3vWaUh/vmSJnvpgmG8YcmS8X3Shf3R7QA4OBUocUKHGER5NNbOOEvwc1txnuWkTRb/aPjimJ5vXabI+3VfOiyS15UWvyezM2xiGOPyuMohOH8O8JiO4Af+FsAGNAEuwCFBYsQEBjlmxRgYrWCGwEFlLsBRSWCGwgFkdsAYrXFhZsBQrAAA=) format('woff');
+}
+
+@font-face {
+  font-family: octicons-anchor;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333333;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body b,
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body sub,
+.markdown-body sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.markdown-body sup {
+  top: -0.5em;
+}
+.markdown-body sub {
+  bottom: -0.25em;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body .codehilitetable {
+  border: 0;
+  border-spacing: 0;
+}
+
+.markdown-body .codehilitetable tr {
+  border: 0;
+}
+
+.markdown-body .codehilitetable pre,
+.markdown-body .codehilitetable div.codehilite {
+  margin: 0;
+}
+
+.markdown-body .linenos,
+.markdown-body .code,
+.markdown-body .codehilitetable td {
+  border: 0;
+  padding: 0;
+}
+
+.markdown-body td:not(.linenos) .linenodiv {
+  padding: 0 !important;
+}
+
+.markdown-body .code {
+  width: 100%;
+}
+
+.markdown-body .linenos div pre,
+.markdown-body .linenodiv pre,
+.markdown-body .linenodiv {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.markdown-body .code div pre,
+.markdown-body .code div {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.markdown-body * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.4;
+}
+
+.markdown-body a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:focus,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before,
+.markdown-body hr:after {
+  display: table;
+  content: " ";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #e7e7e7;
+  background-image: -moz-linear-gradient(#fefefe, #e7e7e7);
+  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  border-radius: 2px;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  padding: 3px 5px;
+  line-height: 10px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  display: inline-block;
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body .headeranchor-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  padding-right: 6px;
+  padding-left: 30px;
+  margin-left: -30px;
+}
+
+.markdown-body .headeranchor-link:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  position: relative;
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .headeranchor,
+.markdown-body h2 .headeranchor,
+.markdown-body h3 .headeranchor,
+.markdown-body h4 .headeranchor,
+.markdown-body h5 .headeranchor,
+.markdown-body h6 .headeranchor {
+  display: none;
+  color: #000;
+  vertical-align: middle;
+}
+
+.markdown-body h1:hover .headeranchor-link,
+.markdown-body h2:hover .headeranchor-link,
+.markdown-body h3:hover .headeranchor-link,
+.markdown-body h4:hover .headeranchor-link,
+.markdown-body h5:hover .headeranchor-link,
+.markdown-body h6:hover .headeranchor-link {
+  height: 1em;
+  padding-left: 8px;
+  margin-left: -30px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .headeranchor-link .headeranchor,
+.markdown-body h2:hover .headeranchor-link .headeranchor,
+.markdown-body h3:hover .headeranchor-link .headeranchor,
+.markdown-body h4:hover .headeranchor-link .headeranchor,
+.markdown-body h5:hover .headeranchor-link .headeranchor,
+.markdown-body h6:hover .headeranchor-link .headeranchor {
+  display: inline-block;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre,
+.markdown-body .admonition {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body code,
+.markdown-body samp {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .codehilite {
+  margin-bottom: 16px;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .codehilite pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+/* Admonition */
+.markdown-body .admonition {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+  border-left: 6px solid #333;
+  padding: 10px 10px 10px 30px;
+}
+
+.markdown-body .admonition table {
+  color: #333;
+}
+
+.markdown-body .admonition p {
+  padding: 0;
+}
+
+.markdown-body .admonition-title {
+  font-weight: bold;
+  margin: 0;
+}
+
+.markdown-body .admonition>.admonition-title {
+  color: #333;
+}
+
+.markdown-body .attention>.admonition-title {
+  color: #a6d796;
+}
+
+.markdown-body .caution>.admonition-title {
+  color: #d7a796;
+}
+
+.markdown-body .hint>.admonition-title {
+  color: #96c6d7;
+}
+
+.markdown-body .danger>.admonition-title {
+  color: #c25f77;
+}
+
+.markdown-body .question>.admonition-title {
+  color: #96a6d7;
+}
+
+.markdown-body .note>.admonition-title {
+  color: #d7c896;
+}
+
+.markdown-body .admonition:before,
+.markdown-body .attention:before,
+.markdown-body .caution:before,
+.markdown-body .hint:before,
+.markdown-body .danger:before,
+.markdown-body .question:before,
+.markdown-body .note:before {
+  font: normal normal 16px fontawesome-mini;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1.5;
+  color: #333;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.markdown-body .admonition:before {
+  content: "\f056\00a0";
+  color: 333;
+}
+
+.markdown-body .attention:before {
+  content: "\f058\00a0";
+  color: #a6d796;
+}
+
+.markdown-body .caution:before {
+  content: "\f06a\00a0";
+  color: #d7a796;
+}
+
+.markdown-body .hint:before {
+  content: "\f05a\00a0";
+  color: #96c6d7;
+}
+
+.markdown-body .danger:before {
+  content: "\f057\00a0";
+  color: #c25f77;
+}
+
+.markdown-body .question:before {
+  content: "\f059\00a0";
+  color: #96a6d7;
+}
+
+.markdown-body .note:before {
+  content: "\f040\00a0";
+  color: #d7c896;
+}
+
+.markdown-body .admonition::after {
+  content: normal;
+}
+
+.markdown-body .attention {
+  border-left: 6px solid #a6d796;
+}
+
+.markdown-body .caution {
+  border-left: 6px solid #d7a796;
+}
+
+.markdown-body .hint {
+  border-left: 6px solid #96c6d7;
+}
+
+.markdown-body .danger {
+  border-left: 6px solid #c25f77;
+}
+
+.markdown-body .question {
+  border-left: 6px solid #96a6d7;
+}
+
+.markdown-body .note {
+  border-left: 6px solid #d7c896;
+}
+
+.markdown-body .admonition>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body .admonition>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* progress bar*/
+.markdown-body .progress {
+  display: block;
+  width: 300px;
+  margin: 10px 0;
+  height: 24px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #ededed;
+  position: relative;
+  box-shadow: inset -1px 1px 3px rgba(0, 0, 0, .1);
+}
+
+.markdown-body .progress-label {
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  width: 100%; margin: 0;
+  line-height: 24px;
+  color: #333;
+  text-shadow: 1px 1px 0 #fefefe, -1px -1px 0 #fefefe, -1px 1px 0 #fefefe, 1px -1px 0 #fefefe, 0 1px 0 #fefefe, 0 -1px 0 #fefefe, 1px 0 0 #fefefe, -1px 0 0 #fefefe, 1px 1px 2px #000;
+  -webkit-font-smoothing: antialiased !important;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.markdown-body .progress-bar {
+  height: 24px;
+  float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #96c6d7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .1);
+  background-size: 30px 30px;
+  background-image: -webkit-linear-gradient(
+    135deg, rgba(255, 255, 255, .4) 27%,
+    transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%,
+    transparent 77%, transparent
+  );
+  background-image: -moz-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -ms-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -o-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+}
+
+.markdown-body .progress-100plus .progress-bar {
+  background-color: #a6d796;
+}
+
+.markdown-body .progress-80plus .progress-bar {
+  background-color: #c6d796;
+}
+
+.markdown-body .progress-60plus .progress-bar {
+  background-color: #d7c896;
+}
+
+.markdown-body .progress-40plus .progress-bar {
+  background-color: #d7a796;
+}
+
+.markdown-body .progress-20plus .progress-bar {
+  background-color: #d796a6;
+}
+
+.markdown-body .progress-0plus .progress-bar {
+  background-color: #c25f77;
+}
+
+.markdown-body .candystripe-animate .progress-bar{
+  -webkit-animation: animate-stripes 3s linear infinite;
+  -moz-animation: animate-stripes 3s linear infinite;
+  animation: animate-stripes 3s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@-moz-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+.markdown-body .gloss .progress-bar {
+  box-shadow:
+    inset 0 4px 12px rgba(255, 255, 255, .7),
+    inset 0 -12px 0 rgba(0, 0, 0, .05);
+}
+
+/* Multimarkdown Critic Blocks */
+.markdown-body .critic_mark {
+  background: #ff0;
+}
+
+.markdown-body .critic_delete {
+  color: #c82829;
+  text-decoration: line-through;
+}
+
+.markdown-body .critic_insert {
+  color: #718c00 ;
+  text-decoration: underline;
+}
+
+.markdown-body .critic_comment {
+  color: #8e908c;
+  font-style: italic;
+}
+
+.markdown-body .headeranchor {
+  font: normal normal 16px octicons-anchor;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.headeranchor:before {
+  content: '\f05c';
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 4px 0.25em -20px;
+  vertical-align: middle;
+}
+
+/* Media */
+@media only screen and (min-width: 480px) {
+  .markdown-body {
+    font-size:14px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .markdown-body {
+    font-size:16px;
+  }
+}
+
+@media print {
+  .markdown-body * {
+    background: transparent !important;
+    color: black !important;
+    filter:none !important;
+    -ms-filter: none !important;
+  }
+
+  .markdown-body {
+    font-size:12pt;
+    max-width:100%;
+    outline:none;
+    border: 0;
+  }
+
+  .markdown-body a,
+  .markdown-body a:visited {
+    text-decoration: underline;
+  }
+
+  .markdown-body .headeranchor-link {
+    display: none;
+  }
+
+  .markdown-body a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  .markdown-body abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .markdown-body .ir a:after,
+  .markdown-body a[href^="javascript:"]:after,
+  .markdown-body a[href^="#"]:after {
+    content: "";
+  }
+
+  .markdown-body pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .markdown-body pre,
+  .markdown-body blockquote {
+    border: 1px solid #999;
+    padding-right: 1em;
+    page-break-inside: avoid;
+  }
+
+  .markdown-body .progress,
+  .markdown-body .progress-bar {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .markdown-body .progress {
+    border: 1px solid #ddd;
+  }
+
+  .markdown-body .progress-bar {
+    height: 22px;
+    border-right: 1px solid #ddd;
+  }
+
+  .markdown-body tr,
+  .markdown-body img {
+    page-break-inside: avoid;
+  }
+
+  .markdown-body img {
+    max-width: 100% !important;
+  }
+
+  .markdown-body p,
+  .markdown-body h2,
+  .markdown-body h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .markdown-body h2,
+  .markdown-body h3 {
+    page-break-after: avoid;
+  }
+}
+</style><title>CHANGELOG</title></head><body><article class="markdown-body"><h2 id="change-log"><a name="user-content-change-log" href="#change-log" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Change Log</h2>
+<h3 id="upcoming-20160630"><a name="user-content-upcoming-20160630" href="#upcoming-20160630" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>upcoming (2016/06/30)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/pull/4">#4</a> Merge pull request #4 from rserur/optimization (@rserur)</li>
+</ul>
+<h3 id="v185-20160630"><a name="user-content-v185-20160630" href="#v185-20160630" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.8.5 (2016/06/30)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/cb3b79916d0a385f6ad401181f74388ae719d32e">cb3b799</a> Changed version number. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/c5009332a6f9a0620767a8c1394a0896cdcd06ef">c500933</a> Ensured new movement code works in 1P mode. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/4792f610bddc9a25951698e03d6c1c1127b273d0">4792f61</a> Improved HR stats and superzone transformation code. (No functionality changes.) (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/6a6b69fe809e1445cbb241272edc45601044b819">6a6b69f</a> Removed IPython embed imports. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/666bf9be19d4a502ab94dbb57251aafc480b9987">666bf9b</a> Cleanup. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/a8672bd0ec1c774a9a48cdb366fa8da46c1c2ae6">a8672bd</a> Further adjusted superplayer movement. Changed superzone spawning range due to bounding error. Making sure superplayer is not iterated over in ending screen. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/4eba90e21b11c33d8a2e3a64888002a1298a6a23">4eba90e</a> Added threshold crossing count. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/a07ca8f3f96adc2450f96660eae7bd2e41f3a092">a07ca8f</a> Added new HR stats to ending screen and refactored the screen&rsquo;s text code a bit. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/fc3d02d12be126e765d6d4d461728603d3fa80c1">fc3d02d</a> Added new HR stats to HXM widget and log: time under threshold (by second), avg HR, min HR, and max HR. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/e27864f2ed5dd85d0ba6676c9edbfbab62abf3ab">e27864f</a> Removing momentum from superplayer movement. Refactored HXM_handler callback so it can quickly log HR stats. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/a565df850134877e0108c6305c779011063a6f07">a565df8</a> Simplifying conditionals in input function. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/fdaeeaf36afe72f592a160c1f68f28baafa2ad0f">fdaeeaf</a> More cleaning up superplayer movement and firing code. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/88a1335cc1e1e30a333896370507156fe26b3a93">88a1335</a> Further refactored code pertaining to movement + difficulty. Also found some spots where sound_on needed to be checked first. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/34d52223e6031d9bc5996870737ddde3e0389392">34d5222</a> Simplified difficulty &lt;-&gt; accel-modifer code. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/a8679f6780983635b16c9c60733b162eb14ff14d">a8679f6</a> Trimmed movement-related code. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/9847e75805e2158a39fc68db6270b092f34847ff">9847e75</a> Updated changelog. (@rserur)</li>
+</ul>
+<h3 id="v180-20160623"><a name="user-content-v180-20160623" href="#v180-20160623" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.8.0 (2016/06/23)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/d429fff87c259ed37498b986b36b3c2440917da9">d429fff</a> Updated version number. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/7cb320081ac22550e132fdabbc4f1b2cbe3f6460">7cb3200</a> Refactored superplayer movement so syncing can be inexact. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/pull/2">#2</a> Merge pull request #2 from rserur/superplayer (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/pull/1">#1</a> Merge pull request #1 from rserur/develop (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/c6411c67bb6a8856307a538c35d2d2d9d43152f8">c6411c6</a> Updated version and changelog. (@rserur)</li>
+</ul>
+<h3 id="v170-20160531"><a name="user-content-v170-20160531" href="#v170-20160531" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.7.0 (2016/05/31)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/401ab44cd598fc28bfab2ed92cf4c2745cdc1c8c">401ab44</a> Ending screen. Numerous types of hits now tracked on player model. Time under threshold calculated. (@rserur)</li>
+</ul>
+<h3 id="v164-20160522"><a name="user-content-v164-20160522" href="#v164-20160522" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.6.4 (2016/05/22)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/aab265b100a939a8426d12c34a0bc8cb4cacb694">aab265b</a> Changed clock to text display. (@rserur)</li>
+</ul>
+<h3 id="v163-20160522"><a name="user-content-v163-20160522" href="#v163-20160522" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.6.3 (2016/05/22)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/445fb32da3e487df5c27b10c2b51ea70a3d3411d">445fb32</a> Limiting boss spawn x coordinate. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/55be444b82e997db66f64a48becb1bda696fcdf8">55be444</a> Changelog and version. (@rserur)</li>
+</ul>
+<h3 id="v162-20160513"><a name="user-content-v162-20160513" href="#v162-20160513" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.6.2 (2016/05/13)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/11b6ca357fb98bb4d72dc23e5eaffc2411b8fb00">11b6ca3</a> Synced superplayer fixed for gamepads. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/8f1346bb495244b9745b10da1c46d2c107f8b113">8f1346b</a> Updated changelog and version. (@rserur)</li>
+</ul>
+<h3 id="v161-20160418"><a name="user-content-v161-20160418" href="#v161-20160418" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.6.1 (2016/04/18)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/9487315188e3a29991729bfebb4003d11d13dbfd">9487315</a> Requiring players to sync left/right direction to move superplayer at all. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/2e3cf12eeda4c710e4543bec170d0191f48c983b">2e3cf12</a> Removed boss explosions upon minimum collisions with friend ships. Limiting bosses to one at a time, but with slightly increased frequency. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/abdbcce0fc1b5a4218d13b59f23b77a3389165be">abdbcce</a> Updated changelog and version. (@rserur)</li>
+</ul>
+<h3 id="v160-20160324"><a name="user-content-v160-20160324" href="#v160-20160324" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.6.0 (2016/03/24)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/da48cfda542a40d0a55ac2fe351c51ac1011f675">da48cfd</a> Improved superzoning process, messaging, and collision sensitivity. Cleaned up and add super sound fx for more player hinting. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/36833e6579e28b32de6d2af590f0983336a2e654">36833e6</a> Completed implementation of power down sound for threshold score wipe. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/380863ae5c17066b59c76d74a2971f2c765a2013">380863a</a> Shortened time needed under threshold to achieve superzone, so superplayer can be achieved more times in one game. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/a337362dd8783aa2d6e92899e07b9bd62478bcb7">a337362</a> Limiting superplayer ability based on player stress levels. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/5a05bd16302c53bc709d5340bf4656d03cf61327">5a05bd1</a> Doubled superplayer-villian hit points. Breaking apart superplayer after 5 asteroid/boss hits. Displaying bosses more frequently. Updated window caption. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/1acb56dcbe087e2435f1f4e62152849e2bfa1cb0">1acb56d</a> Updated changelog and version. (@rserur)</li>
+</ul>
+<h3 id="v153-20160323"><a name="user-content-v153-20160323" href="#v153-20160323" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.5.3 (2016/03/23)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/b5bb3472c17a33dd612585e10e84bfdd9b37207a">b5bb347</a> Optimized images. Tweaked firing logic. (@rserur)</li>
+</ul>
+<h3 id="v152-20160322"><a name="user-content-v152-20160322" href="#v152-20160322" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.5.2 (2016/03/22)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/fd0f8ce2d48f3f36f6e0a33836b22279c7d6085e">fd0f8ce</a> Added graphic and sound fx for new features. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/b7469ae6da484ba11388614bf82b176d230f88e0">b7469ae</a> Moved HR meter and superzone HRs to HUD area beneath players. (@rserur)</li>
+</ul>
+<h3 id="v150-20160322"><a name="user-content-v150-20160322" href="#v150-20160322" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.5.0 (2016/03/22)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/73ee19dc01292044ba36fe2dc223575cc996ce8c">73ee19d</a> Created HR meters for HUD and added &lsquo;thresholdScore&rsquo; based on how long a player stays under threshold. Now using threshold scores from both players to activate superzone. (@rserur)</li>
+</ul>
+<h3 id="v140-20160321"><a name="user-content-v140-20160321" href="#v140-20160321" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.4.0 (2016/03/21)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/ee670f2869e03815f4f105bc545b9bf8295b4b97">ee670f2</a> Using sprite for superzone. Successfully detecting when both players enter the superzone. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/bfad3b9c86569c37697894c7e8d5f58f900a03c1">bfad3b9</a> Using version.txt instead of gitpython to display version on app introscreen. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/9e63652a211ef2162b346dafb92e1076ab79b12a">9e63652</a> Updated changelog. (@rserur)</li>
+</ul>
+<h3 id="v132-20160316"><a name="user-content-v132-20160316" href="#v132-20160316" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.3.2 (2016/03/16)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/a58b8ff837ff7768cb687a997a92e3f6f1af6709">a58b8ff</a> Adding version # to intro screen and app build. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/ef57468affe6562719850c361057575a8d38ff8b">ef57468</a> Sound fx for friend hit. Better font. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/d0c4762b946281c2cd670914adcc118f9527e4d1">d0c4762</a> Lengthened flash message time. Using alternative explosion sprite for boss explosion. (Larger and fiery.) (@rserur)</li>
+</ul>
+<h3 id="v131-20160316"><a name="user-content-v131-20160316" href="#v131-20160316" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.3.1 (2016/03/16)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/07da5d2c9602ac7fcbf8b8e6be7826d1984dadba">07da5d2</a> Removed print statements. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/9b680d1c5a77af51107590835d77566a0197e488">9b680d1</a> Updated changelog. (@rserur)</li>
+</ul>
+<h3 id="v130-20160316"><a name="user-content-v130-20160316" href="#v130-20160316" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.3.0 (2016/03/16)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/4e76500674644f8303fd72dccae875ce98fc89c1">4e76500</a> Removed boss-friend bounce effect. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/eb50cb3d6abb94ee97a635e2ea76aedf8a8f4dfe">eb50cb3</a> Tightened star bullet path boundaries. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/fea69d9092133d0274b7b67d06837e98a163ece5">fea69d9</a> Boss speed reduced by 1/4 rather than 1/2 based on participant trial. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/f65ab6fdbf9910c04d0a8dc25cfa0a9c80d52adc">f65ab6f</a> Subtracting 100 points when player crashes into an asteroid or boss. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/cefff38ee446ad2f2709f6dbcf108e7a98d8ab1d">cefff38</a> Good/bad flashes finished and made to be temporary. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/280e89279aab79b13fa436903f6086ce4507b6e7">280e892</a> Moved success sound for boss defeat. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/87bef67b7c0ea503692b6a31808835de4851cf06">87bef67</a> Made friends slightly larger. Restored friend death by meteor, but without any point substraction. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/684fc20f3b29c882ec311fccb38680fc0b0a819a">684fc20</a> Now only subtracting 100 if friend is hit by a player&rsquo;s bullet&ndash; never when a friend is hit by villian or boss. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/74aa0454db4fd4153b9272983e5d458216109bdc">74aa045</a> Replaced sprite for regular meteors with a more recognizable graphic, half the size of the old original transparent bounding box for similar gameplay, but trimmed to visible pixels. Halved the boss speed. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/1db3f633eb017a3157923e686294d00f1bde463a">1db3f63</a> Smoothing graphic display, removing transparent bounding boxes, adding boss sound fx, new secondary font, and adding message flashes. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/80d41fe0e2af6f2068f11cf515eb2f927cfab1f5">80d41fe</a> Added changelog. Retroactively versioned 1.0.0, demarcating codebase pre-CALMS fork. (@rserur)</li>
+</ul>
+<h3 id="v121-20160309"><a name="user-content-v121-20160309" href="#v121-20160309" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.2.1 (2016/03/09)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/28d2d858ec8c1b27968af180fee5f3871b999b13">28d2d85</a> Removed Log directory from RAGE-Control. (@rserur)</li>
+</ul>
+<h3 id="v120-20160309"><a name="user-content-v120-20160309" href="#v120-20160309" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.2.0 (2016/03/09)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/0eb288e79bb668cb6c5b9a91b2f5d89eb6ad8acd">0eb288e</a> Modified log writing to save outside of app and into current user&rsquo;s Documents directory. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/47baa72ec87e2a55230b706f46f524e1ad95c94b">47baa72</a> Added log files to gitignore. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/695ab1d6674c415d052b8f85a4cbd338ee1eb6b1">695ab1d</a> Removed redundant files, now that redistributable code can also run directly from python at command line. Cleaned out unused files. Added RAGE-Control and CALMS details to README. (@rserur)</li>
+</ul>
+<h3 id="v110-20160229"><a name="user-content-v110-20160229" href="#v110-20160229" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.1.0 (2016/02/29)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/753f1d4a6b56e5e63f31e000265689bf4987affb">753f1d4</a> Replaced buggy graphics and resolved rendering issues that previously resulted in white borders around detected transparent areas. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/2e98679fcc6522b98de4b8b27a7ad484ac563a2e">2e98679</a> Restored log directories to repo. (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/8994c6b6842135dc356a0da2927a0ba06076d336">8994c6b</a> Added way to run app/game0.py without needing to run py2app.git show (@rserur)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/d041f4b779b6ced863443aafea5a0bf714809ccc">d041f4b</a> Resolved numpy-related bug interfering with boss code. (@rserur)</li>
+</ul>
+<h3 id="v100-20150514"><a name="user-content-v100-20150514" href="#v100-20150514" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>v1.0.0 (2015/05/14)</h3>
+<ul>
+<li><a href="https://github.com/rserur/emotional-toys/commit/cd6fd214f9bb33c1496caef05b9190d7a600a1f1">cd6fd21</a> fixing nested repositories (@marcb23)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/82fac51a86e45cdc19e7dad7d9e778a86d4465c9">82fac51</a> fixing nested repositories (@marcb23)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/cfc5b0415e33e64ff39c1117c8e5f040a4356e69">cfc5b04</a> fixed nested repositories (@marcb23)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/1a0bd1fcc880e2284104a40aa2cdde73be73d4e7">1a0bd1f</a> removed extra folders (@marcb23)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/a1f9987dccbb840661c7b2a9f6e54570b53d2206">a1f9987</a> removed extra folders (@marcb23)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/ec9629b309334d858113e65c849cf6b690045d08">ec9629b</a> removed extra folders (@marcb23)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/57c6d097308658978844f142a932cffe46e51149">57c6d09</a> removed extra folders (@marcb23)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/75967b44c6dd714bb21d6340954668547d8e4a9f">75967b4</a> deleted Table_2 (@marcb23)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/404ff40ff79250e217a4c1f9b10179fd0f5f999c">404ff40</a> Merge branch &lsquo;master&rsquo; of <a href="https://github.com/jkahn01/emotional-toys">https://github.com/jkahn01/emotional-toys</a> (@marcb23)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/ca813bd4288a9b590fdb097ea765c6f5001174a5">ca813bd</a> removed GSR folder (@marcb23)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/ce81a7910fd9352427cb6e2b3b80a7aec254aaa2">ce81a79</a> Delete to_do_list.md (@marcb23)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/47be5d5d9287d71798bbbc2ac14b367cff83129d">47be5d5</a> Delete timesheet_3_7.xls (@marcb23)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/36cf1481d3128ca4576ac043476d5c355c39cebd">36cf148</a> Delete Timesheet Biweekly Non-Exempt.xls (@marcb23)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/fe0a8da60efdccd79893ab36ec2ab35793545b01">fe0a8da</a> Delete timesheet_11_8.xls (@marcb23)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/aac45dcebd0b13f344bcf3dd4c02302266b782b7">aac45dc</a> Delete timesheet_11_15.xls (@marcb23)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/e31224b576675c913d3ad03cf70f7989218a8ca1">e31224b</a> Marc Bucchieri&rsquo;s BCH resources (@marcb23)</li>
+<li><a href="https://github.com/rserur/emotional-toys/commit/f76aa9602fa7c1f9f4ba5151d8c9c8b951969869">f76aa96</a> full commit of Marc Bucchieri&rsquo;s material (@marcb23)</li>
+</ul></article></body></html>

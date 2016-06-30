@@ -1,8 +1,28 @@
 ## Change Log
 
+### v1.8.5 (2016/06/30)
+- [cb3b799](https://github.com/rserur/emotional-toys/commit/cb3b79916d0a385f6ad401181f74388ae719d32e) Changed version number. (@rserur)
+- [c500933](https://github.com/rserur/emotional-toys/commit/c5009332a6f9a0620767a8c1394a0896cdcd06ef) Ensured new movement code works in 1P mode. (@rserur)
+- [4792f61](https://github.com/rserur/emotional-toys/commit/4792f610bddc9a25951698e03d6c1c1127b273d0) Improved HR stats and superzone transformation code. (No functionality changes.) (@rserur)
+- [6a6b69f](https://github.com/rserur/emotional-toys/commit/6a6b69fe809e1445cbb241272edc45601044b819) Removed IPython embed imports. (@rserur)
+- [666bf9b](https://github.com/rserur/emotional-toys/commit/666bf9be19d4a502ab94dbb57251aafc480b9987) Cleanup. (@rserur)
+- [a8672bd](https://github.com/rserur/emotional-toys/commit/a8672bd0ec1c774a9a48cdb366fa8da46c1c2ae6) Further adjusted superplayer movement. Changed superzone spawning range due to bounding error. Making sure superplayer is not iterated over in ending screen. (@rserur)
+- [4eba90e](https://github.com/rserur/emotional-toys/commit/4eba90e21b11c33d8a2e3a64888002a1298a6a23) Added threshold crossing count. (@rserur)
+- [a07ca8f](https://github.com/rserur/emotional-toys/commit/a07ca8f3f96adc2450f96660eae7bd2e41f3a092) Added new HR stats to ending screen and refactored the screen's text code a bit. (@rserur)
+- [fc3d02d](https://github.com/rserur/emotional-toys/commit/fc3d02d12be126e765d6d4d461728603d3fa80c1) Added new HR stats to HXM widget and log: time under threshold (by second), avg HR, min HR, and max HR. (@rserur)
+- [e27864f](https://github.com/rserur/emotional-toys/commit/e27864f2ed5dd85d0ba6676c9edbfbab62abf3ab) Removing momentum from superplayer movement. Refactored HXM_handler callback so it can quickly log HR stats. (@rserur)
+- [a565df8](https://github.com/rserur/emotional-toys/commit/a565df850134877e0108c6305c779011063a6f07) Simplifying conditionals in input function. (@rserur)
+- [fdaeeaf](https://github.com/rserur/emotional-toys/commit/fdaeeaf36afe72f592a160c1f68f28baafa2ad0f) More cleaning up superplayer movement and firing code. (@rserur)
+- [88a1335](https://github.com/rserur/emotional-toys/commit/88a1335cc1e1e30a333896370507156fe26b3a93) Further refactored code pertaining to movement + difficulty. Also found some spots where sound_on needed to be checked first. (@rserur)
+- [34d5222](https://github.com/rserur/emotional-toys/commit/34d52223e6031d9bc5996870737ddde3e0389392) Simplified difficulty <-> accel-modifer code. (@rserur)
+- [a8679f6](https://github.com/rserur/emotional-toys/commit/a8679f6780983635b16c9c60733b162eb14ff14d) Trimmed movement-related code. (@rserur)
+- [9847e75](https://github.com/rserur/emotional-toys/commit/9847e75805e2158a39fc68db6270b092f34847ff) Updated changelog. (@rserur)
+
 ### v1.8.0 (2016/06/23)
 - [d429fff](https://github.com/rserur/emotional-toys/commit/d429fff87c259ed37498b986b36b3c2440917da9) Updated version number. (@rserur)
 - [7cb3200](https://github.com/rserur/emotional-toys/commit/7cb320081ac22550e132fdabbc4f1b2cbe3f6460) Refactored superplayer movement so syncing can be inexact. (@rserur)
+- [#2](https://github.com/rserur/emotional-toys/pull/2) Merge pull request #2 from rserur/superplayer (@rserur)
+- [#1](https://github.com/rserur/emotional-toys/pull/1) Merge pull request #1 from rserur/develop (@rserur)
 - [c6411c6](https://github.com/rserur/emotional-toys/commit/c6411c67bb6a8856307a538c35d2d2d9d43152f8) Updated version and changelog. (@rserur)
 
 ### v1.7.0 (2016/05/31)
