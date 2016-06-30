@@ -66,7 +66,7 @@ class _ExplosionParticle (Sprite):
 			Sprite.__init__(self, containers, screen, imageFile=imageFile, size=(50,50), x=loc, v=v1)
 		elif (explosionType is 'superplayer'):
 			self._imageFile = 'spark.png'
-			Sprite.__init__(self, containers, screen, imageFile=imageFile, size=(200,138), x=(loc[0]-100,loc[1]-100), v=(v1 * 2))
+			Sprite.__init__(self, containers, screen, imageFile=imageFile, size=(200,138), x=numpy.array([loc[0]-100,loc[1]-100]), v=(v1 * 2))
 		else:
 			self._imageFile = imageFile
 			Sprite.__init__(self, containers, screen, imageFile=imageFile, size=(15,15), x=loc, v=v1)

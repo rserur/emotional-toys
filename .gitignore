@@ -72,3 +72,4 @@ target/
 
 **/Log/**
 **/Log/***
+*.idea

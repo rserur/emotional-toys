@@ -11,15 +11,16 @@ class PlayerList:
 		self._screen = screen
 		self._containers = containers
 		self._soundOn = sound_on
+		self.difficulty = 1.
 		self.superPlayerActive = False
 		self.hxm = HXMReceiver(minDevices=players)
 		self.hxm.run()
 		self.players = []
 		self.stressedPlayers = []
-		self.maxThresholdScore = 0
 		self.totalScore()
 		for p in range(players):
 			self.players.append(Player.Player(containers, screen, self.hxm.devices[p], thresholds[p], self, p, sound_on))
+			self.hxm.devices[p].threshold = thresholds[p]
 		self.outfile = _logDir + t.strftime('%Y-%m-%d %H.%M.%S') + '.csv'
 		f = open(self.outfile, 'w')
 		f.write('Start time: {0}, Players: {1}\n'.format(time.time(), players))
@@ -30,9 +31,6 @@ class PlayerList:
 		for player in self.players:
 			total += player.score
 		return total
-
-	def changeMaxThresholdScore(self, increment):
-		self.maxThresholdScore += increment
 
 	def activateSuperPlayer(self, x):
 		self.superPlayerActive = True
@@ -45,13 +43,28 @@ class PlayerList:
 	def __getitem__(self, key):
 		return self.players[key]
 
-	def accel(self, player, a):
-		if len(self.players) > player:
-			self.players[player].accel(a)
+	def setDifficulty(self, difficulty):
+		self._difficulty = difficulty
+
+	def setMovement(self, player, moving):
+		if player < len(self.players):
+			self.players[player].moving = moving
+
+	def decel(self, player):
+		self.players[player].decel()
+
+	def accel(self, player):
+		if player < len(self.players):
+			if player == 2:
+				self.players[player].superAccel(self.players[0].moving * self._difficulty)
+			else:
+				self.players[player].accel(self.players[player].moving * self._difficulty)
 	
 	def fire(self, player):
-		if (((player == 2) and (len(self.players) == 3)) or (player < 2)):
-			self.players[player].fire()	
+		if len(self.players) > player:
+			self.players[player].fire()
+		if self.superPlayerActive:
+			self.players[2].fire()
 	
 	def move(self):
 		for player in self.players:
@@ -90,7 +103,10 @@ class PlayerList:
 	def close (self):
 		f = open(self.outfile, 'a')
 		f.write('End time: {0}, Score: {1}\n'.format(time.time(), self.totalScore()))
-		f.write(self.hxm.log())
+		for index, player in enumerate(self.players):
+			if not player.isSuperPlayer:
+				self.hxm.devices[index].calculate_stats()
+				f.write(self.hxm.devices[index].log())
 		f.close()
 		self.__del__()
 

@@ -5,7 +5,6 @@ from PlayerGun import *
 from math import pi
 from HXMReceiver import *
 from Sounds import *
-from HXMReceiver import *
 
 if 'RESOURCEPATH' in os.environ:
 	_mainDir = os.environ['RESOURCEPATH']
@@ -38,6 +37,7 @@ class Player (Sprite):
 		self.score = 0
 		self.thresholdScore = 0
 		self.totalThresholdScore = 0.
+		self.thresholdCrosses = 0
 		self.hxm = hxm
 		self.fontSmall = pygame.font.SysFont(_defaultFont, 18)
 		self.fontLarge = pygame.font.SysFont(_defaultFont, 40, bold=True)
@@ -60,9 +60,10 @@ class Player (Sprite):
 		self.friendsHit = 0
 		self.bossesHit = 0
 		self.hitsTaken = 0
+		self.moving = 0
 
-	def accel (self, a):
-		self._a = numpy.array(a)*5
+	def accel (self, accel_modifier):
+		self._a = numpy.array([accel_modifier, 0.])*5
 	
 	def fire (self, stress=0):
 		if (len(self.bullets) < maxBullets):
@@ -114,7 +115,7 @@ class Player (Sprite):
 				bullet.move()
 		if (self.hxm.HR-self.threshold) > 0:
 			self.playerList.tellEveryoneImStressed(self)
-			self.stressed = True
+			self.triggerStress()
 			self._wobble = self.hxm.stress/7.
 			if self._wobble > 1.:
 				self._wobble = 1.
@@ -133,6 +134,11 @@ class Player (Sprite):
 			if self.sound_on:
 				Sounds().PowerDown()
 	
+	def triggerStress(self):
+		if self.stressed == False:
+			self.stressed = True
+			self.thresholdCrosses += 1
+
 	def changeThresholdScore(self, increment):
 		self.thresholdScore += increment
 
@@ -140,8 +146,8 @@ class Player (Sprite):
 		self.totalThresholdScore += increment
 	
 	def changeScore(self, increment):
-		self.score += increment
-	
+		self.score += increment	
+
 	def startCountdown(self):
 		if (not self.countdownMode) and (not self.stressed):
 			self.countdownMode = True

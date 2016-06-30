@@ -24,12 +24,12 @@ if not os.path.exists(_logDir):
 
 class EndingScreen:
 
-	def __init__(self, screen, thresholdScores=[0,0], players=[]):
+	def __init__(self, screen, players=[]):
 		print "reached endingscreen init"
 		all = pygame.sprite.RenderUpdates()
 		self._screen = screen
 		self._players = players
-		self.background = Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,803), x=numpy.array([0.,0.]))
+		self.background = Sprite.Sprite(all, screen, imageFile='background2.png', size=(1432,803), x=numpy.array([0.,0.]))
 		self.titleParticles = Particles(all, screen, numpy.array([100.,100.]))
 		print "setting fonts"
 		self._defaultFont = os.path.join(_mainDir, 'fonts', 'questrial.ttf')#os.path.join(_mainDir, 'fonts', 'freesansbold.ttf')
@@ -40,47 +40,33 @@ class EndingScreen:
 		self._SmallerFont = pygame.font.Font(self._defaultFont, 24)#pygame.font.SysFont(os.path.join(_mainDir, 'fonts', 'Baskerville.ttc'), 16)
 		self._LargerFont = pygame.font.Font(self._defaultFont, 60)#pygame.font.SysFont(os.path.join(_mainDir, 'fonts', 'Helvetica.dfont'), 60, bold=True)
 		self._TitleFont = pygame.font.Font(self._headerFont, 68)
-		# self._BackFont = pygame.font.Font(self._headerFont, 28)
 		print "setting positions"
-		self._TitlePos = (100, 100)
-		self._SubtitlePos = (100, 200)
-		self._PlayerOnePos = (100, 300)
-		self._PlayerOneThresholdPos = (100, 360)
-		self._PlayerOneScorePos = (100, 390)
-		self._PlayerOneAsteroidsHitPos = (130, 420)
-		self._PlayerOneFriendsHitPos = (130, 450)
-		self._PlayerOneBossesHitPos = (130, 480)
-		self._PlayerOneHitsTakenPos = (130, 510)
-		# self._BackButtonPos = (790, 5)
-		# self.hoverBackButton = False
-		self._UnselectedColor = white
-		self._SelectedColor = yellow
-		# self._BackButton = self._BackFont.render('Menu', True, self._UnselectedColor)
-		self._Title = self._TitleFont.render('Game Over',True,self._UnselectedColor)
-		self._Subtitle = self._SubtitleFont.render('Final Score: {}'.format(self._players.totalScore()),True,self._UnselectedColor)
-		self._PlayerOne = self._PlayerFont.render('Player 1',True,self._UnselectedColor)
-		self._PlayerOneScore = self._SmallerFont.render('Score: {}'.format(players[0].score),True,self._UnselectedColor)
-		self._PlayerOneThreshold = self._SmallerFont.render("Time Below HR: {0:.0f}%".format(thresholdScores[0]/self._players.maxThresholdScore * 100),True,self._UnselectedColor)
-		self._PlayerOneAsteroidsHit = self._SmallerFont.render("Asteroids Hit: {}".format(self._players[0].asteroidsHit),True,self._UnselectedColor)
-		self._PlayerOneFriendsHit = self._SmallerFont.render("Friends Hit: {}".format(self._players[0].friendsHit),True,self._UnselectedColor)
-		self._PlayerOneBossesHit = self._SmallerFont.render("Bosses Hit: {}".format(self._players[0].bossesHit),True,self._UnselectedColor)
-		self._PlayerOneHitsTaken = self._SmallerFont.render("Hits Taken: {}".format(self._players[0].hitsTaken),True,self._UnselectedColor)
-
-		if len(self._players.players) > 1:
-			self._PlayerTwoPos = (400, 300)
-			self._PlayerTwoThresholdPos = (400, 360)
-			self._PlayerTwoScorePos = (400, 390)
-			self._PlayerTwoAsteroidsHitPos = (430, 420)
-			self._PlayerTwoFriendsHitPos = (430, 450)
-			self._PlayerTwoBossesHitPos = (430, 480)
-			self._PlayerTwoHitsTakenPos = (430, 510)
-			self._PlayerTwo = self._PlayerFont.render('Player 2',True,self._UnselectedColor)
-			self._PlayerTwoScore = self._SmallerFont.render('Score: {}'.format(players[1].score),True,self._UnselectedColor)
-			self._PlayerTwoThreshold = self._SmallerFont.render("Time Below HR: {0:.0f}%".format(thresholdScores[1]/self._players.maxThresholdScore * 100),True,self._UnselectedColor)
-			self._PlayerTwoAsteroidsHit = self._SmallerFont.render("Asteroids Hit: {}".format(self._players[1].asteroidsHit),True,self._UnselectedColor)
-			self._PlayerTwoFriendsHit = self._SmallerFont.render("Friends Hit: {}".format(self._players[1].friendsHit),True,self._UnselectedColor)
-			self._PlayerTwoBossesHit = self._SmallerFont.render("Bosses Hit: {}".format(self._players[0].bossesHit),True,self._UnselectedColor)
-			self._PlayerTwoHitsTaken = self._SmallerFont.render("Hits Taken: {}".format(self._players[1].hitsTaken),True,self._UnselectedColor)
+		self._TitlePos = (100, 20)
+		self._SubtitlePos = (100, 120)
+		self._PlayerOnePos = (100, 180)
+		self._PlayerTwoPos = (500, 180)
+		self._StatStartXs = [100, 500]
+		self._StatStartY = 200
+		self._Title = self._TitleFont.render('Game Over',True,white)
+		self._Subtitle = self._SubtitleFont.render('Final Score: {}'.format(self._players.totalScore()),True,white)
+		self._PlayerOne = self._PlayerFont.render('Player 1',True,white)
+		self._PlayerTwo = self._PlayerFont.render('Player 2',True,white)
+		self._PlayerStats = {}
+		for index, player in enumerate(self._players):
+			if not player.isSuperPlayer:
+				self._PlayerStats[index] = [  
+					"Time Below HR: {0:.0f}%".format(player.hxm.underThreshold),
+					"Times Threshold Crossed: {}".format(player.thresholdCrosses),
+					"Threshold HR: {}".format(player.threshold),
+					"Average HR: {0:.0f}".format(player.hxm.avgHR),
+					"Min HR: {0:.0f}".format(player.hxm.minHR),
+					"Max HR: {0:.0f}".format(player.hxm.maxHR),
+					"Score: {}".format(player.score),
+					"Asteroids Hit: {}".format(player.asteroidsHit),
+					"Friends Hit: {}".format(player.friendsHit),
+					"Bosses Hit: {}".format(players[0].bossesHit),
+					"Hits Taken: {}".format(player.hitsTaken) 
+				]			
 		print "leaving endingscreen init"
 		
 	def draw(self):
@@ -92,27 +78,15 @@ class EndingScreen:
 		self._screen.blit(self._Title, self._TitlePos)
 		self._screen.blit(self._Subtitle, self._SubtitlePos)
 		self._screen.blit(self._PlayerOne, self._PlayerOnePos)
-		self._screen.blit(self._PlayerOneScore, self._PlayerOneScorePos)
-		self._screen.blit(self._PlayerOneThreshold, self._PlayerOneThresholdPos)		
-		self._screen.blit(self._PlayerOneAsteroidsHit, self._PlayerOneAsteroidsHitPos)
-		self._screen.blit(self._PlayerOneFriendsHit, self._PlayerOneFriendsHitPos)
-		self._screen.blit(self._PlayerOneBossesHit, self._PlayerOneBossesHitPos)
-		self._screen.blit(self._PlayerOneHitsTaken, self._PlayerOneHitsTakenPos)
+		self._screen.blit(self._PlayerTwo, self._PlayerTwoPos)
+		for p in xrange(len(self._players.players)):
+			if p is not 2:
+				for index, stat in enumerate(self._PlayerStats[p],1):
+					if (index > 6):
+						self._screen.blit(self._SmallerFont.render(stat,True,white), (self._StatStartXs[p] + 30, self._StatStartY + 30 * index))			
+					else:
+						self._screen.blit(self._SmallerFont.render(stat,True,white), (self._StatStartXs[p], self._StatStartY + 30 * index))			
 
-		if len(self._players.players) > 1:
-			self._screen.blit(self._PlayerTwo, self._PlayerTwoPos)
-			self._screen.blit(self._PlayerTwoScore, self._PlayerTwoScorePos)
-			self._screen.blit(self._PlayerTwoThreshold, self._PlayerTwoThresholdPos)
-			self._screen.blit(self._PlayerTwoAsteroidsHit, self._PlayerTwoAsteroidsHitPos)
-			self._screen.blit(self._PlayerTwoFriendsHit, self._PlayerTwoFriendsHitPos)
-			self._screen.blit(self._PlayerTwoBossesHit, self._PlayerTwoBossesHitPos)
-			self._screen.blit(self._PlayerTwoHitsTaken, self._PlayerTwoHitsTakenPos)
-
-	def BackButtonHover(self):
-		self.hoverBackButton = True
-
-	def BackButtonLeave(self):
-		self.hoverBackButton = False
 class Particles:
 
 	def __init__ (self, containers, screen, center):
