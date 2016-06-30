@@ -52,9 +52,8 @@ class HXMWidget:
 
 	def calculate_stats(self):
 		if self.hrHistory:
-			self.avgHR = int(sum(item['HR'] for item in self.hrHistory)/len(self.hrHistory))
-			self.minHR = int(min(item['HR'] for item in self.hrHistory))
-			self.maxHR = int(max(item['HR'] for item in self.hrHistory))
+			HRs = [item['HR'] for item in self.hrHistory]
+			self.avgHR, self.minHR, self.maxHR = (sum(HRs)/len(HRs)), min(HRs), max(HRs)
 			self.underThreshold = float(sum(item['UnderThreshold'] == True for item in self.hrHistory))/len(self.hrHistory)*100
 
 	def log(self):

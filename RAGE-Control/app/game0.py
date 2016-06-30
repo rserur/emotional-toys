@@ -5,7 +5,6 @@ from pygame.locals import *
 import RAGE.PlayerList, RAGE.Player, RAGE.Background, RAGE.Villians, RAGE.Bosses, RAGE.Friends, RAGE.HUD, RAGE.IntroScreen, RAGE.TutorialScreen, RAGE.Sounds, RAGE.SuperZone, RAGE.EndingScreen
 from numpy import array
 
-
 WIDTH =  900 #1080 # 720  # 1024 screen size effects gameplay dramatically-- too big = too easy; not enough enemy density
 HEIGHT =  600 #607 # 405 # 800
 SCREENRECT     = Rect(0, 0, WIDTH, 550)
