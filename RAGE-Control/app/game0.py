@@ -9,7 +9,7 @@ WIDTH =  900 #1080 # 720  # 1024 screen size effects gameplay dramatically-- too
 HEIGHT =  600 #607 # 405 # 800
 SCREENRECT     = Rect(0, 0, WIDTH, 550)
 
-GAME_LENGTH = 180 # seconds
+GAME_LENGTH = 1 # seconds
 USE_DIFFICULTY = 1 # set to 0 to not reverse directions at 1 min remain
 THRESHOLD_GOAL = 1400
 

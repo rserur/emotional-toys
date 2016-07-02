@@ -70,22 +70,21 @@ class EndingScreen:
 		print "leaving endingscreen init"
 		
 	def draw(self):
-		#print self._screen.get_size()
 		self.background.draw()
 		self.titleParticles.move()
 		self.titleParticles.draw()
-		# self._screen.blit(self._BackButton, self._BackButtonPos)
 		self._screen.blit(self._Title, self._TitlePos)
 		self._screen.blit(self._Subtitle, self._SubtitlePos)
 		self._screen.blit(self._PlayerOne, self._PlayerOnePos)
-		self._screen.blit(self._PlayerTwo, self._PlayerTwoPos)
 		for p in xrange(len(self._players.players)):
 			if p is not 2:
 				for index, stat in enumerate(self._PlayerStats[p],1):
-					if (index > 6):
+					if (index > 7):
 						self._screen.blit(self._SmallerFont.render(stat,True,white), (self._StatStartXs[p] + 30, self._StatStartY + 30 * index))			
 					else:
 						self._screen.blit(self._SmallerFont.render(stat,True,white), (self._StatStartXs[p], self._StatStartY + 30 * index))			
+					if p is 1:
+						self._screen.blit(self._PlayerTwo, self._PlayerTwoPos)
 
 class Particles:
 
@@ -118,8 +117,7 @@ class Particle (Sprite.Sprite):
 		v1 = v0 * particleSpeed
 		Sprite.Sprite.__init__(self, containers, screen, imageFile='star.png', size=(20,20), x=loc, v=v1)
 		self.alpha = alpha
-		# self._surface.set_colorkey((255,255,255))
-		self.kill()	# particle don't get to be in any group
+		self.kill()
 	
 	def move (self):
 		Sprite.Sprite.move(self)
