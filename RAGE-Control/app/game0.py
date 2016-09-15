@@ -9,7 +9,7 @@ WIDTH =  900 #1080 # 720  # 1024 screen size effects gameplay dramatically-- too
 HEIGHT =  600 #607 # 405 # 800
 SCREENRECT     = Rect(0, 0, WIDTH, 550)
 
-GAME_LENGTH = 1 # seconds
+GAME_LENGTH = 180 # seconds
 USE_DIFFICULTY = 1 # set to 0 to not reverse directions at 1 min remain
 THRESHOLD_GOAL = 1400
 
@@ -402,7 +402,7 @@ def gameLoop(players=1, thresholds=(70, 70), sound_on=True):
   players = RAGE.PlayerList.PlayerList(all, screen, players, thresholds, sound_on)
   villians = RAGE.Villians.Villians(all, screen, sound_on)
   bosses = RAGE.Bosses.Bosses(all, screen, sound_on)
-  friends = RAGE.Friends.Friends(all, screen, sound_on)
+  friends = RAGE.Friends.Friends(all, screen)
   sounds = RAGE.Sounds.Sounds()
   background = RAGE.Sprite.Sprite(all, screen, imageFile='background.png', size=(1432,803), x=array([0.,0.]))
   hud = RAGE.HUD.HUD(all, screen)

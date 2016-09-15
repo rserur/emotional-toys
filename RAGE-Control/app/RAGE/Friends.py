@@ -12,7 +12,7 @@ from Sounds import *
 
 class Friends:
 	
-	def __init__ (self, containers, screen, sound_on=True):
+	def __init__ (self, containers, screen):
 		self.friendList = []
 		self.explosionList = []
 		self.friendGroup = pygame.sprite.Group()
@@ -59,8 +59,7 @@ class Friends:
 		self.friendList.remove(friend)
 		friend.kill()
 		self.explosionList.append(Explosion.Explosion(self._containers, self._screen, numpy.array([centerX, centerY]), imageFile='star.png'))
-		if self.sound_on:
-			Sounds().SmallExplode()
+		Sounds().SmallExplode()
 
 class _Friend (Sprite):
 
