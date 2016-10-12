@@ -70,6 +70,6 @@ target/
 
 *.xcodeproj
 
-**/Log/**
-**/Log/***
+RAGE-Control/app/RAGE/Log/**
+RAGE-Control/app/Log/***
 *.idea
