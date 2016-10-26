@@ -7,12 +7,10 @@ DATA_FILES= [('', ['RAGE/art']),
 				('',['fonts']),
 				('',['RAGE/Sounds']),
         ('',['version.txt']),]
-# REPO = Repo('../../')
-VERSION = '[Client-Compiled]',
 
 setup(
 	app = ['game0.py'],
-  name = 'CALMS Game %(VERSION)s' % locals(),
+  name = 'CALMS Game' % locals(),
 	options = {'py2app': OPTIONS},
 	data_files = DATA_FILES,
 	)
